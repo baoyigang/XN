@@ -503,6 +503,11 @@
     </CommandString>
   </Command>
 
- 
+  <Command ID="SelectDevice">
+    <CommandString>
+      select * from CMD_Device left join CMD_AilseDevice on CMD_AilseDevice.DeviceNo=CMD_Device.DeviceNo
+      where State=1 and Priority=1 and AreaCode={0}
+    </CommandString>
+  </Command>
 
 </SqlCommand>

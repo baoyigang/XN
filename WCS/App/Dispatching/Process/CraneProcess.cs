@@ -125,6 +125,8 @@ namespace App.Dispatching.Process
 
 
                             bll.ExecTran(comds.ToArray(), paras);
+                            WCSDataService.WCSDataService wcsData = new WCSDataService.WCSDataService();
+                            wcsData.transWCSTaskStatus(TaskNo);
                         }
 
                         string strValue = "";
@@ -333,6 +335,8 @@ namespace App.Dispatching.Process
                         bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", 4), new DataParameter("@TaskNo", TaskNo) });
                         bll.ExecNonQuery("WCS.UpdateBillStateByBillID", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@BillID", BillID) });
                     }
+                    WCSDataService.WCSDataService wcsData = new WCSDataService.WCSDataService();
+                    wcsData.transWCSExecuteTask(TaskNo);
                     Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + craneNo + "堆垛机;起始地址:" + fromStation + ",目标地址:" + toStation);
                 }
             }
@@ -412,6 +416,8 @@ namespace App.Dispatching.Process
                         bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@TaskNo", TaskNo) });
                         bll.ExecNonQuery("WCS.UpdateBillStateByBillID", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@BillID", BillID) });
                     }
+                    WCSDataService.WCSDataService wcsData = new WCSDataService.WCSDataService();
+                    wcsData.transWCSExecuteTask(TaskNo);
                     Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + craneNo + "堆垛机;起始地址:" + fromStation + ",目标地址:" + toStation);
                 }
             }
