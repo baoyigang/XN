@@ -37,139 +37,142 @@ namespace ServiceHost
 
             bll.BatchInsertTable(dt, "WCS_TaskTemp");
 
+          
+            bll.ExecNonQuery("WCS.Sp_InsertWCSTask");
+            #region
+            //List<string> list = new List<string>();
+            //List<DataParameter[]> paras = new List<DataParameter[]>();
+            //DataParameter[] para;
 
-            List<string> list = new List<string>();
-            List<DataParameter[]> paras = new List<DataParameter[]>();
-            DataParameter[] para;
+            //foreach (DataRow row in dt.Rows)
+            //{
+            //    string billTypeCode;
+            //    string CellCode = row["fromAddress"].ToString();
+            //    string ToCellCode = "";
+            //    string AisleNo = "";
+            //    string AreaCode = "B01";
+            //    switch (row["taskType"].ToString())
+            //    {
+            //        case "11":
+            //            billTypeCode = "001";
+            //            CellCode = row["toAddress"].ToString();
+            //            break;
+            //        case "12":
+            //            billTypeCode = "020";
+            //            break;
+            //        case "13":
+            //            billTypeCode = "030";
+            //            ToCellCode = row["toAddress"].ToString();
+            //            break;
+            //        case "15":
+            //            billTypeCode = "050";
+            //            break;
+            //        case "16":
+            //            billTypeCode = "070";
+            //            break;
+            //        default:
+            //            billTypeCode = "060";
+            //            break;
+            //    }
+            //    string As = CellCode.Substring(2, 1);
+            //    if (AreaCode == "A01")
+            //    {
 
-            foreach (DataRow row in dt.Rows)
-            {
-                string billTypeCode;
-                string CellCode = row["fromAddress"].ToString();
-                string ToCellCode = "";
-                string AisleNo = "";
-                string AreaCode = "B01";
-                switch (row["taskType"].ToString())
-                {
-                    case "11":
-                        billTypeCode = "001";
-                        CellCode = row["toAddress"].ToString();
-                        break;
-                    case "12":
-                        billTypeCode = "020";
-                        break;
-                    case "13":
-                        billTypeCode = "030";
-                        ToCellCode = row["toAddress"].ToString();
-                        break;
-                    case "15":
-                        billTypeCode = "050";
-                        break;
-                    case "16":
-                        billTypeCode = "070";
-                        break;
-                    default:
-                        billTypeCode = "060";
-                        break;
-                }
-                string As = CellCode.Substring(2, 1);
-                if (AreaCode == "A01")
-                {
-
-                    if (As == "1" || As == "2" || As == "3")
-                    {
-                        AisleNo = "01";
-                    }
-                    else if (As == "4" || As == "5" || As == "6")
-                    {
-                        AisleNo = "02";
-                    }
-                    else if (As == "7" || As == "8" || As == "9" || As == "10")
-                    {
-                        AisleNo = "03";
-                    }
-                    else
-                    {
-                        AisleNo = "04";
-                    }
-                }
-                else if (AreaCode == "B01")
-                {
-                    if (As == "1" || As == "2" || As == "3" || As == "4")
-                    {
-                        AisleNo = "01";
-                    }
-                    else if (As == "5" || As == "6" || As == "7")
-                    {
-                        AisleNo = "02";
-                    }
-                    else
-                    {
-                        AisleNo = "03";
-                    }
-                }
-                if (row["taskFlag"].ToString() == "1")
-                {
-                    list.Add("WCS.InsertTestWCSTask");
-                    para = new DataParameter[] {new DataParameter("@TaskID",row["taskNo"]),
-                                                    new DataParameter("@TaskNo", row["taskNo"]),
-                                                    new DataParameter("@BillTypeCode",billTypeCode),
-                                                    new DataParameter("@TaskType",row["taskType"]),
-                                                    new DataParameter("@TaskLevel",row["taskLevel"]),
-                                                    new DataParameter("@PalletBarcode",row["palletBarcode"]),
-                                                    new DataParameter("@DeviceNo",""),
-                                                    new DataParameter("@AisleNo",AisleNo),
-                                                    new DataParameter("@CellCode",CellCode),
-                                                    new DataParameter("@ToCellCode",ToCellCode),
-                                                    new DataParameter("@State",row["status"]),
-                                                    new DataParameter("@Tasker",row["sender"]),
-                                                    new DataParameter("@TaskDate",DateTime.ParseExact(row["sendDate"].ToString(),"yyyy-MM-dd HH:mm:ss fff",null)),
-                                                    new DataParameter("@RequestDate",null),
-                                                    new DataParameter("@StartDate",null),
-                                                    new DataParameter("@FinishDate",null),
-                                                    new DataParameter("@AlarmCode","0"),
-                                                    new DataParameter("@AlarmDesc",""),
-                                                    new DataParameter("@AreaCode",AreaCode),
-                                                    new DataParameter("@StationNo","02")
-                                                    };
-                    paras.Add(para);
-                }
-                else if (row["taskFlag"].ToString() == "2")
-                {
-                    list.Add("WCS.UpdateTestWCSTask");
-                    para = new DataParameter[] {new DataParameter("@BillTypeCode",billTypeCode),
-                                                    new DataParameter("@TaskType",row["taskType"]),
-                                                    new DataParameter("@TaskLevel",row["taskLevel"]),
-                                                    new DataParameter("@PalletBarcode",row["palletBarcode"]),
-                                                    new DataParameter("@AisleNo",AisleNo),
-                                                    new DataParameter("@CellCode",CellCode),
-                                                    new DataParameter("@ToCellCode",ToCellCode),
-                                                    new DataParameter("@State",row["status"]),
-                                                    new DataParameter("@Tasker",row["sender"]),
-                                                    new DataParameter("@TaskDate",DateTime.ParseExact(row["sendDate"].ToString(),"yyyy-MM-dd HH:mm:ss fff",null)),
-                                                    new DataParameter("@AreaCode",AreaCode),
-                                                    new DataParameter("@TaskNo", row["taskNo"])
-                                                    };
-                    paras.Add(para);
-                }
-                else
-                {
-                    list.Add("WCS.DeleteTestWCSTask");
-                    para = new DataParameter[] { };
-                    paras.Add(para);
-                }
-            }
+            //        if (As == "1" || As == "2" || As == "3")
+            //        {
+            //            AisleNo = "01";
+            //        }
+            //        else if (As == "4" || As == "5" || As == "6")
+            //        {
+            //            AisleNo = "02";
+            //        }
+            //        else if (As == "7" || As == "8" || As == "9" || As == "10")
+            //        {
+            //            AisleNo = "03";
+            //        }
+            //        else
+            //        {
+            //            AisleNo = "04";
+            //        }
+            //    }
+            //    else if (AreaCode == "B01")
+            //    {
+            //        if (As == "1" || As == "2" || As == "3" || As == "4")
+            //        {
+            //            AisleNo = "01";
+            //        }
+            //        else if (As == "5" || As == "6" || As == "7")
+            //        {
+            //            AisleNo = "02";
+            //        }
+            //        else
+            //        {
+            //            AisleNo = "03";
+            //        }
+            //    }
+            //    if (row["taskFlag"].ToString() == "1")
+            //    {
+            //        list.Add("WCS.InsertTestWCSTask");
+            //        para = new DataParameter[] {new DataParameter("@TaskID",row["taskNo"]),
+            //                                        new DataParameter("@TaskNo", row["taskNo"]),
+            //                                        new DataParameter("@BillTypeCode",billTypeCode),
+            //                                        new DataParameter("@TaskType",row["taskType"]),
+            //                                        new DataParameter("@TaskLevel",row["taskLevel"]),
+            //                                        new DataParameter("@PalletBarcode",row["palletBarcode"]),
+            //                                        new DataParameter("@DeviceNo",""),
+            //                                        new DataParameter("@AisleNo",AisleNo),
+            //                                        new DataParameter("@CellCode",CellCode),
+            //                                        new DataParameter("@ToCellCode",ToCellCode),
+            //                                        new DataParameter("@State",row["status"]),
+            //                                        new DataParameter("@Tasker",row["sender"]),
+            //                                        new DataParameter("@TaskDate",DateTime.ParseExact(row["sendDate"].ToString(),"yyyy-MM-dd HH:mm:ss fff",null)),
+            //                                        new DataParameter("@RequestDate",null),
+            //                                        new DataParameter("@StartDate",null),
+            //                                        new DataParameter("@FinishDate",null),
+            //                                        new DataParameter("@AlarmCode","0"),
+            //                                        new DataParameter("@AlarmDesc",""),
+            //                                        new DataParameter("@AreaCode",AreaCode),
+            //                                        new DataParameter("@StationNo","02")
+            //                                        };
+            //        paras.Add(para);
+            //    }
+            //    else if (row["taskFlag"].ToString() == "2")
+            //    {
+            //        list.Add("WCS.UpdateTestWCSTask");
+            //        para = new DataParameter[] {new DataParameter("@BillTypeCode",billTypeCode),
+            //                                        new DataParameter("@TaskType",row["taskType"]),
+            //                                        new DataParameter("@TaskLevel",row["taskLevel"]),
+            //                                        new DataParameter("@PalletBarcode",row["palletBarcode"]),
+            //                                        new DataParameter("@AisleNo",AisleNo),
+            //                                        new DataParameter("@CellCode",CellCode),
+            //                                        new DataParameter("@ToCellCode",ToCellCode),
+            //                                        new DataParameter("@State",row["status"]),
+            //                                        new DataParameter("@Tasker",row["sender"]),
+            //                                        new DataParameter("@TaskDate",DateTime.ParseExact(row["sendDate"].ToString(),"yyyy-MM-dd HH:mm:ss fff",null)),
+            //                                        new DataParameter("@AreaCode",AreaCode),
+            //                                        new DataParameter("@TaskNo", row["taskNo"])
+            //                                        };
+            //        paras.Add(para);
+            //    }
+            //    else
+            //    {
+            //        list.Add("WCS.DeleteTestWCSTask");
+            //        para = new DataParameter[] { };
+            //        paras.Add(para);
+            //    }
+            //}
 
 
-            try
-            {
-                bll.ExecTran(list.ToArray(), paras);
-            }
-            catch (Exception ex)
-            {
+            //try
+            //{
+            //    bll.ExecTran(list.ToArray(), paras);
+            //}
+            //catch (Exception ex)
+            //{
 
-                throw ex;
-            }
+            //    throw ex;
+            //}
+            #endregion
             json = json + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
             return json;
 
@@ -194,23 +197,12 @@ namespace ServiceHost
             bll.BatchInsertTable(dt, "WCS_AisleTemp");
 
             string Aisle = "";
-            string AreaCode = "002";
-            //获取有空货位的货架
-            //select ShelfCode,COUNT(*) from CMD_Cell where PalletBarCode='' and AreaCode='002'
-            //group by ShelfCode
-            //order by ShelfCode
-            DataTable dtSelectAisle = bll.FillDataTable("Cmd.SelectDevice", new DataParameter("{0}", AreaCode));
-            if (dtSelectAisle.Rows.Count != 0)
-            {
-                Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();
-            }
-            else
-            {
-                DataTable AisleDt = bll.FillDataTable("Wcs.SelectTestAisle", new DataParameter("@AreaCode", AreaCode));
-                //int Aisle = AisleDt.Columns["task"].Expression.Min();
-                Aisle = AisleDt.Rows[0]["AisleNo"].ToString();
-            }
-            json = "[{\"id\":" + dt.Rows[0]["id"] + "\"taskNo\":" + dt.Rows[0]["taskNo"] + "\"aisleNo\":" + Aisle.ToString() + "\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
+            string AreaCode = dt.Rows[0]["areaCode"].ToString();
+
+            DataTable dtSelectAisle = bll.FillDataTable("Cmd.SelectAisle", new DataParameter("{0}", AreaCode));
+            Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();
+            
+            json = "[{\"id\":" + dt.Rows[0]["id"] + "\"taskNo\":" + dt.Rows[0]["taskNo"] + "\"aisleNo\":" + Aisle + "\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
 
             return json;
          }

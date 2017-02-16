@@ -503,10 +503,14 @@
     </CommandString>
   </Command>
 
-  <Command ID="SelectDevice">
+  <Command ID="SelectAisle">
     <CommandString>
-      select * from CMD_Device left join CMD_AilseDevice on CMD_AilseDevice.DeviceNo=CMD_Device.DeviceNo
-      where State=1 and Priority=1 and AreaCode={0}
+      select top 1 cmd_cell.ShelfCode,AisleNo,COUNT(*) a
+      from CMD_Cell
+      left join CMD_Shelf on CMD_Cell.ShelfCode=CMD_Shelf.ShelfCode
+      where PalletBarCode='' and cmd_cell.AreaCode='{0}'
+      group by cmd_cell.ShelfCode,AisleNo
+      order by a desc
     </CommandString>
   </Command>
 

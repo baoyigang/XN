@@ -26,7 +26,7 @@ namespace ServiceHost
             BLL.BLLBase bll = new BLL.BLLBase();
             DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcs", new DataParameter("{0}", TaskNo));
             string Id = bll.FillDataTable("Wcs.SelectTaskTemp", new DataParameter("{0}", TaskNo)).Rows[0]["ID"].ToString();
-            string Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + Jdt.Rows[0]["PalletBarcode"].ToString() + "\",\"startDate\":\"" + Jdt.Rows[0]["StartDate"].ToString() + "\",\"sendDate\":\"" + Jdt.Rows[0]["TaskDate"].ToString() + "\",\"deviceNo\":\"" + Jdt.Rows[0]["DeviceNo"].ToString() + "\",\"sender\":\"" + Jdt.Rows[0]["Tasker"].ToString() + "\"}]";
+            string Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + Jdt.Rows[0]["PalletBarcode"].ToString() + "\",\"startDate\":\"" + Jdt.Rows[0]["StartDate"].ToString() + "\",\"sendDate\":\"" + Jdt.Rows[0]["TaskDate"].ToString() + "\",\"deviceNo\":\"" + Jdt.Rows[0]["DeviceNo"].ToString() + "\",\"sender\":\"" + Jdt.Rows[0]["Tasker"].ToString() + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
             #region 主控WCS服务
             DataTable dt = Util.JsonHelper.Json2Dtb(Json);
             string json = "";
@@ -47,7 +47,7 @@ namespace ServiceHost
             BLL.BLLBase bll = new BLL.BLLBase();
             DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcs", new DataParameter("{0}", TaskNo));
             string Id = bll.FillDataTable("Wcs.SelectTaskTemp", new DataParameter("{0}", TaskNo)).Rows[0]["ID"].ToString();
-            string Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + Jdt.Rows[0]["PalletBarcode"].ToString() + "\",\"status\":\"" + Jdt.Rows[0]["State"].ToString() + "\",\"errorCode\":\"" + "!1!1!1!1!1!1!1!" + "\",\"sendDate\":\"" + Jdt.Rows[0]["TaskDate"].ToString() + "\",\"sender\":\"" + Jdt.Rows[0]["Tasker"].ToString() + "\",\"deviceNo\":\"" + Jdt.Rows[0]["DeviceNo"].ToString() + "\",\"finishDate\":\"" + Jdt.Rows[0]["FinishDate"].ToString() + "\"}]";
+            string Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + Jdt.Rows[0]["PalletBarcode"].ToString() + "\",\"status\":\"" + Jdt.Rows[0]["State"].ToString() + "\",\"errorCode\":\"" + "!1!1!1!1!1!1!1!" + "\",\"sendDate\":\"" + Jdt.Rows[0]["TaskDate"].ToString() + "\",\"sender\":\"" + Jdt.Rows[0]["Tasker"].ToString() + "\",\"deviceNo\":\"" + Jdt.Rows[0]["DeviceNo"].ToString() + "\",\"finishDate\":\"" + Jdt.Rows[0]["FinishDate"].ToString() + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
             #region 主控WCS服务
             DataTable dt = Util.JsonHelper.Json2Dtb(Json);
             string json = "";
