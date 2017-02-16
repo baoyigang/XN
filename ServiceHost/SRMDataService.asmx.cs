@@ -37,8 +37,8 @@ namespace ServiceHost
 
             bll.BatchInsertTable(dt, "WCS_TaskTemp");
 
-          
-            bll.ExecNonQuery("WCS.Sp_InsertWCSTask");
+
+            bll.ExecNonQuery("WCS.Sp_ImportWmsTask");
             #region
             //List<string> list = new List<string>();
             //List<DataParameter[]> paras = new List<DataParameter[]>();

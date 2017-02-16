@@ -319,21 +319,6 @@
       where TaskNo=@TaskNo
     </CommandString>
   </Command>
-  <Command ID="InsertTestWCSTask">
-    <CommandString>
-      Insert into WCS_Task Values(@TaskId,@TaskNo,@BillTypeCode,@TaskType,@TaskLevel,@PalletBarcode,@DeviceNo,@AisleNo,@CellCode,@ToCellCode,@State,@Tasker,@TaskDate,@RequestDate,@StartDate,@FinishDate,@AlarmCode,@AlarmDesc,@AreaCode,@StationNo)
-    </CommandString>
-  </Command>
-  <Command ID="UpdateTestWCSTask">
-    <CommandString>
-      Update WCS_Task set BillTypeCode=@BillTypeCode,TaskType=@TaskType,TaskLevel=@TaskLevel,PalletBarcode=@PalletBarcode,AisleNo=@AisleNo,CellCode=@CellCode,ToCellCode=@ToCellCode,State=@State,Tasker=@Tasker,TaskDate=@TaskDate,AreaCode=@AreaCode  where taskNo=@taskNo
-    </CommandString>
-  </Command>
-  <Command ID="DeleteTestTask">
-    <CommandString>
-
-    </CommandString>
-  </Command>
   <Command ID="SelectTestAisle">
     <CommandString>
       select AisleNo,COUNT(*) task  from WCS_TASK where State!=7 and State!=8 and State!=9 and AreaCode=@AreaCode
@@ -352,6 +337,11 @@
     <CommandString>
       select * from WCS_TaskTemp where taskNo={0} and taskFlag!=9
       order by sendDate desc
+    </CommandString>
+  </Command>
+  <Command ID="Sp_ImportWmsTask">
+    <CommandString>
+      Sp_ImportWmsTask
     </CommandString>
   </Command>
 </SqlCommand>
