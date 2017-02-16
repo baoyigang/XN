@@ -346,6 +346,7 @@ namespace SQLDAL
                 //SqlBulkCopy copy = new SqlBulkCopy((SqlConnection) this.connection) {
                 //    DestinationTableName = tableName
                 //};
+                connection.Open();
                 SqlBulkCopy copy = new SqlBulkCopy((SqlConnection)connection);
                 copy.DestinationTableName = "dbo." + TableName;
                 foreach (DataColumn dc in dt.Columns)

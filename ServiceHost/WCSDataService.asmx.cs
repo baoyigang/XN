@@ -32,7 +32,7 @@ namespace ServiceHost
             string json = "";
             if (dt.Rows.Count == 0)
             {
-                return json = "[{\"id\":\"123678\",\"returnCode\"=\"111\",\"message\"=\"失败\",\"finishDate\":\"2017-02-05 10:37:50 985\"}]";
+                return json = "[{\"id\":\"123678\",\"returnCode\"=\"111\",\"message\"=\"失败\",\"finishDate\":\"2017-02-05 10:37:50.985\"}]";
             }
             json = "[{\"id\":\"" + dt.Rows[0]["id"].ToString() + "\",\"returnCode\"=\"000\",\"message\"=\"成功\",\"finishDate\":\"" + DateTime.Now.ToString() + "\"}]";
             return json;
@@ -53,7 +53,7 @@ namespace ServiceHost
             string json = "";
             if (dt.Rows.Count == 0)
             {
-                return json = "[{\"id\":\"123678\",\"returnCode\"=\"111\",\"message\"=\"失败\",\"finishDate\":\"2017-02-05 10:37:50 985\"}]";
+                return json = "[{\"id\":\"123678\",\"returnCode\"=\"111\",\"message\"=\"失败\",\"finishDate\":\"2017-02-05 10:37:50.985\"}]";
             }
             json = "[{\"id\":\"" + dt.Rows[0]["id"].ToString() + "\",\"returnCode\"=\"000\",\"message\"=\"成功\",\"finishDate\":\"" + DateTime.Now.ToString() + "\"}]";
             return json;

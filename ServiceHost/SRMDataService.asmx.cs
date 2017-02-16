@@ -32,13 +32,13 @@ namespace ServiceHost
             BLL.BLLBase bll = new BLL.BLLBase();
             if (dt.Rows.Count == 0)
             {
-                return json = "[{\"id\":" + dt.Rows[0]["id"] + ",\"returnCode\":001" + ",\"message\":\"失败\"" + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
+                return json = "[{\"id\":" + dt.Rows[0]["id"] + ",\"returnCode\":001" + ",\"message\":\"失败\"" + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "}]";
             }
 
             bll.BatchInsertTable(dt, "WCS_TaskTemp");
 
 
-            bll.ExecNonQuery("WCS.Sp_ImportWmsTask");
+            bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
             #region
             //List<string> list = new List<string>();
             //List<DataParameter[]> paras = new List<DataParameter[]>();
@@ -173,7 +173,7 @@ namespace ServiceHost
             //    throw ex;
             //}
             #endregion
-            json = json + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
+            json = json + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "}]";
             return json;
 
         }
@@ -191,7 +191,7 @@ namespace ServiceHost
             string json;
             if (dt.Rows.Count == 0)
             {
-                return json = "[{\"id\":" + dt.Rows[0]["id"] + ",\"returnCode\":001" + ",\"message\":\"失败\"" + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
+                return json = "[{\"id\":" + dt.Rows[0]["id"] + ",\"returnCode\":001" + ",\"message\":\"失败\"" + ",\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "}]";
             }
 
             bll.BatchInsertTable(dt, "WCS_AisleTemp");
@@ -202,7 +202,7 @@ namespace ServiceHost
             DataTable dtSelectAisle = bll.FillDataTable("Cmd.SelectAisle", new DataParameter("{0}", AreaCode));
             Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();
             
-            json = "[{\"id\":" + dt.Rows[0]["id"] + "\"taskNo\":" + dt.Rows[0]["taskNo"] + "\"aisleNo\":" + Aisle + "\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff") + "}]";
+            json = "[{\"id\":" + dt.Rows[0]["id"] + "\"taskNo\":" + dt.Rows[0]["taskNo"] + "\"aisleNo\":" + Aisle + "\"finishDate\":" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "}]";
 
             return json;
          }
