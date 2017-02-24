@@ -226,6 +226,14 @@
       order by DeviceNo
     </CommandString>
   </Command>
+  <Command ID="SelectAisle">
+    <CommandString>
+      Select *
+      from CMD_Aisle
+      where {0}
+      order by AisleNo
+    </CommandString>
+  </Command>
   <Command ID="UpdateElevator">
     <CommandString>
       Update CMD_Elevator set ElevatorName=@ElevatorName,State=@State,CarState=@CarState,Memo=@Memo where ElevatorNo=@ElevatorNo and CarNo=@CarNo

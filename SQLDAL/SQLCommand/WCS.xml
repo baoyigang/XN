@@ -10,12 +10,13 @@
       (case when WCS_TASK.TaskType in ('11','16') or (WCS_TASK.TaskType='14' and WCS_TASK.State in('1','2','3'))
       then WCS_TASK.CellCode when WCS_TASK.TaskType in('12','15') or (WCS_TASK.TaskType='14'
       and WCS_TASK.State in('0','4','5','6','8')) then A2.OutStationAddress when WCS_TASK.TaskType='13'
-      then WCS_TASK.ToCellCode else '' end) ToStation,S1.AisleNo,C1.CellRow,A1.AreaName
+      then WCS_TASK.ToCellCode else '' end) ToStation,S1.AisleNo,C1.CellRow,A1.AreaName,isnull(A2.DeviceNo,'') AisleDeviceNo,CD.ServiceName
       FROM WCS_TASK
       left join CMD_Cell C1 on WCS_TASK.CellCode=C1.CellCode
       left join CMD_Area A1 on WCS_TASK.AreaCode=A1.AreaCode
       left join CMD_Shelf S1 On C1.ShelfCode=S1.ShelfCode
-      left join CMD_Aisle A2 on A2.AreaCode=S1.AreaCode and A2.WarehouseCode=S1.WarehouseCode and A2.AisleNo=S1.AisleNo
+      left join Vew_AisleDevice A2 on A2.AreaCode=S1.AreaCode and A2.WarehouseCode=S1.WarehouseCode and A2.AisleNo=S1.AisleNo
+      left join CMD_Device CD on CD.DeviceNo=A2.DeviceNo
       left join CMD_BillType On CMD_BillType.BillTypeCode=WCS_TASK.BillTypeCode
       LEFT JOIN  Sys_TableState on Sys_TableState.TableName='WCS_TASK' and Sys_TableState.FieldName='State' and WCS_TASK.State=Sys_TableState.State
       Where {0}
