@@ -345,4 +345,10 @@
       Sp_ImportWmsTask
     </CommandString>
   </Command>
+
+  <Command ID="DeleteWcsTemp">
+    <CommandString>
+      Delete Wcs_TaskTemp
+    </CommandString>
+  </Command>
 </SqlCommand>

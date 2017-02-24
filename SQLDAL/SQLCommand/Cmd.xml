@@ -511,7 +511,7 @@
     </CommandString>
   </Command>
 
-  <Command ID="SelectAisle">
+  <Command ID="AisleRequest">
     <CommandString>
       select top 1 cmd_cell.ShelfCode,AisleNo,COUNT(*) a
       from CMD_Cell
