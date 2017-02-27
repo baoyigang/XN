@@ -32,17 +32,10 @@ namespace ServiceHost
             try
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
-                DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcs", new DataParameter("{0}", TaskNo));
-                if (Jdt.Rows.Count>0)
-                {
-                    palletBarcode = Jdt.Rows[0]["PalletBarcode"].ToString();
-                    startDate = Jdt.Rows[0]["StartDate"].ToString();
-                    TaskDate = Jdt.Rows[0]["TaskDate"].ToString();
-                    deviceNo = Jdt.Rows[0]["DeviceNo"].ToString();
-                    Tasker = Jdt.Rows[0]["Tasker"].ToString();
-                }
-                Id = bll.FillDataTable("Wcs.SelectTaskTemp", new DataParameter("{0}", TaskNo)).Rows[0]["ID"].ToString();
-                Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"startDate\":\"" + startDate + "\",\"sendDate\":\"" + TaskDate + "\",\"deviceNo\":\"" + deviceNo + "\",\"sender\":\"" + Tasker + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
+                DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcsStart", new DataParameter("{0}", TaskNo));
+
+                Json = Util.JsonHelper.Dtb2Json(Jdt);
+                Json = Json.Substring(0, Json.Length - 2) + ",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
             }
             catch(Exception ex)
             {
@@ -60,28 +53,20 @@ namespace ServiceHost
         {
 
             string Json = "";
+            string Id = "";
             string palletBarcode = "";
             string status = "";
             string TaskDate = "";
-            string deviceNo = "";
             string Tasker = "";
+            string deviceNo = "";
             string finishDate = "";
-            string Id = "";
             try
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
-                DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcs", new DataParameter("{0}", TaskNo));
-                if (Jdt.Rows.Count>0)
-                {
-                    palletBarcode = Jdt.Rows[0]["PalletBarcode"].ToString();
-                    status = Jdt.Rows[0]["State"].ToString();
-                    TaskDate = Jdt.Rows[0]["TaskDate"].ToString();
-                    deviceNo = Jdt.Rows[0]["DeviceNo"].ToString();
-                    Tasker = Jdt.Rows[0]["Tasker"].ToString();
-                    finishDate = Jdt.Rows[0]["FinishDate"].ToString();
-                }
-                Id = bll.FillDataTable("Wcs.SelectTaskTemp", new DataParameter("{0}", TaskNo)).Rows[0]["ID"].ToString();
-                Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"status\":\"" + status + "\",\"errorCode\":\"" + "!1!1!1!1!1!1!1!" + "\",\"sendDate\":\"" + TaskDate + "\",\"sender\":\"" + Tasker + "\",\"deviceNo\":\"" + deviceNo + "\",\"finishDate\":\"" + finishDate + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
+                DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
+
+                Json = Util.JsonHelper.Dtb2Json(Jdt);
+                Json = Json.Substring(0, Json.Length - 2) + ",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
             }
             catch (Exception ex)
             {
@@ -89,6 +74,26 @@ namespace ServiceHost
             }
                 #region 主控WCS服务
             string json = "";         
+            return json;
+            #endregion
+        }
+
+        [WebMethod]
+        public string transWCSDevice(string Json)
+        {
+            
+            try
+            {
+                
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            #region 主控WCS服务
+            string json = "";
             return json;
             #endregion
         }
