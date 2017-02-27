@@ -32,5 +32,15 @@ namespace WindowsFormsApplication1.Properties {
                 return ((string)(this["WindowsFormsApplication1_SRMDataService_SRMDataService"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8862/WCSDataService.asmx")]
+        public string WindowsFormsApplication1_WCSDataService_WCSDataService {
+            get {
+                return ((string)(this["WindowsFormsApplication1_WCSDataService_WCSDataService"]));
+            }
+        }
     }
 }

@@ -15,16 +15,25 @@ namespace WindowsFormsApplication1
         {
             InitializeComponent();
         }
-
+        string id="";
         private void button1_Click(object sender, EventArgs e)
         {
             SRMDataService.SRMDataService srm = new SRMDataService.SRMDataService();
-            string Json = "[{\"id\":\"xcafd3ssaf\",\"taskNo\":\"1702160001\",\"taskType\":\"12\",\"taskLevel\":1,\"taskFlag\":\"2\",\"palletBarcode\":\"B001\",\"areaCode\":\"B01\",\"fromAddress\":\"B005001001\",\"toAddress\":\"B005006003\",\"status\":\"0\",\"sendDate\":\""+DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff")+"\",\"sender\":\"admin\"" + "}]";
+            string Json = c
             string json = "";
-            string Ajson = "[{\"id\":\"xcafd3ssaf\",\"taskNo\":\"1702160001\",\"areaCode\":\"A01\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"admin\"" + "}]";
-            string a = srm.transSRMTaskAisle(Ajson);
-            string c = srm.transSRMTask(json);
-            MessageBox.Show(a);
+            //string Ajson = "[{\"id\":\"xcafd3ssaf\",\"taskNo\":\"1702160001\",\"areaCode\":\"A01\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"admin\"" + "}]";
+            //string a = srm.transSRMTaskAisle(Ajson);
+            string c = srm.transSRMTask(Json);
+            MessageBox.Show(c);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            WCSDataService.WCSDataService wcs = new WCSDataService.WCSDataService();
+            wcs.transWCSExecuteTask("1612140001");
+            string m = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
+        }
+
+       
     }
 }

@@ -69,6 +69,7 @@ namespace ServiceHost
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
                 DataTable dt = Util.JsonHelper.Json2Dtb(wcsProductObject);
+               
                 if (dt.Rows.Count > 0)
                 {
                     id = dt.Rows[0]["id"].ToString();

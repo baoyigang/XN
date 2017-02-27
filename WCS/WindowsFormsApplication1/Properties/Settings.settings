@@ -5,5 +5,8 @@
     <Setting Name="WindowsFormsApplication1_SRMDataService_SRMDataService" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://localhost:8862/SRMDataService.asmx</Value>
     </Setting>
+    <Setting Name="WindowsFormsApplication1_WCSDataService_WCSDataService" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:8862/WCSDataService.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
