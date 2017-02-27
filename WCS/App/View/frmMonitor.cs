@@ -112,6 +112,8 @@ namespace App.View
             //tmCrane1.Elapsed += new System.Timers.ElapsedEventHandler(tmCraneWorker1);
             //tmCrane1.Start();
         }
+        //反馈给总控WCS设备状态
+        //string m = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
         #region Miniload监控
 
         private Dictionary<string, Miniload> dicMiniload = new Dictionary<string, Miniload>();

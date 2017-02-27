@@ -27,6 +27,7 @@ namespace ServiceHost
         [WebMethod]
         public string transSRMTask(string wcsProductObject)
         {
+            WriteToLog("1", "transSRMTask", wcsProductObject);
             string json = "";
             string id = "";
             try
@@ -36,75 +37,78 @@ namespace ServiceHost
                     id = dt.Rows[0]["id"].ToString();
                 else
                     id = "";
-                                   
+
 
                 BLL.BLLBase bll = new BLL.BLLBase();
 
                 bll.ExecNonQuery("WCS.DeleteWcsTemp");
-
                 bll.BatchInsertTable(dt, "WCS_TaskTemp");
-
-
                 bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
 
-                json = "[{\"id\":\"" + id+ "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
+                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
             }
             catch (Exception ex)
             {
-                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"失败\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
+                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
             }
-                return json;
+            return json;
 
         }
-
-
-
-
 
         //总控WCS入库巷道请求
         [WebMethod]
         public string transSRMTaskAisle(string wcsProductObject)
         {
+            WriteToLog("1","transSRMTaskAisle", wcsProductObject);
             string json = "";
             string id = "";
             string taskNo = "";
             string Aisle = "";
-            string AreaCode = "";
+            string WarehouseCode = "";
             try
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
                 DataTable dt = Util.JsonHelper.Json2Dtb(wcsProductObject);
+               
                 if (dt.Rows.Count > 0)
                 {
                     id = dt.Rows[0]["id"].ToString();
                     taskNo = dt.Rows[0]["taskNo"].ToString();
-                    AreaCode = dt.Rows[0]["areaCode"].ToString();
+                    WarehouseCode = dt.Rows[0]["WarehouseCode"].ToString();
                 }
                 else
                 {
                     id = "";
                     taskNo = "";
-                    AreaCode = "";
+                    WarehouseCode = "";
                 }
-                    bll.BatchInsertTable(dt, "WCS_AisleTemp");
+                bll.BatchInsertTable(dt, "WCS_AisleTemp");
 
 
-                DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest", new DataParameter("{0}", AreaCode));
+                DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest", new DataParameter("{0}", WarehouseCode));
                 Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();
 
-                json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
+                json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}]";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
+                json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
             return json;
+<<<<<<< HEAD
          }
 
         public void WriteToLog(string Flag, string Method, string Msg)
         {
             string Folder = "WMS";
             if (Flag == "2")
+=======
+        }
+        public void WriteToLog(string Flag, string Method, string Msg)
+        {
+            string Folder = "WMS";
+            if(Flag=="2")
+>>>>>>> mhp/master
                 Folder = "WCS";
             string path = System.AppDomain.CurrentDomain.BaseDirectory + @"\" + Folder;
 
