@@ -95,20 +95,14 @@ namespace ServiceHost
                 json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
             return json;
-<<<<<<< HEAD
          }
+
 
         public void WriteToLog(string Flag, string Method, string Msg)
         {
             string Folder = "WMS";
-            if (Flag == "2")
-=======
-        }
-        public void WriteToLog(string Flag, string Method, string Msg)
-        {
-            string Folder = "WMS";
             if(Flag=="2")
->>>>>>> mhp/master
+
                 Folder = "WCS";
             string path = System.AppDomain.CurrentDomain.BaseDirectory + @"\" + Folder;
 
