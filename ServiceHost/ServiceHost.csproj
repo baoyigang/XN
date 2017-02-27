@@ -87,6 +87,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="SRMDataService.asmx" />
     <Content Include="WCSDataService.asmx" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -104,6 +105,10 @@
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="SRMDataService.asmx.cs">
+      <DependentUpon>SRMDataService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="WCSDataService.asmx.cs">
       <DependentUpon>WCSDataService.asmx</DependentUpon>

@@ -329,13 +329,13 @@
   </Command>
   <Command ID="SelectTaskWcsStart">
     <CommandString>
-      select TaskNo,PalletBarcode,StartDate,TaskDate,DeviceNo,Tasker from Wcs_Task   where TaskNo={0}
+      select TaskNo,PalletBarcode,StartDate,DeviceNo,Tasker from Wcs_Task   where TaskNo={0}
     </CommandString>
   </Command>
 
   <Command ID="SelectTaskWcsFinish">
     <CommandString>
-      select TaskNo,PalletBarcode,State,AlarmCode,TaskDate,DeviceNo,Tasker,FinishDate from Wcs_Task   where TaskNo={0}
+      select TaskNo,PalletBarcode,State,AlarmCode,DeviceNo,Tasker,FinishDate from Wcs_Task   where TaskNo={0}
     </CommandString>
   </Command>
   

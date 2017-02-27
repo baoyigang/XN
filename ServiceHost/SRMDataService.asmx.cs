@@ -22,7 +22,7 @@ namespace ServiceHost
     // [System.Web.Script.Services.ScriptService]
     public class SRMDataService : System.Web.Services.WebService
     {
-      
+
         //总控WCS提供给立库WCS任务数据
         [WebMethod]
         public string transSRMTask(string wcsProductObject)
@@ -45,11 +45,11 @@ namespace ServiceHost
                 bll.BatchInsertTable(dt, "WCS_TaskTemp");
                 bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
 
-                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
+                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}]";
             }
             catch (Exception ex)
             {
-                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"}]";
+                json = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
             return json;
 
@@ -59,7 +59,7 @@ namespace ServiceHost
         [WebMethod]
         public string transSRMTaskAisle(string wcsProductObject)
         {
-            WriteToLog("1","transSRMTaskAisle", wcsProductObject);
+            WriteToLog("1", "transSRMTaskAisle", wcsProductObject);
             string json = "";
             string id = "";
             string taskNo = "";
@@ -69,7 +69,7 @@ namespace ServiceHost
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
                 DataTable dt = Util.JsonHelper.Json2Dtb(wcsProductObject);
-               
+
                 if (dt.Rows.Count > 0)
                 {
                     id = dt.Rows[0]["id"].ToString();
@@ -95,13 +95,13 @@ namespace ServiceHost
                 json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
             return json;
-         }
+        }
 
 
         public void WriteToLog(string Flag, string Method, string Msg)
         {
             string Folder = "WMS";
-            if(Flag=="2")
+            if (Flag == "2")
 
                 Folder = "WCS";
             string path = System.AppDomain.CurrentDomain.BaseDirectory + @"\" + Folder;

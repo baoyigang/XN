@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
             SRMDataService.SRMDataService srm = new SRMDataService.SRMDataService();
-            string Json = c
+            string Json = c;
             string json = "";
             //string Ajson = "[{\"id\":\"xcafd3ssaf\",\"taskNo\":\"1702160001\",\"areaCode\":\"A01\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"admin\"" + "}]";
             //string a = srm.transSRMTaskAisle(Ajson);
