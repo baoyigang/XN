@@ -513,12 +513,10 @@
 
   <Command ID="AisleRequest">
     <CommandString>
-      select top 1 cmd_cell.ShelfCode,AisleNo,COUNT(*) a
-      from CMD_Cell
-      left join CMD_Shelf on CMD_Cell.ShelfCode=CMD_Shelf.ShelfCode
-      where PalletBarCode='' and cmd_cell.AreaCode='{0}'
-      group by cmd_cell.ShelfCode,AisleNo
-      order by a desc
+      select top 1 AisleNo
+      from Vew_AisleTask
+      where {0}
+      order by TaskCount,AisleNo
     </CommandString>
   </Command>
 

@@ -32,7 +32,9 @@ namespace ServiceHost
             try
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
-                DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcs", new DataParameter("{0}", TaskNo));
+                string filter = string.Format("TaskNo='{0}'",TaskNo);
+                DataTable Jdt = bll.FillDataTable("Wcs.SelectTask", new DataParameter[] { new DataParameter("{0}", filter )});
+                
                 if (Jdt.Rows.Count>0)
                 {
                     palletBarcode = Jdt.Rows[0]["PalletBarcode"].ToString();
@@ -82,6 +84,7 @@ namespace ServiceHost
                 }
                 Id = bll.FillDataTable("Wcs.SelectTaskTemp", new DataParameter("{0}", TaskNo)).Rows[0]["ID"].ToString();
                 Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"status\":\"" + status + "\",\"errorCode\":\"" + "!1!1!1!1!1!1!1!" + "\",\"sendDate\":\"" + TaskDate + "\",\"sender\":\"" + Tasker + "\",\"deviceNo\":\"" + deviceNo + "\",\"finishDate\":\"" + finishDate + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
+
             }
             catch (Exception ex)
             {
