@@ -110,8 +110,55 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Account\frmChangePWD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmChangePWD.designer.cs">
+      <DependentUpon>frmChangePWD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmGroupInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmGroupInfo.designer.cs">
+      <DependentUpon>frmGroupInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmGroupList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmGroupList.designer.cs">
+      <DependentUpon>frmGroupList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmGroupManage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmGroupManage.designer.cs">
+      <DependentUpon>frmGroupManage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmGroupUser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmGroupUser.designer.cs">
+      <DependentUpon>frmGroupUser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmLogin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmLogin.designer.cs">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmUserInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmUserInfo.designer.cs">
+      <DependentUpon>frmUserInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Account\frmUserList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Account\frmUserList.designer.cs" />
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
+    <Compile Include="BLL\UserBll.cs" />
     <Compile Include="Common\frmSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -311,6 +358,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Account\frmChangePWD.resx">
+      <DependentUpon>frmChangePWD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmGroupInfo.resx">
+      <DependentUpon>frmGroupInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmGroupList.resx">
+      <DependentUpon>frmGroupList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmGroupManage.resx">
+      <DependentUpon>frmGroupManage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmGroupUser.resx">
+      <DependentUpon>frmGroupUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmLogin.resx">
+      <DependentUpon>frmLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmUserInfo.resx">
+      <DependentUpon>frmUserInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Account\frmUserList.resx" />
     <EmbeddedResource Include="Common\frmSelect.resx">
       <DependentUpon>frmSelect.cs</DependentUpon>
     </EmbeddedResource>
@@ -472,9 +541,12 @@
     <None Include="Resources\car11.png" />
     <None Include="Resources\car12.png" />
     <None Include="Resources\Barcode.png" />
+    <Content Include="Resources\Add.png" />
+    <Content Include="Resources\del.png" />
     <Content Include="Resources\down.png" />
     <None Include="Resources\monitor.png" />
     <None Include="Resources\Elevator.png" />
+    <Content Include="Resources\edit.png" />
     <Content Include="Resources\next.png" />
     <None Include="Resources\process.png" />
     <None Include="Resources\process_accept.png" />
