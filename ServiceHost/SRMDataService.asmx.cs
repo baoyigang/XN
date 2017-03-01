@@ -27,7 +27,7 @@ namespace ServiceHost
         [WebMethod]
         public string transSRMTask(string wcsProductObject)
         {
-            WriteToLog("1", "transSRMTask", wcsProductObject);
+            WriteToLog("1", "transSRMTask--Rec", wcsProductObject);
             string json = "";
             string id = "";
             try
@@ -51,6 +51,7 @@ namespace ServiceHost
             {
                 json = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
+            WriteToLog("1", "transSRMTask--Rtn", json);
             return json;
 
         }
@@ -59,7 +60,7 @@ namespace ServiceHost
         [WebMethod]
         public string transSRMTaskAisle(string wcsProductObject)
         {
-            WriteToLog("1", "transSRMTaskAisle", wcsProductObject);
+            WriteToLog("1", "transSRMTaskAisle-Rec", wcsProductObject);
             string json = "";
             string id = "";
             string taskNo = "";
@@ -94,6 +95,7 @@ namespace ServiceHost
             {
                 json = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
+            WriteToLog("1", "transSRMTaskAisle-Rtn", json);
             return json;
         }
 

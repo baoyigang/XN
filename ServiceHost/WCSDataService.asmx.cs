@@ -34,14 +34,14 @@ namespace ServiceHost
                 BLL.BLLBase bll = new BLL.BLLBase();
                 DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcsStart", new DataParameter("{0}", TaskNo));
 
-                Json = Util.JsonHelper.Dtb2Json(Jdt,DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                Json = Json.Substring(0, Json.Length - 2) + "\",\"field1\":\"null\"}]";
+                Json = Util.JsonHelper.Dtb2Json(Jdt,"yyyy-MM-dd HH:mm:ss.fff");
+                //Json = Json.Substring(0, Json.Length - 2) + "\",\"field1\":\"null\"}]";
             }
             catch(Exception ex)
             {
                 Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"startDate\":\"" + startDate + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"deviceNo\":\"" + deviceNo + "\",\"sender\":\"" + Tasker + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
-            WriteToLog("2", "transSRMTask", Json);
+            WriteToLog("2", "transSRMTask-Rep", Json);
             #region 主控WCS服务
             string json = "";
             return json;
@@ -65,14 +65,14 @@ namespace ServiceHost
                 BLL.BLLBase bll = new BLL.BLLBase();
                 DataTable Jdt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
 
-                Json = Util.JsonHelper.Dtb2Json(Jdt, DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                Json = Json.Substring(0, Json.Length - 2) + "\",\"field1\":\"null\"}]";
+                Json = Util.JsonHelper.Dtb2Json(Jdt, "yyyy-MM-dd HH:mm:ss.fff");
+                //Json = Json.Substring(0, Json.Length - 2) + "\",\"field1\":\"null\"}]";
             }
             catch (Exception ex)
             {
                 Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"status\":\"" + status + "\",\"errorCode\":\"" + "!1!1!1!1!1!1!1!" + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + Tasker + "\",\"deviceNo\":\"" + deviceNo + "\",\"finishDate\":\"" + finishDate + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
-            WriteToLog("2", "transSRMTask", Json);
+            WriteToLog("2", "transSRMTask-Rep", Json);
                 #region 主控WCS服务
             string json = "";         
             return json;
@@ -85,7 +85,7 @@ namespace ServiceHost
             
             try
             {
-                WriteToLog("2", "transSRMTask", Json);
+                WriteToLog("2", "transSRMTask-Rep", Json);
 
             }
             catch (Exception ex)
