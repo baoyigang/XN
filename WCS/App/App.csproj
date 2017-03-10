@@ -155,7 +155,9 @@
     <Compile Include="Account\frmUserList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Account\frmUserList.designer.cs" />
+    <Compile Include="Account\frmUserList.designer.cs">
+      <DependentUpon>frmUserList.cs</DependentUpon>
+    </Compile>
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
     <Compile Include="BLL\UserBll.cs" />
@@ -379,7 +381,9 @@
     <EmbeddedResource Include="Account\frmUserInfo.resx">
       <DependentUpon>frmUserInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Account\frmUserList.resx" />
+    <EmbeddedResource Include="Account\frmUserList.resx">
+      <DependentUpon>frmUserList.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Common\frmSelect.resx">
       <DependentUpon>frmSelect.cs</DependentUpon>
     </EmbeddedResource>
