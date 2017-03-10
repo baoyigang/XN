@@ -789,5 +789,29 @@ namespace App
 
             //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
+
+        private void ToolStripMenuItem_User_Click(object sender, EventArgs e)
+        {
+            App.Account.frmUserList f = new App.Account.frmUserList();
+            ShowForm(f);
+        }
+
+        private void ToolStripMenuItem_Group_Click(object sender, EventArgs e)
+        {
+            App.Account.frmGroupList f = new App.Account.frmGroupList();
+            ShowForm(f);
+        }
+
+        private void ToolStripMenuItem_Power_Click(object sender, EventArgs e)
+        {
+            App.Account.frmGroupManage f = new App.Account.frmGroupManage();
+            ShowForm(f);
+        }
+
+        private void ToolStripMenuItem_ChangPwd_Click(object sender, EventArgs e)
+        {
+            App.Account.frmChangePWD f = new Account.frmChangePWD();
+            f.ShowDialog();
+        }
     }
 }
