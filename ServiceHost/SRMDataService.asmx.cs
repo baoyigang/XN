@@ -51,7 +51,7 @@ namespace ServiceHost
             {
                 json = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
-            WriteToLog("1", "transSRMTask--Rtn", json);
+            WriteToLog("1", "transSRMTask-Rtn", json);
             return json;
 
         }

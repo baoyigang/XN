@@ -254,13 +254,10 @@
   </Command>
   <Command ID="SelectElevatorCar">
     <CommandString>
-      Select CMD_Device.*,StateDesc
-      from CMD_Device
-      inner join CMD_Aisle on CMD_Device.DeviceNo=CMD_Aisle.DeviceNo
-      inner join CMD_AisleDevice on CMD_AisleDevice.WarehouseCode=CMD_Aisle.WarehouseCode and CMD_AisleDevice.AreaCode=CMD_Aisle.AreaCode and CMD_AisleDevice.AisleNo=CMD_Aisle.AisleNo
-      inner join Sys_TableState on CMD_Device.State=Sys_TableState.State and Sys_TableState.FieldName='State' and Sys_TableState.TableName='CMD_Device'
+      select *,(select State from CMD_Device where DeviceNo=CMD_AisleDevice.DeviceNo) State
+      from CMD_AisleDevice
       where {0}
-      order by DeviceNo
+      order by Priority
     </CommandString>
   </Command>
   <!--小车信息-->

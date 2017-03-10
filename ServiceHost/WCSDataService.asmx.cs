@@ -28,7 +28,7 @@ namespace ServiceHost
             string startDate = "";
             string deviceNo = "";
             string Tasker = "";
-            string Id = "";
+            string Id = Guid.NewGuid().ToString();
             try
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
@@ -54,7 +54,7 @@ namespace ServiceHost
         {
 
             string Json = "";
-            string Id = "";
+            string Id = Guid.NewGuid().ToString();
             string palletBarcode = "";
             string status = "";
             string Tasker = "";
@@ -70,7 +70,7 @@ namespace ServiceHost
             }
             catch (Exception ex)
             {
-                Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"status\":\"" + status + "\",\"errorCode\":\"" + "!1!1!1!1!1!1!1!" + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + Tasker + "\",\"deviceNo\":\"" + deviceNo + "\",\"finishDate\":\"" + finishDate + "\",\"field1\":\"" + ex.Message + "\"}]";
+                Json = "[{\"id\":\"" + Id + "\",\"taskNo\":\"" + TaskNo + "\",\"palletBarcode\":\"" + palletBarcode + "\",\"status\":\"" + status + "\",\"errorCode\":\"" + "135" + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + Tasker + "\",\"deviceNo\":\"" + deviceNo + "\",\"finishDate\":\"" + finishDate + "\",\"field1\":\"" + ex.Message + "\"}]";
             }
             WriteToLog("2", "transSRMTask-Rep", Json);
                 #region 主控WCS服务
@@ -82,7 +82,21 @@ namespace ServiceHost
         [WebMethod]
         public string transWCSDevice(string Json)
         {
-            
+            string id = Guid.NewGuid().ToString();
+            string deviceNo = "0101";
+            string mode = "1";
+            string status = "1";
+            string taskNo = "20170316001";
+            string fork = "1";
+            string load = "1";
+            string aisleNo = "01";
+            string column = "1";
+            string layer = "1";
+            string alarmCode = "0";
+            string sender = "admin";
+
+            Json = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
+
             try
             {
                 WriteToLog("2", "transSRMTask-Rep", Json);
@@ -92,6 +106,7 @@ namespace ServiceHost
             {
                 throw;
             }
+
             #region 主控WCS服务
             string json = "";
             return json;
