@@ -48,6 +48,9 @@
       <HintPath>..\..\Lib\IServices.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\Lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Services">
       <HintPath>..\..\Lib\Services.dll</HintPath>
     </Reference>
@@ -83,12 +86,13 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="SecurityService.svc" />
+    <Content Include="transSRMTaskAisle.ashx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <Content Include="SRMDataService.asmx" />
-    <Content Include="WCSDataService.asmx" />
+    <Content Include="SRMDataService.svc" />
+    <Content Include="WCSDataService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -98,21 +102,29 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="transSRMTask.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="transSRMTaskAisle.ashx.cs">
+      <DependentUpon>transSRMTaskAisle.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="ISRMDataService.cs" />
+    <Compile Include="IWCSDataService.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="SRMDataService.asmx.cs">
-      <DependentUpon>SRMDataService.asmx</DependentUpon>
-      <SubType>Component</SubType>
+    <Compile Include="SRMDataService.svc.cs">
+      <DependentUpon>SRMDataService.svc</DependentUpon>
     </Compile>
-    <Compile Include="WCSDataService.asmx.cs">
-      <DependentUpon>WCSDataService.asmx</DependentUpon>
-      <SubType>Component</SubType>
+    <Compile Include="transSRMTask.ashx.cs">
+      <DependentUpon>transSRMTask.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WCSDataService.svc.cs">
+      <DependentUpon>WCSDataService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

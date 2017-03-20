@@ -329,13 +329,13 @@
   </Command>
   <Command ID="SelectTaskWcsStart">
     <CommandString>
-      select TaskNo,PalletBarcode,StartDate,DeviceNo,Tasker,'' field1 from Wcs_Task   where TaskNo={0}
+      select '0001' id,taskNo,palletBarcode,startDate,getdate() sendDate,'admin' sender, deviceNo,tasker,'' field1 from Wcs_Task   where TaskNo={0}
     </CommandString>
   </Command>
 
   <Command ID="SelectTaskWcsFinish">
     <CommandString>
-      select TaskNo,PalletBarcode,State,AlarmCode,DeviceNo,Tasker,FinishDate,'' field1 from Wcs_Task   where TaskNo={0}
+      select '0001' id,taskNo,palletBarcode,'FINISHED' status,alarmCode errorCode,getdate() sendDate,'admin' sender,deviceNo,tasker,finishDate,'' field1 from Wcs_Task   where TaskNo={0}
     </CommandString>
   </Command>
   
