@@ -9,7 +9,6 @@ namespace App.Dispatching.Process
 {
    public class CarProcess : AbstractProcess
     {
-       string AreaCode = "002";
         private class CarStatus
         {
             public string CarNo { get; set; }
@@ -35,6 +34,7 @@ namespace App.Dispatching.Process
 
         // 记录堆垛机当前状态及任务相关信息
         BLL.BLLBase bll = new BLL.BLLBase();
+        private string WarehouseCode = "";
         private Dictionary<int, CarStatus> dicCars = new Dictionary<int, CarStatus>();
         private Timer tmWorkTimer = new Timer();
         private bool blRun = false;
@@ -68,6 +68,9 @@ namespace App.Dispatching.Process
                 tmWorkTimer.Interval = 1000;
                 tmWorkTimer.Elapsed += new ElapsedEventHandler(tmWorker);
 
+                MCP.Config.Configuration conf = new MCP.Config.Configuration();
+                conf.Load("Config.xml");
+                WarehouseCode = conf.Attributes["WarehouseCode"];
 
                 base.Initialize(context);
             }
@@ -617,39 +620,39 @@ namespace App.Dispatching.Process
         }
         private DataTable GetTask()
         {
-            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State='2' or WCS_Task.State='0') and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02'", AreaCode)) };
+            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State='2' or WCS_Task.State='0') and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02'", WarehouseCode)) };
             DataTable dt = bll.FillDataTable("WCS.SelectTask", param);            
             return dt;
         }
         private DataTable GetInTask()
         {
             //获取任务，排序优先等级、任务时间
-            //DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format(" WCS_Task.AreaCode='{0}' ", AreaCode)) };
+            //DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format(" WCS_Task.WarehouseCode='{0}' ", WarehouseCode)) };
             //DataTable dt = bll.FillDataTable("WCS.SelectTask", parameter);
-            //parameter = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') or (WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' ", AreaCode)) };
+            //parameter = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') or (WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' ", WarehouseCode)) };
 
-            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' ", AreaCode)) };
+            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' ", WarehouseCode)) };
             
-            //param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' and CellRow={1} ", AreaCode,FromRow)) };
+            //param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' and CellRow={1} ", WarehouseCode,FromRow)) };
             //入库
-            //param = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' ", AreaCode)) };
+            //param = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' ", WarehouseCode)) };
             DataTable dt = bll.FillDataTable("WCS.SelectTask", param);
             return dt;
         }
         private DataTable GetOutTask(int FromRow)
         {
             //获取任务，排序优先等级、任务时间
-            //DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format(" WCS_Task.AreaCode='{0}' ", AreaCode)) };
+            //DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format(" WCS_Task.WarehouseCode='{0}' ", WarehouseCode)) };
             //DataTable dt = bll.FillDataTable("WCS.SelectTask", parameter);
-            //parameter = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') or (WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' ", AreaCode)) };
+            //parameter = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') or (WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' ", WarehouseCode)) };
 
-            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' and CellRow={1} ", AreaCode, FromRow)) };
+            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' and CellRow={1} ", WarehouseCode, FromRow)) };
             //入库
-            //param = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02' ", AreaCode)) };
+            //param = new DataParameter[] { new DataParameter("{0}", string.Format("((WCS_Task.TaskType in ('11','14','16') and WCS_Task.State='2')) and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02' ", WarehouseCode)) };
             DataTable dt = bll.FillDataTable("WCS.SelectTask", param);
             if (dt.Rows.Count <= 0)
             {
-                param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') and WCS_Task.AreaCode='{0}' and WCS_Task.AisleNo='02'", AreaCode)) };
+                param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.TaskType in ('12','13','14','15') and WCS_Task.State='0') and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='02'", WarehouseCode)) };
                 dt = bll.FillDataTable("WCS.SelectTask", param);
             }
             return dt;

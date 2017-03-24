@@ -168,7 +168,6 @@
       <DependentUpon>frmSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Crane.cs" />
-    <Compile Include="Dispatching\Process\CarInProcess.cs" />
     <Compile Include="Dispatching\Process\ElevatorProcess.cs" />
     <Compile Include="Dispatching\Process\CraneProcess.cs" />
     <Compile Include="Dispatching\Process\CarProcess.cs" />
@@ -202,6 +201,18 @@
     </Compile>
     <Compile Include="View\Base\frmBarcode.Designer.cs">
       <DependentUpon>frmBarcode.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Base\frmDeviceEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Base\frmDeviceEdit.Designer.cs">
+      <DependentUpon>frmDeviceEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Base\frmDevices.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Base\frmDevices.Designer.cs">
+      <DependentUpon>frmDevices.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Dispatcher\frmCellInfo.cs">
       <SubType>Form</SubType>
@@ -400,6 +411,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Base\frmBarcode.resx">
       <DependentUpon>frmBarcode.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Base\frmDeviceEdit.resx">
+      <DependentUpon>frmDeviceEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Base\frmDevices.resx">
+      <DependentUpon>frmDevices.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Dispatcher\frmCellInfo.resx">
       <DependentUpon>frmCellInfo.cs</DependentUpon>

@@ -813,5 +813,11 @@ namespace App
             App.Account.frmChangePWD f = new Account.frmChangePWD();
             f.ShowDialog();
         }
+
+        private void ToolStripMenuItem_Device_Click(object sender, EventArgs e)
+        {
+            App.View.Base.frmDevices f = new App.View.Base.frmDevices();
+            ShowForm(f);
+        }
     }
 }

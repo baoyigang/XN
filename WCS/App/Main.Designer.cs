@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemDelCraneTask = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCellCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,6 +102,7 @@
             this.ToolStripMenuItem_Group = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Power = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_ChangPwd = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Device = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlTab.SuspendLayout();
@@ -117,7 +118,7 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.contextMenuStrip1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemDelCraneTask,
             this.ToolStripMenuItemCellCode,
@@ -245,7 +246,7 @@
             // tabForm
             // 
             this.tabForm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForm.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabForm.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabForm.Location = new System.Drawing.Point(0, 0);
             this.tabForm.Name = "tabForm";
             this.tabForm.SelectedIndex = 0;
@@ -420,7 +421,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.splitContainer1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -440,18 +441,18 @@
             // 
             this.dgvMain.AllowUserToAddRows = false;
             this.dgvMain.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMain.AutoGenerateColumns = false;
             this.dgvMain.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column5,
@@ -669,7 +670,7 @@
             this.columnHeader2,
             this.columnHeader3});
             this.lbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbLog.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbLog.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbLog.FullRowSelect = true;
             this.lbLog.LabelWrap = false;
             this.lbLog.Location = new System.Drawing.Point(0, 0);
@@ -765,6 +766,7 @@
             // 
             this.ToolStripMenuItemSetup.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_Param,
+            this.ToolStripMenuItem_Device,
             this.ToolStripMenuItem_User,
             this.ToolStripMenuItem_Group,
             this.ToolStripMenuItem_Power,
@@ -807,6 +809,13 @@
             this.ToolStripMenuItem_ChangPwd.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_ChangPwd.Text = "密码修改";
             this.ToolStripMenuItem_ChangPwd.Click += new System.EventHandler(this.ToolStripMenuItem_ChangPwd_Click);
+            // 
+            // ToolStripMenuItem_Device
+            // 
+            this.ToolStripMenuItem_Device.Name = "ToolStripMenuItem_Device";
+            this.ToolStripMenuItem_Device.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_Device.Text = "设备管理";
+            this.ToolStripMenuItem_Device.Click += new System.EventHandler(this.ToolStripMenuItem_Device_Click);
             // 
             // Main
             // 
@@ -916,5 +925,6 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Group;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Power;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_ChangPwd;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Device;
     }
 }

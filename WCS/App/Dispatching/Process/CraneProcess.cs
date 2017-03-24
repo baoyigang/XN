@@ -10,29 +10,10 @@ namespace App.Dispatching.Process
 {
     public class CraneProcess : AbstractProcess
     {
-        private class rCrnStatus
-        {
-            public string TaskNo { get; set; }
-            public int Status { get; set; }
-            public int Action { get; set; }
-            public int ErrCode { get; set; }
-            public int TaskStatus { get; set; }
-            public int io_flag { get; set; }
-
-            public rCrnStatus()
-            {
-                TaskNo = "";
-                Status = 0;
-                Action = 0;
-                ErrCode = 0;
-                TaskStatus = 0;
-                io_flag = 0;
-            }
-        }
-
         // 记录堆垛机当前状态及任务相关信息
         BLL.BLLBase bll = new BLL.BLLBase();
-        private Dictionary<int, rCrnStatus> dCrnStatus = new Dictionary<int, rCrnStatus>();
+        private string WarehouseCode = "";
+        private int InTaskCount = 2;
         private Timer tmWorkTimer = new Timer();
         private bool blRun = false;
         private DataTable dtDeviceAlarm;
@@ -44,27 +25,13 @@ namespace App.Dispatching.Process
             {
                 dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "Flag=1") });
 
-                //获取堆垛机信息
-                DataTable dt = bll.FillDataTable("CMD.SelectDevice", new DataParameter[] { new DataParameter("{0}", "Flag=1") });
-                for (int i = 1; i <= dt.Rows.Count; i++)
-                {
-                    if (!dCrnStatus.ContainsKey(i))
-                    {
-                        rCrnStatus crnsta = new rCrnStatus();
-                        dCrnStatus.Add(i, crnsta);
-
-                        dCrnStatus[i].TaskNo = "";
-                        dCrnStatus[i].Status = int.Parse(dt.Rows[i-1]["State"].ToString());
-                        dCrnStatus[i].TaskStatus = 0;
-                        dCrnStatus[i].ErrCode = 0;
-                        dCrnStatus[i].Action = 0;
-                    }
-                }
-
                 tmWorkTimer.Interval = 1000;
                 tmWorkTimer.Elapsed += new ElapsedEventHandler(tmWorker);
-                
 
+                MCP.Config.Configuration conf = new MCP.Config.Configuration();
+                conf.Load("Config.xml");
+                WarehouseCode = conf.Attributes["WarehouseCode"];
+                InTaskCount = int.Parse(conf.Attributes["InTaskCount"]);
                 base.Initialize(context);
             }
             catch (Exception ex)
@@ -194,41 +161,73 @@ namespace App.Dispatching.Process
             {
                 tmWorkTimer.Stop();
 
-                DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", "WarehoseCode in('A','B') and ((TaskType in('11') and State='2') or (TaskType in('12','13') and State='0'))") };
+                DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}' and ((TaskType in('11') and State='2') or (TaskType in('12','13') and State='0'))", WarehouseCode)) };
                 DataTable dt = bll.FillDataTable("WCS.SelectTask", parameter);
-                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisle", new DataParameter[] { new DataParameter("{0}", "WarehoseCode in('A','B')") });
-                for (int i = 0; i <dtAisle.Rows.Count; i++)
+                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleDevice", new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}'", WarehouseCode)) });
+                for (int i = 0; i < dtAisle.Rows.Count; i++)
                 {
                     //查找可用设备
+                    string DeviceNo = dtAisle.Rows[i]["AisleDeviceNo"].ToString();
+                    string ServiceName = dtAisle.Rows[i]["ServiceName"].ToString();
 
-                    //查找任务
-                    string filter = string.Format("WCS_Task.AisleNo='{0}'", dtAisle.Rows[i]["AisleNo"].ToString());
-                    DataRow[] drs = dt.Select(filter);
-                    if(drs.Length>0)
+                    //没有可用设备
+                    if (DeviceNo.Trim().Length <= 0)
+                        continue;
+                    //设备状态不符合
+                    if (Check_Device_Status_IsOk(ServiceName))
+                        continue;
+
+                    //查找入库任务>2的先执行
+                    string filter = string.Format("WCS_Task.AisleNo='{0}' and TaskType='11' and WCS_Task.State in('1','2')", dtAisle.Rows[i]["AisleNo"].ToString());
+                    DataRow[] drs = dt.Select(filter, "State");
+                    if (drs.Length > InTaskCount)
                     {
-                        string DeviceNo = drs[0]["AisleDeviceNo"].ToString();
-                        string ServiceName = drs[0]["ServiceName"].ToString();
-                        //判断设备状态是否满足
-                        if (!Check_Device_Status_IsOk(ServiceName))
-                            return;
-
-                        //string StationLoad = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "StationLoad" + stationNo)).ToString();
-                        //判断出库站台无货
-                        //if (StationLoad.Equals("True") || StationLoad.Equals("1"))
-                        //{
-                        //    Logger.Info("站台状态不符合堆垛机出库");
-                        //    return;
-                        //}
-                        //找到任务再找可以执行的设备
-
-                        if (DeviceNo.Trim().Length > 0)
+                        if (drs[0]["State"].ToString() == "2")
                         {
                             DataRow dr = drs[0];
                             Send2PLC(dr);
+                            continue;
                         }
+                        //找到任务再找可以执行的设备                        
+                    }
+                    else //再按优先等级排序
+                    {
+                        filter = string.Format("WCS_Task.AisleNo='{0}' and TaskType in('12','13') and WCS_Task.State in('0')", dtAisle.Rows[i]["AisleNo"].ToString());
+                        drs = dt.Select(filter, "TaskLevel desc,TaskNo");
+                        if (drs.Length > 0)
+                        {
+                            if (drs[0]["TaskType"].ToString() == "13")
+                            {
+                                DataRow dr = drs[0];
+                                Send2PLC(dr);
+                                continue;
+                            }
+                            else
+                            {
+                                string stationNo = drs[0]["StationNo"].ToString();
+                                string StationLoad = ObjectUtil.GetObject(WriteToService(ServiceName, "StationLoad" + stationNo)).ToString();
+                                //判断出库站台无货
+                                if (StationLoad.Equals("False"))
+                                {
+                                    DataRow dr = drs[0];
+                                    Send2PLC(dr);
+                                    continue;
+                                }
+
+                            }
+
+                        }
+
+                    }
+                    filter = string.Format("WCS_Task.AisleNo='{0}' and TaskType='11' and WCS_Task.State in('2')", dtAisle.Rows[i]["AisleNo"].ToString());
+                    drs = dt.Select(filter, "State");
+                    if (drs.Length > 0)
+                    {
+                        DataRow dr = drs[0];
+                        Send2PLC(dr);
+                        continue;
                     }
                 }
-                
             }
             finally
             {

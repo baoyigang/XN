@@ -65,9 +65,34 @@
       SELECT * FROM CMD_Shelf where {0} ORDER BY ShelfCode,AreaCode
     </CommandString>
   </Command>
-  <Command ID="SelectAisle">
+  <Command ID="SelectAisleDevice">
     <CommandString>
-      SELECT distinct AisleNo FROM CMD_Shelf where {0} ORDER BY AisleNo
+      SELECT distinct S1.AisleNo,A2.DeviceNo,isnull(CD.ServiceName,'') ServiceName
+      FROM CMD_Shelf S1
+      left join Vew_AisleDevice A2 on A2.AreaCode=S1.AreaCode and A2.WarehouseCode=S1.WarehouseCode and A2.AisleNo=S1.AisleNo
+      left join CMD_Device D1 on D1.DeviceNo=A2.DeviceNo
+      where {0}
+      ORDER BY AisleNo
+    </CommandString>
+  </Command>
+  <Command ID="SelectAisleElevator">
+    <CommandString>
+      SELECT distinct S1.AisleNo,A2.DeviceNo2,isnull(D1.ServiceName,'') ServiceName2
+      FROM CMD_Shelf S1
+      left join CMD_AisleDevice A2 on A2.AreaCode=S1.AreaCode and A2.WarehouseCode=S1.WarehouseCode and A2.AisleNo=S1.AisleNo
+      left join CMD_Device D1 on D1.DeviceNo=A2.DeviceNo2 and D1.State='1'
+      where {0}
+      ORDER BY AisleNo
+    </CommandString>
+  </Command>
+  <Command ID="SelectAisleCar">
+    <CommandString>
+      SELECT CMD_AisleDevice.WarehouseCode, CMD_AisleDevice.AreaCode, CMD_AisleDevice.AisleNo, CMD_AisleDevice.Priority,
+      CMD_AisleDevice.DeviceNo, CMD_AisleDevice.DeviceNo2, CMD_AisleDevice.Memo, CMD_Device.State, CMD_Device.ServiceName
+      FROM  CMD_AisleDevice
+      LEFT OUTER JOIN CMD_Device ON CMD_AisleDevice.DeviceNo = CMD_Device.DeviceNo
+      where {0} AND CMD_Device.State = '1'
+      ORDER BY CMD_AisleDevice.DeviceNo
     </CommandString>
   </Command>
   <Command ID="DeleteShelf">
@@ -223,6 +248,7 @@
       Select CMD_Device.DeviceNo, CMD_Device.DeviceName, CMD_Device.State,StateDesc
       from CMD_Device
       inner join Sys_TableState on CMD_Device.State=Sys_TableState.State and Sys_TableState.FieldName='State' and Sys_TableState.TableName='CMD_Device'
+      where {0}
       order by DeviceNo
     </CommandString>
   </Command>
@@ -233,7 +259,7 @@
       where {0}
       order by AisleNo
     </CommandString>
-  </Command>
+  </Command>  
   <Command ID="UpdateElevator">
     <CommandString>
       Update CMD_Elevator set ElevatorName=@ElevatorName,State=@State,CarState=@CarState,Memo=@Memo where ElevatorNo=@ElevatorNo and CarNo=@CarNo
@@ -458,7 +484,6 @@
   </Command>
  
   <!--查询使用-->
-
   <Command ID="selectWareHouseQuery">
     <CommandString>
       select WAREHOUSE_CODE as id,'0' as pid,'仓库：'+WAREHOUSE_NAME as name from  CMD_WAREHOUSE where IsManage=1
