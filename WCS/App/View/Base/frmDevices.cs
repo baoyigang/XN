@@ -34,9 +34,9 @@ namespace App.View.Base
         private void BindData()
         {
             //DataTable dt = bll.FillDataTable("WCS.SelectProducePlan", new DataParameter[] { new DataParameter("{0}", "WCS_TASK.State in('0','1','2','3') and WCS_TASK.TaskType='11'") });
-            DataTable dt = bll.FillDataTable("CMD.SelectProduct");
+            DataTable dt = bll.FillDataTable("CMD.SelectDevice");
             bsMain.DataSource = dt;
-        }      
+        }
 
 
         private void frmProducts_Activated(object sender, EventArgs e)
@@ -59,29 +59,29 @@ namespace App.View.Base
                 return;
             if (this.dgvMain.CurrentRow.Index >= 0)
             {
-                string ProductCode = this.dgvMain.SelectedRows[0].Cells[0].Value.ToString();
+                string DeviceNo = this.dgvMain.SelectedRows[0].Cells[1].Value.ToString();
 
-                if (this.dgvMain.SelectedRows[0].Cells["colFixed"].Value.ToString() == "0")
-                {
-                    //删除产品，先判断此产品是否被用到
-                    //判断能否删除
-                    int Count = bll.GetRowCount("VUsed_CMD_Product", string.Format("ProductCode='{0}'", ProductCode));
-                    if (Count > 0)
-                    {
-                        MessageBox.Show("此产品已被单据使用，不可删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return;
-                    }
-                    if (MessageBox.Show("您确定要删除此产品吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
-                    {
-                        bll.ExecNonQuery("Cmd.DeleteProduct", new DataParameter[] { new DataParameter("{0}", ProductCode) });
-                        this.BindData();
-                    }
-                }
-                else
-                {
+                //if (this.dgvMain.SelectedRows[0].Cells["colFixed"].Value.ToString() == "0")
+                //{
+                //    //删除产品，先判断此产品是否被用到
+                //    //判断能否删除
+                //    int Count = bll.GetRowCount("VUsed_CMD_Product", string.Format("ProductCode='{0}'", ProductCode));
+                //    if (Count > 0)
+                //    {
+                //        MessageBox.Show("此产品已被单据使用，不可删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //        return;
+                //    }
+                //    if (MessageBox.Show("您确定要删除此产品吗?", "提示", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == System.Windows.Forms.DialogResult.Yes)
+                //    {
+                //        bll.ExecNonQuery("Cmd.DeleteProduct", new DataParameter[] { new DataParameter("{0}", ProductCode) });
+                //        this.BindData();
+                //    }
+                //}
+                //else
+                //{
                     MessageBox.Show("此产品为系统内定，不可删除！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
-                }
+                //}
             }
         }
 
@@ -91,26 +91,18 @@ namespace App.View.Base
                 return;
             if (this.dgvMain.CurrentRow.Index >= 0)
             {
-                string ProductCode = this.dgvMain.SelectedRows[0].Cells[0].Value.ToString();
-                DataRowView drv =dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
+                string DeviceNo = this.dgvMain.SelectedRows[0].Cells[1].Value.ToString();
+                DataRowView drv = dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
                 DataRow dr = drv.Row;
 
-                if (this.dgvMain.SelectedRows[0].Cells["colFixed"].Value.ToString() == "0")
+                frmDeviceEdit f = new frmDeviceEdit(dr);
+                if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    frmDeviceEdit f = new frmDeviceEdit(dr);
-                    if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        this.BindData();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("此产品为系统内定，不可修改！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return;
+                    this.BindData();
                 }
             }
         }
-        
+
     }
 }
 

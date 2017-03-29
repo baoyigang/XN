@@ -245,7 +245,7 @@
 
   <Command ID="SelectDevice">
     <CommandString>
-      Select CMD_Device.DeviceNo, CMD_Device.DeviceName, CMD_Device.State,StateDesc
+      Select CMD_Device.*,StateDesc
       from CMD_Device
       inner join Sys_TableState on CMD_Device.State=Sys_TableState.State and Sys_TableState.FieldName='State' and Sys_TableState.TableName='CMD_Device'
       where {0}
@@ -377,25 +377,21 @@
       where {0}
     </CommandString>
   </Command>
-  <Command ID="DeleteProduct">
+  <Command ID="DeleteDevice">
     <CommandString>
-      delete from CMD_PRODUCT WHERE ProductCode in({0})
+      delete from CMD_Device WHERE DeviceNo in({0})
     </CommandString>
   </Command>
-  <Command ID="InsertProduct">
+  <Command ID="InsertDevice">
     <CommandString>
-      INSERT INTO CMD_PRODUCT(ProductCode, ProductName, ProductEName, CategoryCode, FactoryID, ModelNo, Spec, Barcode, Propertity, Unit, Length, Width, Height, Material, Weight,
-      Color,StandardNo,PartNo, ValidPeriod, Description, Memo, Creator, CreateDate, Updater, UpdateDate, AreaCode)
-      values(@ProductCode, @ProductName, @ProductEName, @CategoryCode, @FactoryID, @ModelNo, @Spec, @Barcode, @Propertity, @Unit, @Length, @Width, @Height, @Material, @Weight,
-      @Color,@StandardNo,@PartNo, @ValidPeriod, @Description, @Memo, @Creator, getdate(), @Updater, getdate(), @AreaCode)
+      INSERT INTO CMD_Device(Flag, DeviceType, DeviceNo, DeviceNo2, DeviceName, State, AlarmCode, ServiceName, Memo, Creator, CreateDate, Updater, UpdateDate)
+      values(@Flag, @DeviceType, @DeviceNo, @DeviceNo2, @DeviceName, @State, @AlarmCode, @ServiceName, @Memo, @Creator, getdate(), @Updater, getdate(), @AreaCode)
     </CommandString>
   </Command>
-  <Command ID="UpdateProduct">
+  <Command ID="UpdateDevice">
     <CommandString>
-      Update CMD_PRODUCT Set ProductName=@ProductName, ProductEName=@ProductEName, CategoryCode=@CategoryCode, FactoryID=@FactoryID, ModelNo=@ModelNo, Spec=@Spec, Barcode=@Barcode,
-      Propertity=@Propertity, Unit=@Unit, Length=@Length, Width=@Width, Height=@Height, Material=@Material, Weight=@Weight,
-      Color=@Color,StandardNo=@StandardNo,PartNo=@PartNo, ValidPeriod=@ValidPeriod, Description=@Description, Memo=@Memo,Updater=@Updater,UpdateDate=getdate(), AreaCode=@AreaCode
-      where ProductCode=@ProductCode
+      Update CMD_Device Set Flag =@Flag, DeviceType =@DeviceType, DeviceNo2 =@DeviceNo2, DeviceName =@DeviceName, State =@State, AlarmCode =@AlarmCode, ServiceName =@ServiceName, Memo =@Memo,Updater=@Updater,UpdateDate=getdate()
+      where DeviceNo=@DeviceNo
     </CommandString>
   </Command>
 

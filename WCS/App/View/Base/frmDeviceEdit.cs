@@ -13,7 +13,7 @@ namespace App.View.Base
     public partial class frmDeviceEdit : Form
     {
         BLL.BLLBase bll = new BLL.BLLBase();
-        string ProductCode = "";
+        string DeviceNo = "";
         DataRow dr;
 
         public frmDeviceEdit()
@@ -24,50 +24,43 @@ namespace App.View.Base
         {
             InitializeComponent();
             this.dr = dr;
-            this.ProductCode = dr["ProductCode"].ToString();
+            this.DeviceNo = dr["DeviceNo"].ToString();
         }
         private void btnOK_Click(object sender, EventArgs e)
         {
-            if (this.txtProductCode.Text.Trim().Length <= 0)
+            if (this.txtDeviceNo.Text.Trim().Length <= 0)
             {
-                MessageBox.Show("产品编号不能为空,请输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.txtProductCode.Focus();
+                MessageBox.Show("设备编号不能为空,请输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.txtDeviceNo.Focus();
                 return;
             }
-            if (this.txtProductName.Text.Trim().Length <= 0)
+            if (this.txtDeviceName.Text.Trim().Length <= 0)
             {
-                MessageBox.Show("产品名称不能为空,请输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.txtProductName.Focus();
+                MessageBox.Show("设备名称不能为空,请输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.txtDeviceName.Focus();
                 return;
-            }
-            if (this.txtSpec.Text.Trim().Length <= 0)
-            {
-                MessageBox.Show("规格不能为空,请输入！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.txtSpec.Focus();
-                return;
-            }
+            }            
 
-            if (ProductCode.Length <= 0) //新增
+            if (DeviceNo.Length <= 0) //新增
             {
-                int Count = bll.GetRowCount("CMD_Product", string.Format("ProductCode='{0}'", this.txtProductCode.Text.Trim()));
+                int Count = bll.GetRowCount("CMD_Device", string.Format("DeviceNo='{0}'", this.txtDeviceNo.Text.Trim()));
                 if (Count > 0)
                 {
-                    MessageBox.Show("该编号已经存在,请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.txtProductCode.Focus();
+                    MessageBox.Show("该设备编号已经存在,请确认！", "提示", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.txtDeviceNo.Focus();
                     return;
                 }
 
-                bll.ExecNonQuery("Cmd.InsertProduct", new DataParameter[] { 
-                            new DataParameter("@ProductCode", this.txtProductCode.Text.Trim()),
-                            new DataParameter("@ProductName", this.txtProductName.Text.Trim()),
-                            new DataParameter("@Spec", this.txtSpec.Text.Trim()),
-                            new DataParameter("@Weight", this.txtWeight.Text.Trim()),
-                            new DataParameter("@IsProduce", this.ckbIsProduce.Checked?"1":"0"),                           
-                            new DataParameter("@ValidPeriod", this.txtValidPeriod.Text.Trim()),
-                            new DataParameter("@WarehouseCode", "001"),
-                            new DataParameter("@AreaCode", "001"),
+                bll.ExecNonQuery("Cmd.InsertDevice", new DataParameter[] { 
+                            new DataParameter("@Flag", dr["Flag"]),
+                            new DataParameter("@DeviceType", dr["DeviceType"]),
+                            new DataParameter("@DeviceNo", this.txtDeviceNo.Text.Trim()),
+                            new DataParameter("@DeviceNo2", this.txtDeviceNo2.Text.Trim()),
+                            new DataParameter("@DeviceName", this.txtDeviceName.Text),                           
+                            new DataParameter("@State", this.cmbState.SelectedIndex),
+                            new DataParameter("@AlarmCode", this.txtAlarmCode.Text),
+                            new DataParameter("@ServiceName", this.txtServiceName.Text),
                             new DataParameter("@Memo", this.txtMemo.Text.Trim()),
-                            new DataParameter("@ProductNo", this.cmbProductNo.Text.Trim()),
                             new DataParameter("@Creator", "admin"),
                             new DataParameter("@Updater", "admin")
                           
@@ -75,43 +68,37 @@ namespace App.View.Base
             }
             else //修改
             {
-                bll.ExecNonQuery("Cmd.UpdateProduct", new DataParameter[] {  
-                            new DataParameter("@ProductCode", this.txtProductCode.Text.Trim()),
-                            new DataParameter("@ProductName", this.txtProductName.Text.Trim()),
-                            new DataParameter("@Spec", this.txtSpec.Text.Trim()),
-                            new DataParameter("@Weight", this.txtWeight.Text.Trim()),
-                            new DataParameter("@IsProduce", this.ckbIsProduce.Checked?"1":"0"),                           
-                            new DataParameter("@ValidPeriod", this.txtValidPeriod.Text.Trim()),
+                bll.ExecNonQuery("Cmd.UpdateDevice", new DataParameter[] {  
+                            new DataParameter("@Flag", this.txtFlag.Text),
+                            new DataParameter("@DeviceType", this.txtDeviceType.Text),
+                            new DataParameter("@DeviceNo", this.txtDeviceNo.Text.Trim()),
+                            new DataParameter("@DeviceNo2", this.txtDeviceNo2.Text.Trim()),
+                            new DataParameter("@DeviceName", this.txtDeviceName.Text),                           
+                            new DataParameter("@State", this.cmbState.SelectedIndex),
+                            new DataParameter("@AlarmCode", this.txtAlarmCode.Text),
+                            new DataParameter("@ServiceName", this.txtServiceName.Text),
                             new DataParameter("@Memo", this.txtMemo.Text.Trim()),
-                            new DataParameter("@ProductNo", this.cmbProductNo.Text.Trim()),
                             new DataParameter("@Updater", "admin")
                  });
             }
             this.DialogResult = System.Windows.Forms.DialogResult.OK;
         }
 
-        private void frmProductEdit_Load(object sender, EventArgs e)
+        private void frmDeviceEdit_Load(object sender, EventArgs e)
         {
-            DataTable dt = bll.FillDataTable("CMD.SelectRelationNo");
-            this.cmbProductNo.DataSource = dt.DefaultView;
-            this.cmbProductNo.ValueMember = "ProductNo";
-            this.cmbProductNo.DisplayMember = "ProductNo";
-            if (this.ProductCode.Length > 0)
+            if (this.DeviceNo.Length > 0)
             {
-                this.txtProductCode.Text = dr["ProductCode"].ToString();
-                this.txtProductName.Text = dr["ProductName"].ToString();
-                this.cmbProductNo.Text = dr["ProductNo"].ToString();
-                this.txtSpec.Text = dr["Spec"].ToString();
-                this.txtValidPeriod.Text = dr["ValidPeriod"].ToString();
-                this.txtWeight.Text = dr["Weight"].ToString();
-                this.txtMemo.Text = dr["Memo"].ToString();
-                if (dr["IsProduce"].ToString() == "1")
-                    this.ckbIsProduce.Checked = true;
-                else
-                    this.ckbIsProduce.Checked = false;
-                this.txtProductCode.ReadOnly = true;
+                this.txtDeviceType.Text = dr["DeviceType"].ToString();
+                this.txtFlag.Text = dr["Flag"].ToString();
+                this.txtDeviceNo.Text = dr["DeviceNo"].ToString();
+                this.txtDeviceNo2.Text = dr["DeviceNo2"].ToString();
+                this.txtDeviceName.Text = dr["DeviceName"].ToString();
+                this.cmbState.SelectedIndex = int.Parse(dr["State"].ToString());
+                this.txtAlarmCode.Text = dr["AlarmCode"].ToString();                
+                this.txtServiceName.Text = dr["ServiceName"].ToString();
+                this.txtMemo.Text = dr["Memo"].ToString();                
+                this.txtDeviceNo.ReadOnly = true;
             }
-
         }
 
         private void btnClose_Click(object sender, EventArgs e)
