@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.ServiceModel.Web;
 
 namespace ServiceHost
 {
@@ -12,16 +13,10 @@ namespace ServiceHost
     public interface IWCSDataService
     {
         [OperationContract]
-        void DoWork();
-    }
-    [DataContract]
-    public class WcsTask
-    {
+        string transWCSExecuteTask(string taskNo);
 
+        [OperationContract]
+        string transWCSTaskStatus(string taskNo);
     }
-    [DataContract]
-    public class WcsTaskStatus
-    {
 
-    }
 }
