@@ -13,7 +13,7 @@ namespace App.Dispatching.Process
         BLL.BLLBase bll = new BLL.BLLBase();
 
         private Timer tmWorkTimer = new Timer();
-        private string WarehouseCode = "";
+        //private string WarehouseCode = "";
         private bool blRun = false;
         private DataTable dtDeviceAlarm;
 
@@ -21,20 +21,20 @@ namespace App.Dispatching.Process
         {
             try
             {
-                dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "Flag=3") });                
+                dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "Flag in(2,3)") });                
 
                 tmWorkTimer.Interval = 1000;
                 tmWorkTimer.Elapsed += new ElapsedEventHandler(tmWorker);
 
-                MCP.Config.Configuration conf = new MCP.Config.Configuration();
-                conf.Load("Config.xml");
-                WarehouseCode = conf.Attributes["WarehouseCode"];
+                //MCP.Config.Configuration conf = new MCP.Config.Configuration();
+                //conf.Load("Config.xml");
+                //WarehouseCode = conf.Attributes["WarehouseCode"];
 
                 base.Initialize(context);
             }
             catch (Exception ex)
             {
-                Logger.Error("CarProcess堆垛机初始化出错，原因：" + ex.Message);
+                Logger.Error("ElevatorProcess提升机初始化出错，原因：" + ex.Message);
             }
         }
         #region StateChanged
@@ -44,59 +44,55 @@ namespace App.Dispatching.Process
             {
                 case "TaskFinished01":
                 case "TaskFinished02":
-                    object obj = ObjectUtil.GetObject(stateItem.State);
+                    object[] obj = ObjectUtil.GetObjects(stateItem.State);
+                    
                     if (obj == null)
                         return;
-                    int TaskNo = int.Parse(obj.ToString());
-                    {                      
-                        
+                    string TaskNo = ConvertStringChar.BytesToString(obj);
+                    {                
                         //存储过程处理
-                        if (TaskNo > 0)
+                        if (TaskNo.Length > 0)
                         {
-                            WriteToService(stateItem.Name, stateItem.ItemName, 0);
+                            byte[] b = new byte[30];
+                            ConvertStringChar.stringToByte("", 30).CopyTo(b, 0);
+                            WriteToService(stateItem.Name, stateItem.ItemName, b);
+
                             Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
-                            //更新任务状态
-                            bll.ExecNonQuery("WCS.UpdateTaskCarNoByTaskNo", new DataParameter[] { new DataParameter("@CarNo", stateItem.ItemName.Substring(12,2)), new DataParameter("@TaskNo", TaskNo) });
                             DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
                             bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
                         }
-                        DataParameter[] paras = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
-                        DataTable dt = bll.FillDataTable("WCS.SelectTask", paras);
+                        //上报总控WCS，下架完成
 
-                        string PalletCode = "";
-                        string strState = "";
-
-                        if (dt.Rows.Count > 0)
-                        {
-                            PalletCode = dt.Rows[0]["PalletCode"].ToString();
-                            strState = dt.Rows[0]["State"].ToString();
-
-                        }
-                        if (strState == "5")
-                        {
-                            //输送线出库
-                            sbyte[] OutTaskNo = new sbyte[20];
-                            Util.ConvertStringChar.stringToBytes(TaskNo + PalletCode, 10).CopyTo(OutTaskNo, 0);
-                            WriteToService("TranLine", "OutTaskNo2", OutTaskNo);
-                            if (WriteToService("TranLine", "OutFinish2", 1))
-                            {
-                                bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 6), new DataParameter("@TaskNo", TaskNo) });
-                            }
-                        }
                     }
                     break;
-                case "CraneAlarmCode":
+                case "CarAlarm01":
+                case "CarAlarm02":
                     object obj1 = ObjectUtil.GetObject(stateItem.State);
                     if (obj1 == null)
                         return;
                     if (obj1.ToString() != "0")
                     {
                         string strError = "";
-                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("AlarmCode={0}", obj1.ToString()));
+                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("Flag=2 and AlarmCode={0}", obj1.ToString()));
                         if (drs.Length > 0)
                             strError = drs[0]["AlarmCode"].ToString();
                         else
                             strError = "穿梭车未知错误！";
+                        Logger.Error(strError);
+                    }
+                    break;
+                case "ElevatorAlarm":
+                    object obj2 = ObjectUtil.GetObject(stateItem.State);
+                    if (obj2 == null)
+                        return;
+                    if (obj2.ToString() != "0")
+                    {
+                        string strError = "";
+                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("Flag=3 and AlarmCode={0}", obj2.ToString()));
+                        if (drs.Length > 0)
+                            strError = drs[0]["AlarmCode"].ToString();
+                        else
+                            strError = "提升机未知错误！";
                         Logger.Error(strError);
                     }
                     break;
@@ -138,24 +134,26 @@ namespace App.Dispatching.Process
                 }
                 tmWorkTimer.Stop();
 
-                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}'", WarehouseCode)) });
+                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}'", Program.WarehouseCode)) });
                 
 
                 for (int i = 0; i < dtAisle.Rows.Count; i++)
                 {
                     string serviceName = dtAisle.Rows[i]["ServiceName2"].ToString();
                     string AisleNo = dtAisle.Rows[i]["AisleNo"].ToString();
-                    string filter = string.Format("WarehoseCode='{0}' and AisleNo='{1}'", WarehouseCode,AisleNo);
+                    string filter = string.Format("WarehoseCode='{0}' and AisleNo='{1}'", Program.WarehouseCode, AisleNo);
                     DataTable dtTask = GetTask(AisleNo);
                     DataTable dtCar = bll.FillDataTable("CMD.SelectAisleCar", new DataParameter[] { new DataParameter("{0}",  filter)});
 
                     for (int j = 0; j < dtCar.Rows.Count; j++)
                     {
                         //读取小车状态
-                        string carNo = dtCar.Rows[j]["DeviceNo"].ToString();
-                        object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus"));
-                        int Layer = int.Parse(obj[3].ToString());
+                        string carNo = dtCar.Rows[j]["DeviceNo2"].ToString();
+                        carNo = carNo.Substring(carNo.Length - 2, 2);
+                        object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
                         int Column = int.Parse(obj[2].ToString());
+                        int Layer = int.Parse(obj[3].ToString());
+                        
                         //如果小车空闲、在出入库站台位置，先找入库任务
                         if (Check_Car_Status_IsOk(carNo,serviceName))
                         {
@@ -196,7 +194,7 @@ namespace App.Dispatching.Process
                                 int ToLayer = GetNoTaskLayer(dtCar, carNo);
                                 if (ToLayer > 0)
                                 {
-                                    Send2PLC2(carNo, "003001" + (1000 + ToLayer).ToString().Substring(1, 3));
+                                    Send2PLC2(serviceName,carNo, "001001" + (1000 + ToLayer).ToString().Substring(1, 3));
                                 }
                             }
                         }
@@ -211,7 +209,7 @@ namespace App.Dispatching.Process
             }
         }
         private bool FindInTask(DataTable dtCar, DataTable dtTask, string carNo, object[] obj)
-        {            
+        {
             string filter = string.Format("TaskType in ('11','16','14') and State='2'");
             DataRow[] drs = dtTask.Select(filter, "TaskLevel DESC,RequestDate,StartDate");
             if (drs.Length > 0)
@@ -243,6 +241,7 @@ namespace App.Dispatching.Process
         }
         private bool SendOutTask(DataTable dtCar, string carNo, DataRow[] drs, object[] obj)
         {
+            string serviceName = dtCar.Rows[0]["ServiceName"].ToString();
             int carColumn = int.Parse(obj[2].ToString());
             bool IsSend = false;
             for(int i=0;i<drs.Length;i++)
@@ -256,7 +255,7 @@ namespace App.Dispatching.Process
                 if (CheckOtherCarStatus(dtCar, carNo, FromLayer, ToLayer, 12, obj))
                 {
                     //给小车下达任务
-                    Send2PLC(dr, carNo);
+                    Send2PLC(serviceName,dr, carNo);
                     IsSend = true;
                     break;
                 }
@@ -265,6 +264,7 @@ namespace App.Dispatching.Process
         }
         private bool SendInTask(DataTable dtCar, string carNo, DataRow[] drs, object[] obj)
         {
+            string serviceName = dtCar.Rows[0]["ServiceName"].ToString();
             int carLayer = int.Parse(obj[3].ToString());
             int carColumn = int.Parse(obj[2].ToString());
             bool IsSend = false;
@@ -279,7 +279,7 @@ namespace App.Dispatching.Process
                 if (CheckOtherCarStatus(dtCar, carNo, FromLayer, ToLayer, 11, obj))
                 {
                     //给小车下达任务
-                    Send2PLC(dr, carNo);
+                    Send2PLC(serviceName,dr, carNo);
                     IsSend = true;
                     break;
                 }
@@ -297,7 +297,7 @@ namespace App.Dispatching.Process
                 {
                     //读取小车状态
 
-                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus"));
+                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
                     object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                     object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress"));
 
@@ -332,7 +332,7 @@ namespace App.Dispatching.Process
                     if (DeviceNo != carNo)
                     {
                         //读取小车状态
-                        object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus"));
+                        object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
                         object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                         object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress"));
 
@@ -395,7 +395,7 @@ namespace App.Dispatching.Process
                 if (DeviceNo != carNo)
                 {
                     //读取小车状态
-                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus"));
+                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
                     object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                     object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress"));
                     int TaskFlag = int.Parse(obj1[0].ToString());
@@ -557,7 +557,7 @@ namespace App.Dispatching.Process
         }
         private DataTable GetTask(string AisleNo)
         {
-            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State='2' or WCS_Task.State='0') and WCS_Task.WarehouseCode='{0}' and WCS_Task.AisleNo='{1}'", WarehouseCode, AisleNo)) };
+            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State='2' or WCS_Task.State='0') and WCS_Task.WarehouseCode in {0} and WCS_Task.AisleNo='{1}'", Program.WarehouseCode, AisleNo)) };
             DataTable dt = bll.FillDataTable("WCS.SelectTask", param);            
             return dt;
         }        
@@ -570,7 +570,7 @@ namespace App.Dispatching.Process
         {
             try
             {
-                object[] obj = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus"));
+                object[] obj = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
                 object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                 int TaskFlag = int.Parse(obj1[0].ToString());
                 int CarMode = int.Parse(obj[0].ToString());
@@ -588,9 +588,8 @@ namespace App.Dispatching.Process
                 return false;
             }
         }
-        private void Send2PLC(DataRow dr, string carNo)
+        private void Send2PLC(string serviceName, DataRow dr, string carNo)
         {
-            string serviceName = "CarPLC01" + carNo;
             string TaskNo = dr["TaskNo"].ToString();
             string BillID = dr["BillID"].ToString();
             string TaskType = dr["TaskType"].ToString();
@@ -639,9 +638,8 @@ namespace App.Dispatching.Process
             }
             Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
-        private void Send2PLC2(string carNo, string toStation)
+        private void Send2PLC2(string serviceName,string carNo, string toStation)
         {
-            string serviceName = "CarPLC01" + carNo;
             string TaskNo = "0";
             
             int taskType = 1;

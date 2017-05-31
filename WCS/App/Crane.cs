@@ -8,18 +8,15 @@ namespace App
 {
     public class Crane
     {
-        public int CraneNo { get; set; }
+        public string CraneNo { get; set; }
         public string TaskNo { get; set; }
-        public string PalletCode { get; set; }
-        public int TaskType { get; set; }
-        public int Action { get; set; }
+        public int Status { get; set; }
+        public int Mode { get; set; }
         public int Row { get; set; }
         public int Column { get; set; }
-        public int Height { get; set; }
+        public int Layer { get; set; }
         public int ForkStatus { get; set; }
         public int AlarmCode { get; set; }
-        public int WalkCode { get; set; }
-        public int UpDownCode { get; set; }
     }
 
     public delegate void CraneEventHandler(CraneEventArgs args);

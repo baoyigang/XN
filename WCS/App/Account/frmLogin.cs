@@ -6,22 +6,29 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using MCP.Config;
+using Util;
 
 namespace App.Account
 {
     public partial class frmLogin : Form
     {
+        Dictionary<string, string> attributes = null;
         public frmLogin()
         {
             InitializeComponent();
         }
         private void frmLogin_Load(object sender, EventArgs e)
         {
+            ConfigUtil configUtil = new ConfigUtil();
+            attributes = configUtil.GetAttribute();
+            this.txtUserName.Text = attributes["UserName"];
+
             this.Show();
             if (txtUserName.Text != "")
                 txtPassWord.Focus();
             else
-                txtUserName.Focus();
+                txtUserName.Focus();            
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -35,6 +42,15 @@ namespace App.Account
                 {
                     if (dtUserList.Rows[0]["UserPassword"].ToString().Trim() == txtPassWord.Text.Trim())
                     {
+                        //保存Context参数
+                        
+                        attributes["UserName"] = this.txtUserName.Text.Trim();
+
+                        ConfigUtil configUtil = new ConfigUtil();
+                        configUtil.Save(attributes);
+
+                        BLL.BLLBase bll = new BLL.BLLBase();
+                        Program.dtUserPermission = bll.FillDataTable("Security.SelectUserPermission", new DataParameter[] { new DataParameter("@UserName", this.txtUserName.Text.Trim()), new DataParameter("@SystemName", "WCS") });
                         this.DialogResult = DialogResult.OK;
                     }
                     else

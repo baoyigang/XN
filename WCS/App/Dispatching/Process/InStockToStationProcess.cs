@@ -17,27 +17,23 @@ namespace App.Dispatching.Process
             string TaskFinish = obj.ToString();
             if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
             {
-                string ReadName = "";
-                int SlideNum = 0;
+                string ReadName = "";                
                 string AreaCode = "";
                 string StationNo = "";
                 switch (stateItem.ItemName)
                 {
                     case "InFinish1":
                         ReadName = "InTaskNo1";
-                        SlideNum = 1;
                         AreaCode = "003";
                         StationNo = "01";
                         break;
                     case "InFinish2":
                         ReadName = "InTaskNo2";
-                        SlideNum = 2;
                         AreaCode = "002";
                         StationNo = "02";
                         break;
                     case "InFinish3":
                         ReadName = "InTaskNo3";
-                        SlideNum = 3;
                         AreaCode = "003";
                         StationNo = "03";
                         break;

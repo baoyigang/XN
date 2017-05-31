@@ -326,7 +326,7 @@
             this.sbShelf.Dock = System.Windows.Forms.DockStyle.Right;
             this.sbShelf.LargeChange = 30;
             this.sbShelf.Location = new System.Drawing.Point(1038, 0);
-            this.sbShelf.Maximum = 360;
+            this.sbShelf.Maximum = 180;
             this.sbShelf.Name = "sbShelf";
             this.sbShelf.Size = new System.Drawing.Size(19, 81);
             this.sbShelf.SmallChange = 30;

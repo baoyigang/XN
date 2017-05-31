@@ -12,7 +12,7 @@ namespace App.Dispatching.Process
     {
         // 记录堆垛机当前状态及任务相关信息
         BLL.BLLBase bll = new BLL.BLLBase();
-        private string WarehouseCode = "";
+        //private string WarehouseCode = "";
         private int InTaskCount = 2;
         private Timer tmWorkTimer = new Timer();
         private bool blRun = false;
@@ -30,7 +30,7 @@ namespace App.Dispatching.Process
 
                 MCP.Config.Configuration conf = new MCP.Config.Configuration();
                 conf.Load("Config.xml");
-                WarehouseCode = conf.Attributes["WarehouseCode"];
+                //WarehouseCode = conf.Attributes["WarehouseCode"];
                 InTaskCount = int.Parse(conf.Attributes["InTaskCount"]);
                 base.Initialize(context);
             }
@@ -90,10 +90,15 @@ namespace App.Dispatching.Process
                             para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
                             paras.Add(para);
 
-
                             bll.ExecTran(comds.ToArray(), paras);
-                            WCSDataService.WCSDataService wcsData = new WCSDataService.WCSDataService();
-                            wcsData.transWCSTaskStatus(TaskNo);
+
+
+                            //上报任务完成
+                            dt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
+                            string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                            Logger.Info("任务完成上报");
+                            string rtnMessage = Program.send("transWCSTaskStatus", Json);
+                            Logger.Info("任务完成执行上报，收到反馈:" + rtnMessage);
                         }
 
                         string strValue = "";
@@ -127,6 +132,14 @@ namespace App.Dispatching.Process
                             strError = drs[0]["AlarmDesc"].ToString();
                         else
                             strError = "堆垛机未知错误！";
+
+                        //上报任务完成
+                        //dt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
+                        //string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                        //Logger.Info("任务完成上报");
+                        //string rtnMessage = Program.send("transWCSTaskStatus", Json);
+                        //Logger.Info("任务完成执行上报，收到反馈:" + rtnMessage);
+
                         Logger.Error(strError);
                     }
                     break;
@@ -161,9 +174,9 @@ namespace App.Dispatching.Process
             {
                 tmWorkTimer.Stop();
 
-                DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}' and ((TaskType in('11') and State='2') or (TaskType in('12','13') and State='0'))", WarehouseCode)) };
+                DataParameter[] parameter = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode = '{0}' and ((TaskType in('11') and State='2') or (TaskType in('12','13') and State='0'))", Program.WarehouseCode)) };
                 DataTable dt = bll.FillDataTable("WCS.SelectTask", parameter);
-                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleDevice", new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}'", WarehouseCode)) });
+                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleDevice", new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode = '{0}'", Program.WarehouseCode)) });
                 for (int i = 0; i < dtAisle.Rows.Count; i++)
                 {
                     //查找可用设备
@@ -266,7 +279,6 @@ namespace App.Dispatching.Process
             string DeviceNo = dr["AisleDeviceNo"].ToString();
             string serviceName = dr["ServiceName"].ToString();
             string TaskNo = dr["TaskNo"].ToString();
-            string BillID = dr["BillID"].ToString();
             string TaskType = dr["TaskType"].ToString();
             string state = dr["State"].ToString();
             int taskType = 10;
@@ -285,8 +297,8 @@ namespace App.Dispatching.Process
                 }
             }
 
-            string fromStation = dr["FromStation"].ToString();
-            string toStation = dr["ToStation"].ToString();
+            string FromStationAdd = dr["FromAddress"].ToString();
+            string ToStationAdd = dr["ToAddress"].ToString();
 
             int[] cellAddr = new int[10];
 
@@ -294,12 +306,12 @@ namespace App.Dispatching.Process
             cellAddr[1] = 0;
             cellAddr[2] = 0;
 
-            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
-            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
-            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
-            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
-            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
-            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
+            cellAddr[3] = byte.Parse(FromStationAdd.Substring(4, 3));
+            cellAddr[4] = byte.Parse(FromStationAdd.Substring(7, 3));
+            cellAddr[5] = byte.Parse(FromStationAdd.Substring(1, 3));
+            cellAddr[6] = byte.Parse(ToStationAdd.Substring(4, 3));
+            cellAddr[7] = byte.Parse(ToStationAdd.Substring(7, 3));
+            cellAddr[8] = byte.Parse(ToStationAdd.Substring(1, 3));
             cellAddr[9] = taskType;
 
             int taskNo = int.Parse(TaskNo);
@@ -309,8 +321,15 @@ namespace App.Dispatching.Process
             if (WriteToService(serviceName, "WriteFinished", 1))
             {
                 bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
+
+                //上报任务开始
+                DataTable dt = bll.FillDataTable("Wcs.SelectTaskWcsStart", new DataParameter("{0}", TaskNo));
+                string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                Logger.Info("任务开始上报");
+                string rtnMessage = Program.send("transWCSExecuteTask", Json);
+                Logger.Info("任务开始执行上报，收到反馈:" + rtnMessage);
             }
-            Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + DeviceNo + ";起始地址:" + fromStation + ",目标地址:" + toStation);
+            Logger.Info("任务:" + TaskNo + "已下发给" + DeviceNo + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
         }        
     }
 }

@@ -35,8 +35,6 @@ namespace App.Account
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            
-
             try
             {
                 BLL.UserBll ubll = new BLL.UserBll();
@@ -71,9 +69,6 @@ namespace App.Account
                 MessageBox.Show(ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-             
-            
-
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

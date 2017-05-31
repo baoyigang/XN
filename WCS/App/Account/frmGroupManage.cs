@@ -26,11 +26,10 @@ namespace App.Account
 
         private void frmUserList_Load(object sender, EventArgs e)
         {
-
+            bll.ExecNonQuery("Security.InsertGroupOperationList");
             colbtn.Name = "Detail";
             colbtn.DefaultCellStyle.NullValue = "删除用户";
-            InitSmartTree();
-           
+            InitSmartTree();           
         }
         private void frmUserList_Activated(object sender, EventArgs e)
         {
@@ -53,11 +52,11 @@ namespace App.Account
         {
              GroupID = this.dgvMain.Rows[e.RowIndex].Cells["colID"].Value.ToString();
              GroupName = this.dgvMain.Rows[e.RowIndex].Cells["colGroupName"].Value.ToString();
-             this.lblGroupName.Text = "用户组 " + this.dgvMain.Rows[e.RowIndex].Cells["colGroupName"].Value.ToString() + " 权限设置";
+             //this.lblGroupName.Text = "用户组 " + this.dgvMain.Rows[e.RowIndex].Cells["colGroupName"].Value.ToString() + " 权限设置";
              if (GroupName == "admin")
-                 this.btnSave.Enabled = false;
+                 this.toolStripButton_Save.Enabled = false;
              else
-                 this.btnSave.Enabled = true;
+                 this.toolStripButton_Save.Enabled = true;
              blnBindCheck = true;
              GroupOperationBind();
              blnBindCheck = false;

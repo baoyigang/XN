@@ -12,7 +12,7 @@ using DataGridViewAutoFilter;
 
 namespace App
 {
-    public partial class Main : App.View.BaseForm
+    public partial class Main : Form
     {
         private bool IsActiveForm = false;
         public bool IsActiveTab = false;
@@ -41,10 +41,16 @@ namespace App
                 context = new Context();
 
                 ContextInitialize initialize = new ContextInitialize();
-                initialize.InitializeContext(context);
-
-                View.frmMonitor f = new View.frmMonitor();
+                //initialize.InitializeContext(context);
+                View.BaseForm f;
+                if (Program.WarehouseCode == "A")
+                    f = new View.frmMonitorA();
+                else if (Program.WarehouseCode == "B")
+                    f = new View.frmMonitorB();
+                else
+                    f = new View.frmMonitor();
                 ShowForm(f);
+
                 MainData.OnTask += new TaskEventHandler(Data_OnTask);
                 this.BindData();
                 for (int i = 0; i < this.dgvMain.Columns.Count - 1; i++)
@@ -54,11 +60,97 @@ namespace App
                 tmWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmWorker);
                 tmWorkTimer.Start();
 
-               
+                PermissionControl();
             }
             catch (Exception ee)
             {
                 Logger.Error("初始化处理失败请检查配置，原因：" + ee.Message);
+            }
+        }
+        private void PermissionControl()
+        {            
+            DataTable dt = Program.dtUserPermission;
+            //监控任务--删除堆垛机任务
+            string filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='1'";
+            DataRow[] drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.ToolStripMenuItemDelCraneTask.Visible = false;                
+            }
+            //监控任务--重新下发堆垛机任务
+            filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='2'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.ToolStripMenuItemReassign.Visible = false;
+            }
+            //监控任务--任务状态切换
+            filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='3'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.ToolStripMenuItemStateChange.Visible = false;
+            }
+            //入库任务
+            filter = "SubModuleCode='MNU_W00A_00B' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_InStockTask.Visible = false;
+                this.inStockToolStripMenuItem.Visible = false;
+            }
+            //出库任务
+            filter = "SubModuleCode='MNU_W00A_00C' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_OutStock.Visible = false;
+                this.OutStockToolStripMenuItem.Visible = false;
+            }
+            //盘点任务
+            filter = "SubModuleCode='MNU_W00A_00D' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_Inventor.Visible = false;
+                this.InventortoolStripMenuItem.Visible = false;
+            }
+            //移库任务
+            filter = "SubModuleCode='MNU_W00A_00E' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_MoveStock.Visible = false;
+                this.MoveStockToolStripMenuItem.Visible = false;
+            }
+            //设备测试
+            filter = "SubModuleCode='MNU_W00B_00A' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_UnitLoad.Visible = false;
+            }
+            //货位监控
+            filter = "SubModuleCode='MNU_W00B_00C' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_CellMonitor.Visible = false;
+                this.ToolStripMenuItem_Cell.Visible = false;
+            }
+            //联机自动
+            filter = "SubModuleCode='MNU_W00B_00D' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_StartCrane.Visible = false;
+            }
+            //退出系统
+            filter = "SubModuleCode='MNU_W00B_00E' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.toolStripButton_Close.Visible = false;
             }
         }
         private void tmWorker(object sender, System.Timers.ElapsedEventArgs e)
@@ -326,7 +418,7 @@ namespace App
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-            View.Task.frmCraneTask f = new View.Task.frmCraneTask();
+            View.Task.frmDeviceTask f = new View.Task.frmDeviceTask();
             ShowForm(f);
         }
 
@@ -706,9 +798,9 @@ namespace App
 
             int taskNo = int.Parse(TaskNo);
 
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
 
             //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
@@ -738,9 +830,9 @@ namespace App
 
             int taskNo = int.Parse(TaskNo);
 
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
 
             Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + CarNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }
@@ -783,9 +875,9 @@ namespace App
 
             int taskNo = int.Parse(TaskNo);
 
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
 
             //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
         }

@@ -38,8 +38,8 @@ namespace App.View.Param
 
 
             //扫描枪--由于使用USB接口，而屏蔽
-            //ConfigUtil configUtil = new ConfigUtil();
-            //attributes = configUtil.GetAttribute();          
+            ConfigUtil configUtil = new ConfigUtil();
+            attributes = configUtil.GetAttribute();          
 
             //PLC1
             parameter.PLC1ServerName = PLC1.ProgID;
