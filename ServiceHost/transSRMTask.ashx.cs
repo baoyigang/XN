@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.IO;
 using System.Data;
+using Util;
 
 namespace ServiceHost
 {
@@ -35,6 +36,8 @@ namespace ServiceHost
             Log.WriteToLog("1", "transSRMTask-Rec", taskData);
             string json = "";
             string id = "";
+            string state = "";
+            string State = "";
             try
             {
                 DataTable dt = Util.JsonHelper.Json2Dtb(taskData);
@@ -45,8 +48,8 @@ namespace ServiceHost
 
                 bll.ExecNonQuery("WCS.DeleteWcsTemp");
                 bll.BatchInsertTable(dt, "WCS_TaskTemp");
-                //bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
-
+                bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
+                
                 json = "{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
             }
             catch (Exception ex)

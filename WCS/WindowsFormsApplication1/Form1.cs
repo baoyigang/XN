@@ -102,7 +102,7 @@ namespace WindowsFormsApplication1
         private void button4_Click(object sender, EventArgs e)
         {
 
-            string Json = "[{\"field1\": \"null\",\"field2\": \"null\",\"field3\":\"null\",\"fromAddress\": \"101010\",\"id\": \"0001\",\"palletBarcode\": \"00001\",\"sendDate\":\"2017-03-15 02:21:20.411\",\"sender\":\"admin\",\"status\":\"RECEIVED\",\"taskLevel\":\"0\",\"taskFlag\":\"NORMAL\",\"taskNo\":\"string\",\"taskType\":\"T_11\",\"toAddress\":\"202010\",\"warehouseCode\":\"XN_A\"}]";
+            string Json = "[{\"field1\": \"null\",\"field2\": \"null\",\"field3\":\"null\",\"fromAddress\": \"101010\",\"id\": \"0001\",\"palletBarcode\": \"00001\",\"sendDate\":\"2017-03-15 02:21:20.411\",\"sender\":\"admin\",\"status\":\"RECEIVED\",\"taskLevel\":\"0\",\"taskFlag\":\"NORMAL\",\"taskNo\":\"string\",\"taskType\":\"T_11\",\"toAddress\":\"202010\",\"warehouseCode\":\"XN_B\"}]";
             //Json = "param=[{\"field1\": \"null\",\"field2\": \"null\",\"field3\":\"null\",\"fromAddress\": \"101010\",\"id\": \"0001\",\"palletBarcode\": \"00001\",\"sendDate\":\"2017-03-15 02:21:20.411\",\"sender\":\"admin\",\"status\":\"RECEIVED\",\"taskLevel\":\"0\",\"taskFlag\":\"NORMAL\",\"taskNo\":\"string\",\"taskType\":\"T_11\",\"toAddress\":\"202010\",\"warehouseCode\":\"XN_A\"}]";
             //var client = new RestClient();  
             //client.EndPoint = @"http://localhost/ROBOService/SRMDataService.svc/transSRMTask"; ;  
@@ -147,12 +147,12 @@ namespace WindowsFormsApplication1
 
         private void button5_Click(object sender, EventArgs e)
         {
-            string Json = "[{\"field1\": \"null\",\"field2\": \"null\",\"field3\":\"null\",\"fromAddress\": \"101010\",\"id\": \"0001\",\"palletBarcode\": \"00001\",\"sendDate\":\"2017-03-15 02:21:20.411\",\"sender\":\"admin\",\"status\":\"RECEIVED\",\"taskLevel\":\"0\",\"taskFlag\":\"NORMAL\",\"taskNo\":\"string\",\"taskType\":\"T_11\",\"toAddress\":\"202010\",\"warehouseCode\":\"XN_A\"}]";
+            string Json = "[{\"field1\": \"null\",\"field2\": \"null\",\"field3\":\"null\",\"fromAddress\": \"A001001001\",\"id\": \"0001\",\"palletBarcode\": \"00001\",\"sendDate\":\"2017-03-15 02:21:20.411\",\"sender\":\"admin\",\"status\":\"RECEIVED\",\"taskLevel\":\"0\",\"taskFlag\":\"NORMAL\",\"taskNo\":\"string15\",\"taskType\":\"T_11\",\"toAddress\":\"A001001002\",\"warehouseCode\":\"XN_A\"}]";
 
-            Json = "{\"key\":\"1\"}";
+            //Json = "{\"key\":\"1\"}";
             Encoding myEncode = Encoding.GetEncoding("UTF-8");
             byte[] postBytes = Encoding.UTF8.GetBytes(Json);
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://localhost/serviceHost/SRMDataService.svc/transSRMTask");
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://127.0.0.1/ServiceHost/transSRMTask.ashx");
             req.Method = "POST";
             req.ContentType = "application/json;charset=UTF-8";
             req.ContentLength = postBytes.Length;
