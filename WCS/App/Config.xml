@@ -7,13 +7,11 @@
     <Attribute Name="IsShowFlag" Value="1" />
     <Attribute Name="WarehouseCode" Value="A" />
     <Attribute Name="InTaskCount" Value="2" />
+    <Attribute Name="UserName" Value="Admin" />
+    <Attribute Name="WcsUrl" Value="http://192.200.105.198:8080/api/RB2MJ/" />
   </Attributes>
   <Services>
-    <!--<Service Name="CranePLC1" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CranePLC1.xml" />-->
-    <Service Name="CarPLC0101" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CarPLC0101.xml" />
-    <Service Name="CarPLC0102" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="CarPLC0102.xml" />
-    <Service Name="TranLine" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="TranLine.xml" />
-    <Service Name="MiniLoad02" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="MiniLoad02.xml" />
+    <Service Name="Elevator01" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="Elevator01.xml" />    
   </Services>
   <Processes>
     <!--堆垛机Process-->

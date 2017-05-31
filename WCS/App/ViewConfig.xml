@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
   <Application>
   <Caption MinBox="false" MaxBox="false"/>
-  <Title Text="厦门晶璟自动化有限公司" Visible="true"/>
+  <Title Text="罗伯泰克自动化科技(苏州)有限公司" Visible="true"/>
   <MenuBar Width="180"/>
   <MenuItem Height="22"/>
   <Menus Name="穿梭车与移栽车">

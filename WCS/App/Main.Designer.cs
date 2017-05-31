@@ -46,7 +46,6 @@
             this.ToolStripMenuItem17 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem18 = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem19 = new System.Windows.Forms.ToolStripMenuItem();
-            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.pnlTab = new System.Windows.Forms.Panel();
             this.tabForm = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -54,13 +53,11 @@
             this.toolStripButton_InStockTask = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_OutStock = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Inventor = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_MoveStock = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_UnitLoad = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_CellMonitor = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Barcode = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_StartCrane = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_MoveStock = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -70,7 +67,6 @@
             this.Column11 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colPalletCode = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colCraneNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.colCarNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column3 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colFromStation = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colToStation = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
@@ -82,8 +78,7 @@
             this.colTaskType = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column7 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column2 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column6 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.lbLog = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -98,13 +93,12 @@
             this.ToolStripMenuItem_Cell = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemSetup = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Param = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Device = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_User = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Group = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Power = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_ChangPwd = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_Device = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.pnlBottom.SuspendLayout();
@@ -113,6 +107,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -239,7 +234,7 @@
             this.pnlTab.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTab.Location = new System.Drawing.Point(0, 77);
             this.pnlTab.Name = "pnlTab";
-            this.pnlTab.Size = new System.Drawing.Size(1284, 23);
+            this.pnlTab.Size = new System.Drawing.Size(1020, 23);
             this.pnlTab.TabIndex = 14;
             this.pnlTab.Visible = false;
             // 
@@ -250,7 +245,7 @@
             this.tabForm.Location = new System.Drawing.Point(0, 0);
             this.tabForm.Name = "tabForm";
             this.tabForm.SelectedIndex = 0;
-            this.tabForm.Size = new System.Drawing.Size(1284, 23);
+            this.tabForm.Size = new System.Drawing.Size(1020, 23);
             this.tabForm.TabIndex = 6;
             this.tabForm.SelectedIndexChanged += new System.EventHandler(this.tabForm_SelectedIndexChanged);
             // 
@@ -263,17 +258,15 @@
             this.toolStripButton_InStockTask,
             this.toolStripButton_OutStock,
             this.toolStripButton_Inventor,
-            this.toolStripButton2,
-            this.toolStripButton1,
-            this.toolStripButton3,
+            this.toolStripButton_MoveStock,
+            this.toolStripButton_UnitLoad,
             this.toolStripButton_CellMonitor,
             this.toolStripButton_Barcode,
             this.toolStripButton_StartCrane,
-            this.toolStripButton_MoveStock,
             this.toolStripButton_Close});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1284, 52);
+            this.toolStrip1.Size = new System.Drawing.Size(1020, 52);
             this.toolStrip1.TabIndex = 13;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -286,6 +279,7 @@
             this.toolStripButton_Scan.Size = new System.Drawing.Size(80, 50);
             this.toolStripButton_Scan.Text = "托盘/箱入库";
             this.toolStripButton_Scan.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Scan.Visible = false;
             this.toolStripButton_Scan.Click += new System.EventHandler(this.toolStripButton_Scan_Click);
             // 
             // toolStripButton_InStockTask
@@ -321,38 +315,28 @@
             this.toolStripButton_Inventor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton_Inventor.Click += new System.EventHandler(this.toolStripButton_Inventor_Click);
             // 
-            // toolStripButton2
+            // toolStripButton_MoveStock
             // 
-            this.toolStripButton2.AutoSize = false;
-            this.toolStripButton2.Image = global::App.Properties.Resources.process;
-            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(70, 50);
-            this.toolStripButton2.Text = "穿梭车测试";
-            this.toolStripButton2.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            this.toolStripButton_MoveStock.AutoSize = false;
+            this.toolStripButton_MoveStock.Image = global::App.Properties.Resources.next;
+            this.toolStripButton_MoveStock.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_MoveStock.Name = "toolStripButton_MoveStock";
+            this.toolStripButton_MoveStock.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_MoveStock.Text = "移库任务";
+            this.toolStripButton_MoveStock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_MoveStock.Click += new System.EventHandler(this.toolStripButton_MoveStock_Click);
             // 
-            // toolStripButton1
+            // toolStripButton_UnitLoad
             // 
-            this.toolStripButton1.AutoSize = false;
-            this.toolStripButton1.Image = global::App.Properties.Resources.process;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(90, 50);
-            this.toolStripButton1.Text = "托盘堆垛机测试";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // toolStripButton3
-            // 
-            this.toolStripButton3.AutoSize = false;
-            this.toolStripButton3.Image = global::App.Properties.Resources.process;
-            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(90, 50);
-            this.toolStripButton3.Text = "箱式堆垛机测试";
-            this.toolStripButton3.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            this.toolStripButton_UnitLoad.AutoSize = false;
+            this.toolStripButton_UnitLoad.Image = global::App.Properties.Resources.process;
+            this.toolStripButton_UnitLoad.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_UnitLoad.Name = "toolStripButton_UnitLoad";
+            this.toolStripButton_UnitLoad.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_UnitLoad.Text = "设备测试";
+            this.toolStripButton_UnitLoad.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_UnitLoad.ToolTipText = "设备测试";
+            this.toolStripButton_UnitLoad.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton_CellMonitor
             // 
@@ -374,6 +358,7 @@
             this.toolStripButton_Barcode.Size = new System.Drawing.Size(70, 50);
             this.toolStripButton_Barcode.Text = "条码管理";
             this.toolStripButton_Barcode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Barcode.Visible = false;
             this.toolStripButton_Barcode.Click += new System.EventHandler(this.toolStripButton_Barcode_Click);
             // 
             // toolStripButton_StartCrane
@@ -386,17 +371,6 @@
             this.toolStripButton_StartCrane.Text = "联机自动";
             this.toolStripButton_StartCrane.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton_StartCrane.Click += new System.EventHandler(this.toolStripButton_StartCrane_Click);
-            // 
-            // toolStripButton_MoveStock
-            // 
-            this.toolStripButton_MoveStock.AutoSize = false;
-            this.toolStripButton_MoveStock.Image = global::App.Properties.Resources.next;
-            this.toolStripButton_MoveStock.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_MoveStock.Name = "toolStripButton_MoveStock";
-            this.toolStripButton_MoveStock.Size = new System.Drawing.Size(60, 50);
-            this.toolStripButton_MoveStock.Text = "移库任务";
-            this.toolStripButton_MoveStock.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_MoveStock.Click += new System.EventHandler(this.toolStripButton_MoveStock_Click);
             // 
             // toolStripButton_Close
             // 
@@ -413,9 +387,9 @@
             // 
             this.pnlBottom.Controls.Add(this.splitContainer1);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 361);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 300);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(1284, 199);
+            this.pnlBottom.Size = new System.Drawing.Size(1020, 260);
             this.pnlBottom.TabIndex = 9;
             // 
             // splitContainer1
@@ -433,8 +407,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lbLog);
-            this.splitContainer1.Size = new System.Drawing.Size(1284, 199);
-            this.splitContainer1.SplitterDistance = 114;
+            this.splitContainer1.Size = new System.Drawing.Size(1020, 260);
+            this.splitContainer1.SplitterDistance = 148;
             this.splitContainer1.TabIndex = 2;
             // 
             // dgvMain
@@ -460,7 +434,6 @@
             this.Column11,
             this.colPalletCode,
             this.colCraneNo,
-            this.colCarNo,
             this.Column3,
             this.colFromStation,
             this.colToStation,
@@ -471,9 +444,7 @@
             this.colErrDesc,
             this.colTaskType,
             this.Column7,
-            this.Column2,
-            this.Column4,
-            this.Column6});
+            this.Column2});
             this.dgvMain.DataSource = this.bsMain;
             this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMain.Location = new System.Drawing.Point(0, 0);
@@ -482,7 +453,7 @@
             this.dgvMain.RowHeadersWidth = 40;
             this.dgvMain.RowTemplate.Height = 23;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(1284, 114);
+            this.dgvMain.Size = new System.Drawing.Size(1020, 148);
             this.dgvMain.TabIndex = 7;
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
@@ -519,7 +490,7 @@
             // 
             // colPalletCode
             // 
-            this.colPalletCode.DataPropertyName = "PalletCode";
+            this.colPalletCode.DataPropertyName = "PalletBarcode";
             this.colPalletCode.FilteringEnabled = false;
             this.colPalletCode.Frozen = true;
             this.colPalletCode.HeaderText = "盘/箱条码";
@@ -529,22 +500,13 @@
             // 
             // colCraneNo
             // 
-            this.colCraneNo.DataPropertyName = "CraneNo";
+            this.colCraneNo.DataPropertyName = "DeviceNo";
             this.colCraneNo.FilteringEnabled = false;
             this.colCraneNo.Frozen = true;
-            this.colCraneNo.HeaderText = "堆垛机";
+            this.colCraneNo.HeaderText = "设备编号";
             this.colCraneNo.Name = "colCraneNo";
             this.colCraneNo.ReadOnly = true;
             this.colCraneNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // colCarNo
-            // 
-            this.colCarNo.DataPropertyName = "CarNo";
-            this.colCarNo.FilteringEnabled = false;
-            this.colCarNo.Frozen = true;
-            this.colCarNo.HeaderText = "小车编号";
-            this.colCarNo.Name = "colCarNo";
-            this.colCarNo.ReadOnly = true;
             // 
             // Column3
             // 
@@ -557,7 +519,7 @@
             // 
             // colFromStation
             // 
-            this.colFromStation.DataPropertyName = "FromStation";
+            this.colFromStation.DataPropertyName = "CellCode";
             this.colFromStation.FilteringEnabled = false;
             this.colFromStation.HeaderText = "起始地址";
             this.colFromStation.Name = "colFromStation";
@@ -566,7 +528,7 @@
             // 
             // colToStation
             // 
-            this.colToStation.DataPropertyName = "ToStation";
+            this.colToStation.DataPropertyName = "ToCellCode";
             this.colToStation.FilteringEnabled = false;
             this.colToStation.HeaderText = "目标地址";
             this.colToStation.Name = "colToStation";
@@ -602,7 +564,7 @@
             // 
             // colErrCode
             // 
-            this.colErrCode.DataPropertyName = "CraneErrCode";
+            this.colErrCode.DataPropertyName = "AlarmCode";
             this.colErrCode.FilteringEnabled = false;
             this.colErrCode.HeaderText = "错误代码";
             this.colErrCode.Name = "colErrCode";
@@ -611,7 +573,7 @@
             // 
             // colErrDesc
             // 
-            this.colErrDesc.DataPropertyName = "CraneErrDesc";
+            this.colErrDesc.DataPropertyName = "AlarmDesc";
             this.colErrDesc.FilteringEnabled = false;
             this.colErrDesc.HeaderText = "错误描述";
             this.colErrDesc.Name = "colErrDesc";
@@ -644,24 +606,6 @@
             this.Column2.ReadOnly = true;
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "TaskAB";
-            this.Column4.FilteringEnabled = false;
-            this.Column4.HeaderText = "TaskAB";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column6
-            // 
-            this.Column6.DataPropertyName = "MergeTaskNo";
-            this.Column6.FilteringEnabled = false;
-            this.Column6.HeaderText = "合并任务";
-            this.Column6.Name = "Column6";
-            this.Column6.ReadOnly = true;
-            this.Column6.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
             // lbLog
             // 
             this.lbLog.BackColor = System.Drawing.SystemColors.Window;
@@ -676,7 +620,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 0);
             this.lbLog.Name = "lbLog";
             this.lbLog.ShowGroups = false;
-            this.lbLog.Size = new System.Drawing.Size(1284, 81);
+            this.lbLog.Size = new System.Drawing.Size(1020, 108);
             this.lbLog.TabIndex = 10;
             this.lbLog.UseCompatibleStateImageBehavior = false;
             this.lbLog.View = System.Windows.Forms.View.Details;
@@ -704,7 +648,7 @@
             this.ToolStripMenuItemSetup});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1284, 25);
+            this.menuStrip1.Size = new System.Drawing.Size(1020, 25);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -778,50 +722,50 @@
             // ToolStripMenuItem_Param
             // 
             this.ToolStripMenuItem_Param.Name = "ToolStripMenuItem_Param";
-            this.ToolStripMenuItem_Param.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_Param.Size = new System.Drawing.Size(136, 22);
             this.ToolStripMenuItem_Param.Text = "参数设定";
             this.ToolStripMenuItem_Param.Click += new System.EventHandler(this.ToolStripMenuItem_Param_Click);
+            // 
+            // ToolStripMenuItem_Device
+            // 
+            this.ToolStripMenuItem_Device.Name = "ToolStripMenuItem_Device";
+            this.ToolStripMenuItem_Device.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_Device.Text = "设备管理";
+            this.ToolStripMenuItem_Device.Click += new System.EventHandler(this.ToolStripMenuItem_Device_Click);
             // 
             // ToolStripMenuItem_User
             // 
             this.ToolStripMenuItem_User.Name = "ToolStripMenuItem_User";
-            this.ToolStripMenuItem_User.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_User.Size = new System.Drawing.Size(136, 22);
             this.ToolStripMenuItem_User.Text = "用户管理";
             this.ToolStripMenuItem_User.Click += new System.EventHandler(this.ToolStripMenuItem_User_Click);
             // 
             // ToolStripMenuItem_Group
             // 
             this.ToolStripMenuItem_Group.Name = "ToolStripMenuItem_Group";
-            this.ToolStripMenuItem_Group.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_Group.Size = new System.Drawing.Size(136, 22);
             this.ToolStripMenuItem_Group.Text = "用户组管理";
             this.ToolStripMenuItem_Group.Click += new System.EventHandler(this.ToolStripMenuItem_Group_Click);
             // 
             // ToolStripMenuItem_Power
             // 
             this.ToolStripMenuItem_Power.Name = "ToolStripMenuItem_Power";
-            this.ToolStripMenuItem_Power.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_Power.Size = new System.Drawing.Size(136, 22);
             this.ToolStripMenuItem_Power.Text = "权限设定";
             this.ToolStripMenuItem_Power.Click += new System.EventHandler(this.ToolStripMenuItem_Power_Click);
             // 
             // ToolStripMenuItem_ChangPwd
             // 
             this.ToolStripMenuItem_ChangPwd.Name = "ToolStripMenuItem_ChangPwd";
-            this.ToolStripMenuItem_ChangPwd.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItem_ChangPwd.Size = new System.Drawing.Size(136, 22);
             this.ToolStripMenuItem_ChangPwd.Text = "密码修改";
             this.ToolStripMenuItem_ChangPwd.Click += new System.EventHandler(this.ToolStripMenuItem_ChangPwd_Click);
-            // 
-            // ToolStripMenuItem_Device
-            // 
-            this.ToolStripMenuItem_Device.Name = "ToolStripMenuItem_Device";
-            this.ToolStripMenuItem_Device.Size = new System.Drawing.Size(152, 22);
-            this.ToolStripMenuItem_Device.Text = "设备管理";
-            this.ToolStripMenuItem_Device.Click += new System.EventHandler(this.ToolStripMenuItem_Device_Click);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1284, 560);
+            this.ClientSize = new System.Drawing.Size(1020, 560);
             this.Controls.Add(this.pnlTab);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this.pnlBottom);
@@ -835,7 +779,6 @@
             this.Load += new System.EventHandler(this.Main_Load);
             this.Shown += new System.EventHandler(this.Main_Shown);
             this.contextMenuStrip1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.pnlTab.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -845,6 +788,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -875,7 +819,7 @@
         private System.Windows.Forms.TabControl tabForm;
         private System.Windows.Forms.ToolStripMenuItem InventortoolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButton_Inventor;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton_UnitLoad;
         private System.Windows.Forms.ToolStripButton toolStripButton_StartCrane;
         private System.Windows.Forms.ToolStripButton toolStripButton_CellMonitor;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemSetup;
@@ -895,19 +839,21 @@
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem17;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem19;
         private System.Windows.Forms.BindingSource bsMain;
-        private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem15;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem16;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem18;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStripButton toolStripButton_Barcode;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_User;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Group;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Power;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_ChangPwd;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Device;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column5;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column11;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colPalletCode;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colCraneNo;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colCarNo;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column3;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colFromStation;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colToStation;
@@ -919,12 +865,5 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colTaskType;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column7;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column2;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column4;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column6;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_User;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Group;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Power;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_ChangPwd;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Device;
     }
 }

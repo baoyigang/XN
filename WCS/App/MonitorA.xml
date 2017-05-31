@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+  <Servers>
+    <Server Name="CraneServer01" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC01]" UpdateRate="350">
+      <OPCItem ItemName="Mode" ClientHandler="10" OPCItemName="DB541,INT4,6"/>
+      <OPCItem ItemName="Status" ClientHandler="13" OPCItemName="DB541,INT28,5"/>
+      <OPCItem ItemName="TaskNo" ClientHandler="15" OPCItemName="DB541,CHAR20,20"/>
+    </Server>
+  </Servers>
+</Configuration>

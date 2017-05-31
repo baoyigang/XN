@@ -45,10 +45,10 @@ namespace App.View
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            Point P2 = picCrane2.Location;
-            P2.X = P2.X - 90;
+            //Point P2 = picCrane2.Location;
+            //P2.X = P2.X - 90;
 
-            this.picCrane2.Location = P2;
+            //this.picCrane2.Location = P2;
         }
 
         private void frmMonitor_Load(object sender, EventArgs e)
@@ -56,10 +56,10 @@ namespace App.View
 
             Cranes.OnCrane += new CraneEventHandler(Monitor_OnCrane);
             
-            picCrane1.Parent = pictureBox1;
-            InitialP1 = picCrane1.Location;
+            //picCrane1.Parent = pictureBox1;
+            //InitialP1 = picCrane1.Location;
             
-            picCrane1.BackColor = Color.Transparent;
+            //picCrane1.BackColor = Color.Transparent;
 
             InitialP2 = picCar01.Location;
             picCar01.Parent = pictureBox1;
@@ -69,9 +69,9 @@ namespace App.View
             picCar02.Parent = pictureBox1;
             picCar02.BackColor = Color.Transparent;
 
-            InitialP4 = picCrane2.Location;
-            picCrane2.Parent = pictureBox1;
-            picCrane2.BackColor = Color.Transparent;
+            //InitialP4 = picCrane2.Location;
+            //picCrane2.Parent = pictureBox1;
+            //picCrane2.BackColor = Color.Transparent;
             AddDicKeyValue();
             try
             {
@@ -178,7 +178,7 @@ namespace App.View
 
                     if (miniload.MiniloadNo == "02")
                     {
-                        this.picCrane2.Visible = true;
+                        //this.picCrane2.Visible = true;
                         Point P2 = InitialP4;
                         if (miniload.Status == null)
                             return;
@@ -188,7 +188,7 @@ namespace App.View
                         if (miniloadColumn < 37)
                         {
                             P2 = dicMiniloadLocation[miniloadColumn];
-                            this.picCrane2.Location = P2;
+                            //this.picCrane2.Location = P2;
                         }
 
                         this.txtTaskNo4.Text = miniload.TaskANo;
@@ -564,12 +564,12 @@ namespace App.View
                     txt.Text = crane.TaskNo;
 
                 txt = GetTextBox("txtState", crane.CraneNo);
-                if (txt != null && dicCraneStatus.ContainsKey(crane.TaskType))
-                    txt.Text = dicCraneStatus[crane.TaskType];
+                //if (txt != null && dicCraneStatus.ContainsKey(crane.TaskType))
+                //    txt.Text = dicCraneStatus[crane.TaskType];
 
-                txt = GetTextBox("txtCraneAction", crane.CraneNo);
-                if (txt != null && dicCraneAction.ContainsKey(crane.Action))
-                    txt.Text = dicCraneAction[crane.Action];
+                //txt = GetTextBox("txtCraneAction", crane.CraneNo);
+                //if (txt != null && dicCraneAction.ContainsKey(crane.Action))
+                //    txt.Text = dicCraneAction[crane.Action];
 
                 txt = GetTextBox("txtRow", crane.CraneNo);
                 if (txt != null)
@@ -580,7 +580,7 @@ namespace App.View
                     txt.Text = crane.Column.ToString();
 
                 //堆垛机位置
-                if (crane.CraneNo == 1)
+                if (crane.CraneNo == "01")
                 {
                     //this.picCrane2.Visible = true;
                     //Point P1 = InitialP1;
@@ -599,7 +599,7 @@ namespace App.View
 
                 txt = GetTextBox("txtHeight", crane.CraneNo);
                 if (txt != null)
-                    txt.Text = crane.Height.ToString();
+                    txt.Text = crane.Layer.ToString();
 
                 txt = GetTextBox("txtForkStatus", crane.CraneNo);
                 if (txt != null && dicCraneFork.ContainsKey(crane.ForkStatus))
@@ -647,9 +647,9 @@ namespace App.View
                 return null;
         }
 
-        TextBox GetTextBox(string name, int CraneNo)
+        TextBox GetTextBox(string name, string CraneNo)
         {
-            Control[] ctl = this.Controls.Find(name + CraneNo.ToString(), true);
+            Control[] ctl = this.Controls.Find(name + CraneNo, true);
             if (ctl.Length > 0)
                 return (TextBox)ctl[0];
             else

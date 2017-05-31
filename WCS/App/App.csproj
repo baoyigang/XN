@@ -170,7 +170,6 @@
     <Compile Include="Crane.cs" />
     <Compile Include="Dispatching\Process\ElevatorProcess.cs" />
     <Compile Include="Dispatching\Process\CraneProcess.cs" />
-    <Compile Include="Dispatching\Process\CarProcess.cs" />
     <Compile Include="Dispatching\Process\InStockToStationProcess.cs" />
     <Compile Include="Dispatching\Process\OutStockFinishProcess.cs" />
     <Compile Include="Dispatching\Process\ReadProcess.cs" />
@@ -213,6 +212,18 @@
     </Compile>
     <Compile Include="View\Base\frmDevices.Designer.cs">
       <DependentUpon>frmDevices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmMonitorB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmMonitorB.Designer.cs">
+      <DependentUpon>frmMonitorB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\frmMonitorA.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmMonitorA.Designer.cs">
+      <DependentUpon>frmMonitorA.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Dispatcher\frmCellInfo.cs">
       <SubType>Form</SubType>
@@ -324,11 +335,11 @@
     <Compile Include="View\Task\frmInventor.Designer.cs">
       <DependentUpon>frmInventor.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Task\frmCraneTask.cs">
+    <Compile Include="View\Task\frmDeviceTask.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Task\frmCraneTask.Designer.cs">
-      <DependentUpon>frmCraneTask.cs</DependentUpon>
+    <Compile Include="View\Task\frmDeviceTask.Designer.cs">
+      <DependentUpon>frmDeviceTask.cs</DependentUpon>
     </Compile>
     <Compile Include="View\Task\frmMoveStock.cs">
       <SubType>Form</SubType>
@@ -418,6 +429,12 @@
     <EmbeddedResource Include="View\Base\frmDevices.resx">
       <DependentUpon>frmDevices.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\frmMonitorB.resx">
+      <DependentUpon>frmMonitorB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\frmMonitorA.resx">
+      <DependentUpon>frmMonitorA.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\Dispatcher\frmCellInfo.resx">
       <DependentUpon>frmCellInfo.cs</DependentUpon>
     </EmbeddedResource>
@@ -469,8 +486,8 @@
     <EmbeddedResource Include="View\Task\frmInventor.resx">
       <DependentUpon>frmInventor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Task\frmCraneTask.resx">
-      <DependentUpon>frmCraneTask.cs</DependentUpon>
+    <EmbeddedResource Include="View\Task\frmDeviceTask.resx">
+      <DependentUpon>frmDeviceTask.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\Task\frmMoveStock.resx">
       <DependentUpon>frmMoveStock.cs</DependentUpon>
@@ -516,15 +533,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CarPLC0101.xml">
+    <Content Include="MonitorB.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="CarPLC0102.xml">
+    <Content Include="MonitorA.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Elevator.xml">
+    <Content Include="Elevator01.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -542,20 +559,11 @@
     <None Include="Resources\close.png" />
     <None Include="Resources\calculator.png" />
     <None Include="Resources\Barcode_32.png" />
-    <Content Include="ERP.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="MiniLoad02.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Monitor.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Crane1.png" />
-    <None Include="Resources\Car.png" />
-    <None Include="Resources\car1.png" />
     <None Include="Resources\Crane3.png" />
     <None Include="Resources\Crane4.png" />
     <None Include="Resources\Crane2.png" />
@@ -563,6 +571,8 @@
     <None Include="Resources\car12.png" />
     <None Include="Resources\Barcode.png" />
     <Content Include="Resources\Add.png" />
+    <None Include="Resources\A_Rack.png" />
+    <None Include="Resources\B_Rack.png" />
     <Content Include="Resources\del.png" />
     <Content Include="Resources\down.png" />
     <None Include="Resources\monitor.png" />
@@ -575,12 +585,11 @@
     <None Include="Resources\PalletIn.png" />
     <None Include="Resources\Printer.png" />
     <Content Include="Resources\remove.png" />
-    <None Include="Resources\Shelf.png" />
     <None Include="Resources\shuttlecar.png" />
-    <None Include="Resources\RoboShelf.png" />
-    <None Include="Resources\Shelf2.png" />
-    <None Include="Resources\Shelf21.png" />
+    <None Include="Resources\S_Rack.png" />
+    <None Include="Resources\save.png" />
     <Content Include="Resources\up.png" />
+    <None Include="Resources\user_add.png" />
     <Content Include="TableXML\CMD_Cell.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -588,10 +597,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="TableXML\CMD_ProductInStock.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TranLine.xml">
-      <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ViewConfig.xml">

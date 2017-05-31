@@ -65,7 +65,6 @@
             this.Column14 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column15 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column10 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column2 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column12 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column13 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
@@ -190,7 +189,6 @@
             this.Column14,
             this.Column15,
             this.Column10,
-            this.Column2,
             this.Column12,
             this.Column13});
             this.dgvMain.DataSource = this.bsMain;
@@ -344,7 +342,7 @@
             // 
             // Column8
             // 
-            this.Column8.DataPropertyName = "StationNo";
+            this.Column8.DataPropertyName = "CellCode";
             this.Column8.FilteringEnabled = false;
             this.Column8.HeaderText = "入库站台";
             this.Column8.Name = "Column8";
@@ -353,7 +351,7 @@
             // 
             // Column4
             // 
-            this.Column4.DataPropertyName = "CellCode";
+            this.Column4.DataPropertyName = "ToCellCode";
             this.Column4.FilteringEnabled = false;
             this.Column4.HeaderText = "货位编号";
             this.Column4.Name = "Column4";
@@ -406,21 +404,12 @@
             // 
             // Column10
             // 
-            this.Column10.DataPropertyName = "PalletCode";
+            this.Column10.DataPropertyName = "PalletBarcode";
             this.Column10.FilteringEnabled = false;
-            this.Column10.HeaderText = "托盘编号";
+            this.Column10.HeaderText = "托盘条码";
             this.Column10.Name = "Column10";
             this.Column10.ReadOnly = true;
             this.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column2
-            // 
-            this.Column2.DataPropertyName = "BillID";
-            this.Column2.FilteringEnabled = false;
-            this.Column2.HeaderText = "单据号码";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Column12
             // 
@@ -496,7 +485,6 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column14;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column15;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column10;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column2;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column12;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column13;
     }

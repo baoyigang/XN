@@ -33,6 +33,10 @@ namespace App.View.Dispatcher
         private int left = 5;
         string CellCode = "";
         private bool IsWheel = true;
+        private string WarehouseCode = "";
+        private string WarehouseFilter = "";
+        private int pages = 7;
+        private int fontSize = 10;
 
         public frmCellQuery()
         {
@@ -52,6 +56,36 @@ namespace App.View.Dispatcher
             pnlChart.MouseWheel += new MouseEventHandler(pnlChart_MouseWheel);
 
             this.PColor.Visible = false;
+
+            MCP.Config.Configuration conf = new MCP.Config.Configuration();
+            conf.Load("Config.xml");
+            WarehouseCode = conf.Attributes["WarehouseCode"];
+            WarehouseFilter = string.Format("CMD_Shelf.WarehouseCode='{0}'", WarehouseCode);
+            if (WarehouseCode == "A")
+            {
+                Rows = 5;
+                Columns = 45;
+                pages = 7;
+                sbShelf.Minimum = 0;
+                sbShelf.Maximum = 210;
+                fontSize = 10;
+            }
+            else if (WarehouseCode == "B")
+            {
+                Rows = 5;
+                Columns = 45;
+                pages = 6;
+                sbShelf.Maximum = 180;
+                fontSize = 10;
+            }
+            else
+            {
+                Rows = 10;
+                Columns = 72;
+                pages = 7;
+                sbShelf.Maximum = 210;
+                fontSize = 8;
+            }
         }
         private void btnRefresh_Click(object sender, EventArgs e)
         {
@@ -72,7 +106,7 @@ namespace App.View.Dispatcher
                 ShelfCode.Clear();
                 ShelfName.Clear();
 
-                DataTable dtShelf = bll.FillDataTable("CMD.SelectShelf");
+                DataTable dtShelf = bll.FillDataTable("CMD.SelectShelf", new DataParameter[] { new DataParameter("{0}", WarehouseFilter) });
                 for (int i = 0; i < dtShelf.Rows.Count; i++)
                 {
                     ShelfCode.Add(i + 1, dtShelf.Rows[i]["ShelfCode"].ToString());
@@ -87,7 +121,8 @@ namespace App.View.Dispatcher
                 pnlProgress.Visible = true;
                 Application.DoEvents();
 
-                cellTable = bll.FillDataTable("WCS.SelectCell");
+
+                cellTable = bll.FillDataTable("WCS.SelectCell", new DataParameter[] { new DataParameter("{0}", WarehouseFilter) });
                 bsMain.DataSource = cellTable;
 
                 pnlProgress.Visible = false;
@@ -140,30 +175,33 @@ namespace App.View.Dispatcher
                     for (int i = 0; i <= 1; i++)
                     {
                         int key = currentPage * 2 + i - 1;
-                        if (!shelf.ContainsKey(key))
+                        if (key <= ShelfCode.Count)
                         {
-                            DataRow[] rows = cellTable.Select(string.Format("ShelfCode='{0}'", ShelfCode[key]), "CellCode desc");
-                            shelf.Add(key, rows);
-                            ShelfRow.Add(key, int.Parse(rows[0]["Rows"].ToString()));
-                            ShelfColumn.Add(key, int.Parse(rows[0]["Columns"].ToString()));
+                            if (!shelf.ContainsKey(key))
+                            {
+                                DataRow[] rows = cellTable.Select(string.Format("ShelfCode='{0}'", ShelfCode[key]), "CellCode desc");
+                                shelf.Add(key, rows);
+                                ShelfRow.Add(key, int.Parse(rows[0]["Rows"].ToString()));
+                                ShelfColumn.Add(key, int.Parse(rows[0]["Columns"].ToString()));
 
-                            SetCellSize(ShelfColumn[key], ShelfRow[key]);
-                        }
-                        Font font = new Font("微软雅黑", 10);
-                        SizeF size = e.Graphics.MeasureString("第1排第5层", font);
-                        float adjustHeight = Math.Abs(size.Height - cellHeight) / 2;
-                        size = e.Graphics.MeasureString("13", font);
-                        float adjustWidth = (cellWidth - size.Width) / 2;
+                                SetCellSize(ShelfColumn[key], ShelfRow[key]);
+                            }
+                            Font font = new Font("微软雅黑", fontSize);
+                            SizeF size = e.Graphics.MeasureString("第1排第5层", font);
+                            float adjustHeight = Math.Abs(size.Height - cellHeight) / 2;
+                            size = e.Graphics.MeasureString("13", font);
+                            float adjustWidth = (cellWidth - size.Width) / 2;
 
-                        DrawShelf(shelf[key], e.Graphics, top[i], font, adjustWidth);
+                            DrawShelf(shelf[key], e.Graphics, top[i], font, adjustWidth);
 
-                        int tmpLeft = left + ShelfColumn[key] * cellWidth + 5;
+                            int tmpLeft = left + ShelfColumn[key] * cellWidth + 5;
 
-                        for (int j = 0; j < Rows; j++)
-                        {
-                            //string s = string.Format("第{0}排第{1}层", key, Convert.ToString(Rows - j).PadLeft(2, '0'));
-                            string s = string.Format("{0}-{1}", ShelfName[key], Convert.ToString(Rows - j).PadLeft(2, '0'));
-                            e.Graphics.DrawString(s, font, Brushes.DarkCyan, tmpLeft, top[i] + (j + 1) * cellHeight + adjustHeight);
+                            for (int j = 0; j < Rows; j++)
+                            {
+                                //string s = string.Format("第{0}排第{1}层", key, Convert.ToString(Rows - j).PadLeft(2, '0'));
+                                string s = string.Format("{0}-{1}", ShelfName[key], Convert.ToString(Rows - j).PadLeft(2, '0'));
+                                e.Graphics.DrawString(s, font, Brushes.DarkCyan, tmpLeft, top[i] + (j + 1) * cellHeight + adjustHeight);
+                            }
                         }
                     }
 
@@ -228,7 +266,7 @@ namespace App.View.Dispatcher
             {
                 if (j == 1 && cellRows.Length < Columns * Rows)
                     continue;
-                g.DrawString(Convert.ToString(j), new Font("微软雅黑", 10), Brushes.DarkCyan, left + (j - 1) * cellWidth + adjustWidth, top + cellHeight * (Rows + 1) + 3);
+                g.DrawString(Convert.ToString(j), new Font("微软雅黑", fontSize), Brushes.DarkCyan, left + (j - 1) * cellWidth + adjustWidth, top + cellHeight * (Rows + 1) + 3);
             }
         }
         
@@ -262,7 +300,7 @@ namespace App.View.Dispatcher
 
         private void SetCellSize(int Columns, int Rows)
         {
-            cellWidth = (pnlContent.Width - 90 - sbShelf.Width - 20) / Columns;
+            cellWidth = (pnlContent.Width - sbShelf.Width - 40) / Columns;
             cellHeight = (pnlContent.Height / 2) / (Rows + 2);
         }
 
@@ -270,7 +308,8 @@ namespace App.View.Dispatcher
         {
             int i = e.Y < top[1] ? 0 : 1;
             int shelf = currentPage * 2 + i - 1;
-
+            if (shelf > ShelfCode.Count)
+                return;
             int column = (e.X - left) / cellWidth +1;
 
             int row = Rows - (e.Y - top[i]) / cellHeight + 1;
@@ -345,7 +384,7 @@ namespace App.View.Dispatcher
         private void pnlChart_MouseWheel(object sender, MouseEventArgs e)
         {
             IsWheel = true;
-            if (e.Delta < 0 && currentPage + 1 <= 12)
+            if (e.Delta < 0 && currentPage <= pages)
                 sbShelf.Value = (currentPage) * 30;
             else if (e.Delta > 0 && currentPage - 1 >= 1)
                 sbShelf.Value = (currentPage - 2) * 30;
@@ -354,14 +393,13 @@ namespace App.View.Dispatcher
         private void sbShelf_ValueChanged(object sender, EventArgs e)
         {
             int pos = sbShelf.Value / 30 + 1;
-            if (pos > 12)
+            if (pos > pages)
                 return;
             if (pos != currentPage)
             {
                 currentPage = pos;
                 pnlChart.Invalidate();
-                cellWidth = (pnlContent.Width - 90 - sbShelf.Width - 20) / Columns;
-                cellHeight = (pnlContent.Height / 2) / (Rows + 2);
+                SetCellSize(Columns, Rows);
             }
         }
 
@@ -431,7 +469,8 @@ namespace App.View.Dispatcher
                 int i = e.Y < top[1] ? 0 : 1;
                 
                 int shelf = currentPage * 2 + i - 1;
-
+                if (shelf > ShelfCode.Count)
+                    return;
                 int column =  (e.X - left) / cellWidth + 1;
                 int row = Rows - (e.Y - top[i]) / cellHeight + 1;
                 if (column <= Columns && row <= Rows && row > 0 && column > 0)
