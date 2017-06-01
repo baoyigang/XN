@@ -92,6 +92,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <Content Include="SRMDataService.svc" />
+    <Content Include="WCSDataService.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -104,6 +105,7 @@
     <Content Include="transSRMTask.ashx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IWCSDataService.cs" />
     <Compile Include="transSRMTaskAisle.ashx.cs">
       <DependentUpon>transSRMTaskAisle.ashx</DependentUpon>
     </Compile>
@@ -120,6 +122,9 @@
     </Compile>
     <Compile Include="transSRMTask.ashx.cs">
       <DependentUpon>transSRMTask.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="WCSDataService.svc.cs">
+      <DependentUpon>WCSDataService.svc</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
