@@ -41,30 +41,23 @@ namespace App.Dispatching.Process
         }
         protected override void StateChanged(StateItem stateItem, IProcessDispatcher dispatcher)
         {
+            object obj = ObjectUtil.GetObject(stateItem.State);
+            string TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ReadTaskNo")));        
             switch (stateItem.ItemName)
             {
-                case "CraneTaskFinished":
-                    object obj = ObjectUtil.GetObject(stateItem.State);
+                case "TaskFinish":
+                    
                     string TaskFinish = obj.ToString();
                     if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
-                    {
-                        string TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "CraneTaskNo")));
-                        //清除堆垛机任务号
-                        sbyte[] taskNo = new sbyte[10];
-                        Util.ConvertStringChar.stringToBytes("", 10).CopyTo(taskNo, 0);
-                        WriteToService(stateItem.Name, "TaskNo", taskNo);
+                    {                                       
 
                         DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
                         DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
 
-                        string TaskType = "";
-                        string strState = "";
+                        string TaskType = "";                        
                         if (dt.Rows.Count > 0)
-                        {
                             TaskType = dt.Rows[0]["TaskType"].ToString();
-                            strState = dt.Rows[0]["State"].ToString();
 
-                        }
                         //存储过程处理
                         if (TaskNo != "")
                         {
@@ -73,18 +66,7 @@ namespace App.Dispatching.Process
 
                             List<string> comds = new List<string>();
                             List<DataParameter[]> paras = new List<DataParameter[]>();
-                            if (TaskType == "12" || TaskType == "15" || TaskType == "14")  //输送线处理程序
-                            {
-                                comds.Add("WCS.Sp_TaskProcess"); //更新为出库任务完成
-                                para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                                paras.Add(para);
-
-
-                                comds.Add("WCS.UpdateTaskStateByTaskNo"); //更新到达出库站台
-                                para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@State", 6) };
-                                paras.Add(para);
-                            }
-
+                            
                             comds.Add("WCS.Sp_TaskProcess");
 
                             para = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
@@ -92,6 +74,10 @@ namespace App.Dispatching.Process
 
                             bll.ExecTran(comds.ToArray(), paras);
 
+                            //清除堆垛机任务号
+                            sbyte[] taskNo = new sbyte[20];
+                            Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
+                            WriteToService(stateItem.Name, "TaskNo", taskNo);
 
                             //上报任务完成
                             dt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
@@ -99,40 +85,28 @@ namespace App.Dispatching.Process
                             Logger.Info("任务完成上报");
                             string rtnMessage = Program.send("transWCSTaskStatus", Json);
                             Logger.Info("任务完成执行上报，收到反馈:" + rtnMessage);
-                        }
-
-                        string strValue = "";
-                        string[] str = new string[3];
-                        if (TaskType == "12" || (TaskType == "14" && strState == "4"))//显示拣货信息.
-                        {
-                            str[0] = "1";
-                            if (TaskType == "14")
-                                str[0] = "2";
-
-                            while ((strValue = FormDialog.ShowDialog(str, dt)) != "")
-                            {
-                                if (TaskType == "14")
-                                {
-                                    bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@State", 2) });
-                                }
-                                break;
-                            }
-                        }
+                        }                       
                     }
                     break;
-                case "CraneAlarmCode":
-                    object obj1 = ObjectUtil.GetObject(stateItem.State);
-                    if (obj1 == null)
+                case "ACK":
+                    string ack = obj.ToString();
+                    if (ack.Equals("True") || ack.Equals("1"))
+                        WriteToService(stateItem.Name, "STB", 0);
+                    break;
+                case "AlarmCode":                    
+                    if (obj == null)
                         return;
-                    if (obj1.ToString() != "0")
+                    if (obj.ToString() != "0")
                     {
-                        string strError = "";
-                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("AlarmCode={0}", obj1.ToString()));
+                        string AlarmDesc = "";
+                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("AlarmCode={0}", obj.ToString()));
                         if (drs.Length > 0)
-                            strError = drs[0]["AlarmDesc"].ToString();
+                            AlarmDesc = drs[0]["AlarmDesc"].ToString();
                         else
-                            strError = "堆垛机未知错误！";
+                            AlarmDesc = "堆垛机未知错误！";
 
+                         
+                        
                         //上报任务完成
                         //dt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
                         //string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
@@ -140,8 +114,12 @@ namespace App.Dispatching.Process
                         //string rtnMessage = Program.send("transWCSTaskStatus", Json);
                         //Logger.Info("任务完成执行上报，收到反馈:" + rtnMessage);
 
-                        Logger.Error(strError);
+                        Logger.Error(AlarmDesc);
                     }
+                    //更新任务报警
+
+                    DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@AlarmCode", obj), new DataParameter("@AlarmDesc", AlarmDesc) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskDeviceAlarm", param);
                     break;
                 case "Run":
                     blRun = (int)stateItem.State == 1;
@@ -159,8 +137,6 @@ namespace App.Dispatching.Process
                 default:
                     break;
             }
-           
-            
             return;
         }
         /// <summary>

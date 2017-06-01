@@ -341,4 +341,14 @@
       Delete Wcs_TaskTemp
     </CommandString>
   </Command>
+  <Command ID="UpdateDeviceAlarm">
+    <CommandString>
+      update CMD_Device set AlarmCode=@AlarmCode where DeviceNo=@DeviceNo
+    </CommandString>
+  </Command>
+  <Command ID="UpdateTaskDeviceAlarm">
+    <CommandString>
+      update WCS_Task set AlarmCode=@AlarmCode,AlarmDesc=@AlarmDesc where TaskNo=@TaskNo
+    </CommandString>
+  </Command>
 </SqlCommand>

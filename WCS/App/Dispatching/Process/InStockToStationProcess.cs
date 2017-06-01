@@ -49,8 +49,8 @@ namespace App.Dispatching.Process
 
                     BLL.BLLBase bll = new BLL.BLLBase();
 
-                    DataParameter[] param = new DataParameter[] { new DataParameter("@AreaCode", AreaCode), new DataParameter("@TaskNo", TaskNo), new DataParameter("@StationNo", @StationNo) };
-                    bll.ExecNonQueryTran("WCS.Sp_UpdateTaskCell", param);
+                    DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@StationNo", @StationNo) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskStateByTaskNo", param);
 
                     Logger.Info("任务号:" + TaskNo + " 托盘/箱号:" + Barcode + "到达入库站台:" + StationNo);
                 }

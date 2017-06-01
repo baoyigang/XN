@@ -11,18 +11,21 @@
     <Attribute Name="WcsUrl" Value="http://192.200.105.198:8080/api/RB2MJ/" />
   </Attributes>
   <Services>
-    <Service Name="Elevator01" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="Elevator01.xml" />    
+    <Service Name="PLC0101" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0101.xml" />
+    <Service Name="PLC0102" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0102.xml" />
+    <Service Name="PLC0103" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0103.xml" />
+    <Service Name="PLC0104" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0104.xml" />
   </Services>
   <Processes>
     <!--堆垛机Process-->
-    <Process Name="CarProcess" Type="App.exe, App.Dispatching.Process.CarProcess">
+    <Process Name="ElevatorProcess" Type="App.exe, App.Dispatching.Process.ElevatorProcess">
       <Item ServiceName="CarPLC0101" ItemName="TaskFinished" />
       <Item ServiceName="CarPLC0102" ItemName="TaskFinished" />
       <Item ServiceName="CarPLC0101" ItemName="AlarmCode" />
       <Item ServiceName="CarPLC0102" ItemName="AlarmCode" />
     </Process>
     <!--MiniLoadProcess-->
-    <Process Name="MiniLoadProcess" Type="App.exe, App.Dispatching.Process.MiniLoadProcess">
+    <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
       <Item ServiceName="MiniLoad02" ItemName="TaskFinished1" />
       <Item ServiceName="MiniLoad02" ItemName="TaskFinished2" />
       <Item ServiceName="MiniLoad02" ItemName="AlarmCode" />
