@@ -173,6 +173,7 @@
     <Compile Include="Dispatching\Process\InStockToStationProcess.cs" />
     <Compile Include="Dispatching\Process\OutStockFinishProcess.cs" />
     <Compile Include="Dispatching\Process\ReadProcess.cs" />
+    <Compile Include="Dispatching\Process\RtnMessage.cs" />
     <Compile Include="Dispatching\Process\StockRequestProcess.cs" />
     <Compile Include="Dispatching\TCPMessageParse.cs" />
     <Compile Include="Main.cs">
@@ -533,6 +534,34 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="PLC0104.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0103.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0102.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0101.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0105.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0106.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0107.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MonitorB.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -548,10 +577,6 @@
     <Content Include="Crane.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="PLC0101.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
     </Content>
     <None Include="Web References\WCSDataService\WCSDataService.disco" />
     <None Include="Resources\zoom.png" />

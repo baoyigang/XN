@@ -55,13 +55,13 @@ namespace ServiceHost
             }
             catch (Exception ex)
             {
-                rtnMessage = "[{\"id\":\"123678\",\"returnCode\"=\"111\",\"message\"=\"失败\",\"finishDate\":\"" + DateTime.Now.ToString() + "\",\"filed1\":\"" + ex.Message + "\"}]";
+                rtnMessage = "[{\"id\":\"123678\",\"returnCode\"=\"111\",\"message\"=\"" + ex.Message + "\",\"finishDate\":\"" + DateTime.Now.ToString() + "\",\"filed1\":\"" + ex.Message + "\"}]";
             }
             Log.WriteToLog("1", "transWCSTaskStatus--Rtn", rtnMessage);
             return rtnMessage;
         }
 
-        public static string send(string method, string data)
+        public string send(string method, string data)
         {
             string url = "" + method;
 

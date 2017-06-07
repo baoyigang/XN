@@ -18,12 +18,14 @@ namespace ServiceHost
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)] 
     public class SRMDataService : ISRMDataService
     {        
-        public string transWCSTask(List<Task> list)
+        public TaskRtn transWCSTask(List<Task> list)
         {
             string Json = List2Json(list);
             Log.WriteToLog("1", "transSRMTask--Rec", Json);
             string rtnMessage = "";
             string id = "";
+
+            TaskRtn taskRtn = new TaskRtn();
             try
             {
                 DataTable dt = Util.JsonHelper.Json2Dtb(Json);
@@ -37,19 +39,31 @@ namespace ServiceHost
                 bll.ExecNonQuery("WCS.DeleteWcsTemp");
                 bll.BatchInsertTable(dt, "WCS_TaskTemp");
                // bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
+                
+                taskRtn.id = id;
+                taskRtn.returnCode = "000";
+                taskRtn.message = "成功";
+                taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                taskRtn.field1 = "null";
 
-                rtnMessage = "[{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}]";
+                rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
             }
             catch (Exception ex)
             {
-                rtnMessage = "[{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
+                taskRtn.id = id;
+                taskRtn.returnCode = "001";
+                taskRtn.message = ex.Message;
+                taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                taskRtn.field1 = "null";
+                rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}";
             }
             Log.WriteToLog("1", "transSRMTask-Rtn", rtnMessage);
-            return rtnMessage;
+            return taskRtn;
+            //return rtnMessage;
         }
 
         //总控WCS入库巷道请求
-        public string transWCSTaskAisle(List<TaskAisle> list)
+        public TaskAisleRtn transWCSTaskAisle(List<TaskAisle> list)
         {
             string Json = List2Json(list);
             Log.WriteToLog("1", "transSRMTaskAisle-Rec", Json);
@@ -59,6 +73,7 @@ namespace ServiceHost
             string taskNo = "";
             string Aisle = "";
             string WarehouseCode = "";
+            TaskAisleRtn taskAisleRtn = new TaskAisleRtn();
             try
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
@@ -84,14 +99,21 @@ namespace ServiceHost
                 if(dtSelectAisle.Rows.Count>0)
                     Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();
 
-                rtnMessage = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}]";
+                taskAisleRtn.id = id;
+                taskAisleRtn.taskNo = taskNo;
+                taskAisleRtn.aisleNo = Aisle;
+                taskAisleRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                taskAisleRtn.field1 = "null";
+
+                rtnMessage = "{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
             }
             catch (Exception ex)
             {
-                rtnMessage = "[{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}]";
+                rtnMessage = "{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}";
             }
             Log.WriteToLog("1", "transSRMTaskAisle-Rtn", rtnMessage);
-            return rtnMessage;
+            return taskAisleRtn;
+            //return rtnMessage;
         }
         private string List2Json<T>(List<T> list)
         {

@@ -12,7 +12,7 @@
       left join CMD_BillType On CMD_BillType.BillTypeCode=WCS_TASK.BillTypeCode
       left join Sys_TableState on Sys_TableState.TableName='WCS_TASK' and Sys_TableState.FieldName='State' and WCS_TASK.State=Sys_TableState.State
       Where {0}
-      ORDER BY WCS_TASK.TaskLevel DESC,WCS_TASK.RequestDate,WCS_TASK.StartDate
+      ORDER BY WCS_TASK.TaskLevel,WCS_TASK.RequestDate,WCS_TASK.StartDate
     </CommandString>
   </Command>
   <Command ID="GetTaskByPallet">
@@ -172,7 +172,7 @@
   </Command> 
   <Command ID="UpdateTaskTimeByTaskNo">
     <CommandString>
-      update WCS_TASK set State=@State,CarNo=@CarNo,StartDate=getdate() where TaskNo=@TaskNo
+      update WCS_TASK set State=@State,DeviceNo=@DeviceNo,StartDate=getdate() where TaskNo=@TaskNo
     </CommandString>
   </Command>
   <Command ID="UpdateTaskAB">
@@ -314,13 +314,13 @@
   </Command>
   <Command ID="SelectTaskWcsStart">
     <CommandString>
-      select '0001' id,taskNo,palletBarcode,startDate,getdate() sendDate,'admin' sender, deviceNo,tasker,'' field1 from Wcs_Task   where TaskNo={0}
+      select '0001' id,taskNo,palletBarcode,startDate,getdate() sendDate,'admin' sender, deviceNo,tasker,'' field1 from Wcs_Task   where TaskNo='{0}'
     </CommandString>
   </Command>
 
   <Command ID="SelectTaskWcsFinish">
     <CommandString>
-      select '0001' id,taskNo,palletBarcode,'FINISHED' status,alarmCode errorCode,getdate() sendDate,'admin' sender,deviceNo,tasker,finishDate,'' field1 from Wcs_Task   where TaskNo={0}
+      select '0001' id,taskNo,palletBarcode,'FINISHED' status,alarmCode errorCode,getdate() sendDate,'admin' sender,deviceNo,tasker,finishDate,'' field1 from Wcs_Task   where TaskNo='{0}'
     </CommandString>
   </Command>
   
@@ -349,6 +349,24 @@
   <Command ID="UpdateTaskDeviceAlarm">
     <CommandString>
       update WCS_Task set AlarmCode=@AlarmCode,AlarmDesc=@AlarmDesc where TaskNo=@TaskNo
+    </CommandString>
+  </Command>
+  <Command ID="UpdateTaskStateByBarcode">
+    <CommandString>
+      update WCS_Task set State=@State,RequestDate=(case when @State=2 and RequestDate is null then getdate() else null end) 
+      where PalletBarcode=@PalletBarcode and State in('0','1','2') and TaskType='11'
+    </CommandString>
+  </Command>
+  <Command ID="UpdateTaskNewCellCode">
+    <CommandString>
+      update WCS_Task set NewCellCode=@field1,NewAddress=(select StationAddress from Vew_StationAddress where StationNo=@field1) where TaskNo=@TaskNo and NewCellCode=''
+    </CommandString>
+  </Command>
+  <Command ID="UpdateTaskReturnCode">
+    <CommandString>
+      update WCS_Task set StartReturnCode=(case when @Flag=1 then @ReturnCode else StartReturnCode end),
+      AlarmReturnCode=(case when @Flag=2 then @ReturnCode else AlarmReturnCode end),FinishReturnCode=(case when @Flag=3 then @ReturnCode else FinishReturnCode end)
+      where TaskNo=@TaskNo
     </CommandString>
   </Command>
 </SqlCommand>

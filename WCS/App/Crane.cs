@@ -17,6 +17,7 @@ namespace App
         public int Layer { get; set; }
         public int ForkStatus { get; set; }
         public int AlarmCode { get; set; }
+        public int Load { get; set; }
     }
 
     public delegate void CraneEventHandler(CraneEventArgs args);

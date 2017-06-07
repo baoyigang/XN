@@ -214,7 +214,14 @@ namespace App.View.Dispatcher
                             string depth = cellRow["CellCode"].ToString().Substring(9, 1);
                                
                             int shelf = 0;
-
+                            for (int j = 1; j <= ShelfCode.Count; j++)
+                            {
+                                if (ShelfCode[j].CompareTo(cellRow["ShelfCode"].ToString()) >= 0)
+                                {
+                                    shelf = j;
+                                    break;
+                                }
+                            }
                             if (shelf == i || shelf == i - 1)
                             {
                                 int top = 0;
@@ -325,48 +332,48 @@ namespace App.View.Dispatcher
                 {
                     if (cellRows.Length != 0)
                     {
-                        if (cellRows[0]["PalletBarCode"].ToString() != "")
-                        {
-                            frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString(), CellCode);
-                            f.ShowDialog();
-                        }
-                        //Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
-                        //Dictionary<string, object> property = new Dictionary<string, object>();
-                        //property.Add("产品编号", cellRows[0]["PalletBarCode"]);
-                        ////property.Add("产品名称", cellRows[0]["ProductName"]);
-                        ////property.Add("入库类型", cellRows[0]["BillTypeName"]);
-                        ////property.Add("产品状态", cellRows[0]["StateName"]);
-                        ////property.Add("条码", cellRows[0]["PalletBarcode"]);
-                        ////property.Add("产品类型", cellRows[0]["ProductTypeName"]);
-                        ////property.Add("托盘", cellRows[0]["PalletCode"]);
-
-                        ////property.Add("单据号", cellRows[0]["BillNo"]);
-                        //property.Add("入库时间", cellRows[0]["InDate"]);
-                        //properties.Add("产品信息", property);
-
-                        //property = new Dictionary<string, object>();
-                        //property.Add("库区名称", cellRows[0]["AreaName"]);
-                        //property.Add("货架名称", cellRows[0]["ShelfName"]);
-                        //property.Add("列", column);
-                        //property.Add("层", row);
-                        //string strState = "正常";
-                        //if (cellRows[0]["IsLock"].ToString() == "0")
-                        //    strState = "正常";
-                        //else
-                        //    strState = "锁定";
-                        //if (cellRows[0]["ErrorFlag"].ToString() == "1")
-                        //    strState = "异常";
-
-                        //if (cellRows[0]["IsActive"].ToString() == "0")
-                        //    strState = "禁用";
-
-                        //property.Add("状态", strState);
-                        //properties.Add("货位信息", property);
-                        //if (cellRows[0]["PalletBarCode"].ToString().Length > 0)
+                        //if (cellRows[0]["PalletBarCode"].ToString() != "")
                         //{
-                        //    frmCellDialog cellDialog = new frmCellDialog(properties);
-                        //    cellDialog.ShowDialog();
+                        //    frmCellInfo f = new frmCellInfo(cellRows[0]["PalletBarCode"].ToString(), CellCode);
+                        //    f.ShowDialog();
                         //}
+                        Dictionary<string, Dictionary<string, object>> properties = new Dictionary<string, Dictionary<string, object>>();
+                        Dictionary<string, object> property = new Dictionary<string, object>();
+                        //property.Add("产品编号", cellRows[0]["PalletBarCode"]);
+                        //property.Add("产品名称", cellRows[0]["ProductName"]);
+                        //property.Add("入库类型", cellRows[0]["BillTypeName"]);
+                        //property.Add("产品状态", cellRows[0]["StateName"]);
+                        property.Add("托盘条码", cellRows[0]["PalletBarcode"]);
+                        //property.Add("产品类型", cellRows[0]["ProductTypeName"]);
+                        //property.Add("托盘", cellRows[0]["PalletCode"]);
+
+                        property.Add("任务号", cellRows[0]["BillNo"]);
+                        property.Add("入库时间", cellRows[0]["InDate"]);
+                        properties.Add("产品信息", property);
+
+                        property = new Dictionary<string, object>();
+                        property.Add("库区名称", cellRows[0]["AreaName"]);
+                        property.Add("货架名称", cellRows[0]["ShelfName"]);
+                        property.Add("列", column);
+                        property.Add("层", row);
+                        string strState = "正常";
+                        if (cellRows[0]["IsLock"].ToString() == "0")
+                            strState = "正常";
+                        else
+                            strState = "锁定";
+                        if (cellRows[0]["ErrorFlag"].ToString() == "1")
+                            strState = "异常";
+
+                        if (cellRows[0]["IsActive"].ToString() == "0")
+                            strState = "禁用";
+
+                        property.Add("状态", strState);
+                        properties.Add("货位信息", property);
+                        if (cellRows[0]["PalletBarCode"].ToString().Length > 0)
+                        {
+                            frmCellDialog cellDialog = new frmCellDialog(properties);
+                            cellDialog.ShowDialog();
+                        }
                     }
                 }
                 else if (e.Button == System.Windows.Forms.MouseButtons.Right)
@@ -411,6 +418,10 @@ namespace App.View.Dispatcher
 
         private int ReturnColorFlag(string ProductCode, string IsActive, string IsLock, string ErrFlag)
         {
+            if (ProductCode.Length > 0)
+            {
+                string s = "";
+            }
             int Flag = 0;
             if (ProductCode == "")
             {
@@ -423,17 +434,11 @@ namespace App.View.Dispatcher
             {
                 if (IsLock == "0")
                 {
-                    if (ProductCode == "0001")
-                        Flag = 6;
-                    else
-                        Flag = 2;
+                    Flag = 2;
                 }
                 else
                 {
-                    if (ProductCode == "0001")
-                        Flag = 7;
-                    else
-                        Flag = 3;
+                    Flag = 3;
                 }
             }
             if (IsActive == "0")

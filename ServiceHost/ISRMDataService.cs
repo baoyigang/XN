@@ -17,11 +17,11 @@ namespace ServiceHost
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate ="transSRMTask", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json, BodyStyle = WebMessageBodyStyle.Bare)]
         //string transWCSTask(string taskData);
-        string transWCSTask(List<Task> list);
+        TaskRtn transWCSTask(List<Task> list);
 
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "transSRMTaskAisle", RequestFormat = WebMessageFormat.Json, ResponseFormat = WebMessageFormat.Json)]
-        string transWCSTaskAisle(List<TaskAisle> list);
+        TaskAisleRtn transWCSTaskAisle(List<TaskAisle> list);
 
     }
     [DataContract]
@@ -59,6 +59,20 @@ namespace ServiceHost
         public string field3 { get; set; }
     }
     [DataContract]
+    public class TaskRtn
+    {
+        [DataMember]
+        public string id { get; set; }
+        [DataMember]
+        public string returnCode { get; set; }
+        [DataMember]
+        public string message { get; set; }
+        [DataMember]
+        public string finishDate { get; set; }
+        [DataMember]
+        public string field1 { get; set; }        
+    }
+    [DataContract]
     public class TaskAisle
     {
         [DataMember]
@@ -77,5 +91,19 @@ namespace ServiceHost
         public string field2 { get; set; }
         [DataMember]
         public string field3 { get; set; }
+    }
+    [DataContract]
+    public class TaskAisleRtn
+    {
+        [DataMember]
+        public string id { get; set; }
+        [DataMember]
+        public string taskNo { get; set; }
+        [DataMember]
+        public string aisleNo { get; set; }
+        [DataMember]
+        public string finishDate { get; set; }
+        [DataMember]
+        public string field1 { get; set; }
     }
 }

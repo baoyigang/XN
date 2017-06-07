@@ -55,9 +55,9 @@
             this.toolStripButton_Inventor = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_MoveStock = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_UnitLoad = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_StartCrane = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_CellMonitor = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Barcode = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_StartCrane = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
             this.pnlBottom = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -66,18 +66,20 @@
             this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column11 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colPalletCode = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.colCraneNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colDeviceNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column3 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colFromStation = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colToStation = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column13 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column8 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column15 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.colErrCode = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.colErrDesc = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colAlarmCode = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colAlarmDesc = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colTaskType = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column7 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column2 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colNewCellCode = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colNewAddress = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.lbLog = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -134,6 +136,7 @@
             this.ToolStripMenuItemCellCode.Name = "ToolStripMenuItemCellCode";
             this.ToolStripMenuItemCellCode.Size = new System.Drawing.Size(148, 22);
             this.ToolStripMenuItemCellCode.Text = "重新分配货位";
+            this.ToolStripMenuItemCellCode.Visible = false;
             this.ToolStripMenuItemCellCode.Click += new System.EventHandler(this.ToolStripMenuItemCellCode_Click);
             // 
             // ToolStripMenuItemReassign
@@ -163,67 +166,67 @@
             // ToolStripMenuItem10
             // 
             this.ToolStripMenuItem10.Name = "ToolStripMenuItem10";
-            this.ToolStripMenuItem10.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem10.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem10.Text = "等待";
             this.ToolStripMenuItem10.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // ToolStripMenuItem11
             // 
             this.ToolStripMenuItem11.Name = "ToolStripMenuItem11";
-            this.ToolStripMenuItem11.Size = new System.Drawing.Size(148, 22);
-            this.ToolStripMenuItem11.Text = "请求入库";
+            this.ToolStripMenuItem11.Size = new System.Drawing.Size(155, 22);
+            this.ToolStripMenuItem11.Text = "到达入库站台1";
             this.ToolStripMenuItem11.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // ToolStripMenuItem12
             // 
             this.ToolStripMenuItem12.Name = "ToolStripMenuItem12";
-            this.ToolStripMenuItem12.Size = new System.Drawing.Size(148, 22);
-            this.ToolStripMenuItem12.Text = "入库站台";
+            this.ToolStripMenuItem12.Size = new System.Drawing.Size(155, 22);
+            this.ToolStripMenuItem12.Text = "到达入库站台2";
             this.ToolStripMenuItem12.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // ToolStripMenuItem13
             // 
             this.ToolStripMenuItem13.Name = "ToolStripMenuItem13";
-            this.ToolStripMenuItem13.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem13.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem13.Text = "上架执行";
             this.ToolStripMenuItem13.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // ToolStripMenuItem14
             // 
             this.ToolStripMenuItem14.Name = "ToolStripMenuItem14";
-            this.ToolStripMenuItem14.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem14.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem14.Text = "下架执行";
             this.ToolStripMenuItem14.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // ToolStripMenuItem15
             // 
             this.ToolStripMenuItem15.Name = "ToolStripMenuItem15";
-            this.ToolStripMenuItem15.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem15.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem15.Text = "到达出库站台";
             // 
             // ToolStripMenuItem16
             // 
             this.ToolStripMenuItem16.Name = "ToolStripMenuItem16";
-            this.ToolStripMenuItem16.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem16.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem16.Text = "出库输送";
             // 
             // ToolStripMenuItem17
             // 
             this.ToolStripMenuItem17.Name = "ToolStripMenuItem17";
-            this.ToolStripMenuItem17.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem17.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem17.Text = "完成";
             this.ToolStripMenuItem17.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
             // ToolStripMenuItem18
             // 
             this.ToolStripMenuItem18.Name = "ToolStripMenuItem18";
-            this.ToolStripMenuItem18.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem18.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem18.Text = "盘点中";
             // 
             // ToolStripMenuItem19
             // 
             this.ToolStripMenuItem19.Name = "ToolStripMenuItem19";
-            this.ToolStripMenuItem19.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItem19.Size = new System.Drawing.Size(155, 22);
             this.ToolStripMenuItem19.Text = "取消";
             this.ToolStripMenuItem19.Click += new System.EventHandler(this.ToolStripMenuItem_Click);
             // 
@@ -260,9 +263,9 @@
             this.toolStripButton_Inventor,
             this.toolStripButton_MoveStock,
             this.toolStripButton_UnitLoad,
+            this.toolStripButton_StartCrane,
             this.toolStripButton_CellMonitor,
             this.toolStripButton_Barcode,
-            this.toolStripButton_StartCrane,
             this.toolStripButton_Close});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
@@ -313,6 +316,7 @@
             this.toolStripButton_Inventor.Size = new System.Drawing.Size(60, 50);
             this.toolStripButton_Inventor.Text = "盘点任务";
             this.toolStripButton_Inventor.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Inventor.Visible = false;
             this.toolStripButton_Inventor.Click += new System.EventHandler(this.toolStripButton_Inventor_Click);
             // 
             // toolStripButton_MoveStock
@@ -338,6 +342,17 @@
             this.toolStripButton_UnitLoad.ToolTipText = "设备测试";
             this.toolStripButton_UnitLoad.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // toolStripButton_StartCrane
+            // 
+            this.toolStripButton_StartCrane.AutoSize = false;
+            this.toolStripButton_StartCrane.Image = global::App.Properties.Resources.process_remove;
+            this.toolStripButton_StartCrane.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_StartCrane.Name = "toolStripButton_StartCrane";
+            this.toolStripButton_StartCrane.Size = new System.Drawing.Size(70, 50);
+            this.toolStripButton_StartCrane.Text = "联机自动";
+            this.toolStripButton_StartCrane.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_StartCrane.Click += new System.EventHandler(this.toolStripButton_StartCrane_Click);
+            // 
             // toolStripButton_CellMonitor
             // 
             this.toolStripButton_CellMonitor.AutoSize = false;
@@ -360,17 +375,6 @@
             this.toolStripButton_Barcode.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton_Barcode.Visible = false;
             this.toolStripButton_Barcode.Click += new System.EventHandler(this.toolStripButton_Barcode_Click);
-            // 
-            // toolStripButton_StartCrane
-            // 
-            this.toolStripButton_StartCrane.AutoSize = false;
-            this.toolStripButton_StartCrane.Image = global::App.Properties.Resources.process_remove;
-            this.toolStripButton_StartCrane.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_StartCrane.Name = "toolStripButton_StartCrane";
-            this.toolStripButton_StartCrane.Size = new System.Drawing.Size(70, 50);
-            this.toolStripButton_StartCrane.Text = "联机自动";
-            this.toolStripButton_StartCrane.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_StartCrane.Click += new System.EventHandler(this.toolStripButton_StartCrane_Click);
             // 
             // toolStripButton_Close
             // 
@@ -433,18 +437,20 @@
             this.Column1,
             this.Column11,
             this.colPalletCode,
-            this.colCraneNo,
+            this.colDeviceNo,
             this.Column3,
             this.colFromStation,
             this.colToStation,
             this.Column13,
             this.Column8,
             this.Column15,
-            this.colErrCode,
-            this.colErrDesc,
+            this.colAlarmCode,
+            this.colAlarmDesc,
             this.colTaskType,
             this.Column7,
-            this.Column2});
+            this.Column2,
+            this.colNewCellCode,
+            this.colNewAddress});
             this.dgvMain.DataSource = this.bsMain;
             this.dgvMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvMain.Location = new System.Drawing.Point(0, 0);
@@ -486,7 +492,6 @@
             this.Column11.Name = "Column11";
             this.Column11.ReadOnly = true;
             this.Column11.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Column11.Width = 80;
             // 
             // colPalletCode
             // 
@@ -498,15 +503,15 @@
             this.colPalletCode.ReadOnly = true;
             this.colPalletCode.Width = 120;
             // 
-            // colCraneNo
+            // colDeviceNo
             // 
-            this.colCraneNo.DataPropertyName = "DeviceNo";
-            this.colCraneNo.FilteringEnabled = false;
-            this.colCraneNo.Frozen = true;
-            this.colCraneNo.HeaderText = "设备编号";
-            this.colCraneNo.Name = "colCraneNo";
-            this.colCraneNo.ReadOnly = true;
-            this.colCraneNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDeviceNo.DataPropertyName = "DeviceNo";
+            this.colDeviceNo.FilteringEnabled = false;
+            this.colDeviceNo.Frozen = true;
+            this.colDeviceNo.HeaderText = "设备编号";
+            this.colDeviceNo.Name = "colDeviceNo";
+            this.colDeviceNo.ReadOnly = true;
+            this.colDeviceNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // Column3
             // 
@@ -562,23 +567,23 @@
             this.Column15.ReadOnly = true;
             this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // colErrCode
+            // colAlarmCode
             // 
-            this.colErrCode.DataPropertyName = "AlarmCode";
-            this.colErrCode.FilteringEnabled = false;
-            this.colErrCode.HeaderText = "错误代码";
-            this.colErrCode.Name = "colErrCode";
-            this.colErrCode.ReadOnly = true;
-            this.colErrCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAlarmCode.DataPropertyName = "AlarmCode";
+            this.colAlarmCode.FilteringEnabled = false;
+            this.colAlarmCode.HeaderText = "报警代码";
+            this.colAlarmCode.Name = "colAlarmCode";
+            this.colAlarmCode.ReadOnly = true;
+            this.colAlarmCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
-            // colErrDesc
+            // colAlarmDesc
             // 
-            this.colErrDesc.DataPropertyName = "AlarmDesc";
-            this.colErrDesc.FilteringEnabled = false;
-            this.colErrDesc.HeaderText = "错误描述";
-            this.colErrDesc.Name = "colErrDesc";
-            this.colErrDesc.ReadOnly = true;
-            this.colErrDesc.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colAlarmDesc.DataPropertyName = "AlarmDesc";
+            this.colAlarmDesc.FilteringEnabled = false;
+            this.colAlarmDesc.HeaderText = "报警描述";
+            this.colAlarmDesc.Name = "colAlarmDesc";
+            this.colAlarmDesc.ReadOnly = true;
+            this.colAlarmDesc.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // colTaskType
             // 
@@ -605,6 +610,24 @@
             this.Column2.Name = "Column2";
             this.Column2.ReadOnly = true;
             this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // colNewCellCode
+            // 
+            this.colNewCellCode.DataPropertyName = "NewCellCode";
+            this.colNewCellCode.FilteringEnabled = false;
+            this.colNewCellCode.HeaderText = "新货位";
+            this.colNewCellCode.Name = "colNewCellCode";
+            this.colNewCellCode.ReadOnly = true;
+            this.colNewCellCode.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // colNewAddress
+            // 
+            this.colNewAddress.DataPropertyName = "NewAddress";
+            this.colNewAddress.FilteringEnabled = false;
+            this.colNewAddress.HeaderText = "新货位地址";
+            this.colNewAddress.Name = "colNewAddress";
+            this.colNewAddress.ReadOnly = true;
+            this.colNewAddress.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // lbLog
             // 
@@ -853,17 +876,19 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column1;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column11;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colPalletCode;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colCraneNo;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colDeviceNo;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column3;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colFromStation;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colToStation;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column13;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column8;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column15;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colErrCode;
-        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colErrDesc;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colAlarmCode;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colAlarmDesc;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colTaskType;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column7;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column2;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colNewCellCode;
+        private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colNewAddress;
     }
 }

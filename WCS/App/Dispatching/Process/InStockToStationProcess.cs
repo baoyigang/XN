@@ -14,50 +14,36 @@ namespace App.Dispatching.Process
             object obj = ObjectUtil.GetObject(stateItem.State);
             if (obj == null)
                 return;
-            string TaskFinish = obj.ToString();
-            if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
+            if (obj.ToString().Trim().Length <= 0)
+                return;
+            string PalletBarcode = obj.ToString();
+
+            string StationNo = "";
+            int state = 1;
+            switch (stateItem.ItemName)
             {
-                string ReadName = "";                
-                string AreaCode = "";
-                string StationNo = "";
-                switch (stateItem.ItemName)
-                {
-                    case "InFinish1":
-                        ReadName = "InTaskNo1";
-                        AreaCode = "003";
-                        StationNo = "01";
-                        break;
-                    case "InFinish2":
-                        ReadName = "InTaskNo2";
-                        AreaCode = "002";
-                        StationNo = "02";
-                        break;
-                    case "InFinish3":
-                        ReadName = "InTaskNo3";
-                        AreaCode = "003";
-                        StationNo = "03";
-                        break;
-                }
+                case "ToInStation1":
+                    StationNo = "AX-" + stateItem.Name.Substring(5, 2) + "-00";
+                    break;
+                case "ToInStation2":
+                    StationNo = "AX-" + stateItem.Name.Substring(5, 2) + "-01";
+                    state = 2;
+                    break;
+            }
 
-                try
-                {
-                    string TaskInfo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, ReadName)));
-                    if (TaskInfo.Length <= 0)
-                        return;
-                    string TaskNo = TaskInfo.Substring(0, 10).Trim();
-                    string Barcode = TaskInfo.PadRight(20, ' ').Substring(10, 10).Trim();
+            try
+            {
 
-                    BLL.BLLBase bll = new BLL.BLLBase();
+                BLL.BLLBase bll = new BLL.BLLBase();
 
-                    DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@StationNo", @StationNo) };
-                    bll.ExecNonQueryTran("WCS.UpdateTaskStateByTaskNo", param);
+                DataParameter[] param = new DataParameter[] { new DataParameter("@PalletBarcode", PalletBarcode), new DataParameter("@State", state) };
+                bll.ExecNonQueryTran("WCS.UpdateTaskStateByBarcode", param);
 
-                    Logger.Info("任务号:" + TaskNo + " 托盘/箱号:" + Barcode + "到达入库站台:" + StationNo);
-                }
-                catch (Exception ex)
-                {
-                    Logger.Error("InStockToStationProcess出错，原因：" + ex.Message);
-                }
+                Logger.Info("托盘/箱号：" + PalletBarcode + "到达入库站台：" + StationNo);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("InStockToStationProcess出错，原因：" + ex.Message);
             }
         }
     }

@@ -29,20 +29,18 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMonitorB));
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.pnlMain = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.picCrane1 = new System.Windows.Forms.PictureBox();
+            this.btnSRM7 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtRow5 = new System.Windows.Forms.TextBox();
-            this.btnBack5 = new System.Windows.Forms.Button();
-            this.btnStop5 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -55,7 +53,7 @@
             this.txtForkStatus5 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtAlarmDesc5 = new System.Windows.Forms.TextBox();
-            this.txtActionMode5 = new System.Windows.Forms.TextBox();
+            this.txtWorkMode5 = new System.Windows.Forms.TextBox();
             this.txtColumn5 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txtTaskNo5 = new System.Windows.Forms.TextBox();
@@ -63,8 +61,6 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.txtRow6 = new System.Windows.Forms.TextBox();
-            this.btnBack6 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -77,40 +73,39 @@
             this.txtForkStatus6 = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtAlarmDesc6 = new System.Windows.Forms.TextBox();
-            this.txtActionMode6 = new System.Windows.Forms.TextBox();
+            this.txtWorkMode6 = new System.Windows.Forms.TextBox();
             this.txtColumn6 = new System.Windows.Forms.TextBox();
             this.label17 = new System.Windows.Forms.Label();
             this.txtTaskNo6 = new System.Windows.Forms.TextBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label18 = new System.Windows.Forms.Label();
-            this.txtRow3 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.txtRow7 = new System.Windows.Forms.TextBox();
             this.label19 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label22 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
-            this.txtStatus3 = new System.Windows.Forms.TextBox();
+            this.txtStatus7 = new System.Windows.Forms.TextBox();
             this.label24 = new System.Windows.Forms.Label();
-            this.txtAlarmCode3 = new System.Windows.Forms.TextBox();
-            this.txtLayer3 = new System.Windows.Forms.TextBox();
+            this.txtAlarmCode7 = new System.Windows.Forms.TextBox();
+            this.txtLayer7 = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
-            this.txtForkStatus3 = new System.Windows.Forms.TextBox();
+            this.txtForkStatus7 = new System.Windows.Forms.TextBox();
             this.label26 = new System.Windows.Forms.Label();
-            this.txtAlarmDesc3 = new System.Windows.Forms.TextBox();
-            this.txtActionMode3 = new System.Windows.Forms.TextBox();
-            this.txtColumn3 = new System.Windows.Forms.TextBox();
+            this.txtAlarmDesc7 = new System.Windows.Forms.TextBox();
+            this.txtWorkMode7 = new System.Windows.Forms.TextBox();
+            this.txtColumn7 = new System.Windows.Forms.TextBox();
             this.label27 = new System.Windows.Forms.Label();
-            this.txtTaskNo3 = new System.Windows.Forms.TextBox();
-            this.bsMain = new System.Windows.Forms.BindingSource(this.components);
+            this.txtTaskNo7 = new System.Windows.Forms.TextBox();
+            this.btnSRM6 = new System.Windows.Forms.Button();
+            this.btnSRM5 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picCrane1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -119,7 +114,6 @@
             this.groupBox1.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.SuspendLayout();
             // 
             // pnlMain
@@ -150,7 +144,9 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.picCrane1);
+            this.panel1.Controls.Add(this.btnSRM5);
+            this.panel1.Controls.Add(this.btnSRM6);
+            this.panel1.Controls.Add(this.btnSRM7);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -158,16 +154,17 @@
             this.panel1.Size = new System.Drawing.Size(1124, 418);
             this.panel1.TabIndex = 9;
             // 
-            // picCrane1
+            // btnSRM7
             // 
-            this.picCrane1.BackColor = System.Drawing.Color.Transparent;
-            this.picCrane1.Image = ((System.Drawing.Image)(resources.GetObject("picCrane1.Image")));
-            this.picCrane1.Location = new System.Drawing.Point(966, 35);
-            this.picCrane1.Name = "picCrane1";
-            this.picCrane1.Size = new System.Drawing.Size(40, 21);
-            this.picCrane1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCrane1.TabIndex = 155;
-            this.picCrane1.TabStop = false;
+            this.btnSRM7.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM7.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
+            this.btnSRM7.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM7.Location = new System.Drawing.Point(72, 40);
+            this.btnSRM7.Name = "btnSRM7";
+            this.btnSRM7.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM7.TabIndex = 156;
+            this.btnSRM7.Text = "7";
+            this.btnSRM7.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
@@ -206,8 +203,6 @@
             // 
             this.groupBox4.Controls.Add(this.label8);
             this.groupBox4.Controls.Add(this.txtRow5);
-            this.groupBox4.Controls.Add(this.btnBack5);
-            this.groupBox4.Controls.Add(this.btnStop5);
             this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.label3);
@@ -220,7 +215,7 @@
             this.groupBox4.Controls.Add(this.txtForkStatus5);
             this.groupBox4.Controls.Add(this.label7);
             this.groupBox4.Controls.Add(this.txtAlarmDesc5);
-            this.groupBox4.Controls.Add(this.txtActionMode5);
+            this.groupBox4.Controls.Add(this.txtWorkMode5);
             this.groupBox4.Controls.Add(this.txtColumn5);
             this.groupBox4.Controls.Add(this.label6);
             this.groupBox4.Controls.Add(this.txtTaskNo5);
@@ -228,7 +223,7 @@
             this.groupBox4.ForeColor = System.Drawing.Color.Red;
             this.groupBox4.Location = new System.Drawing.Point(5, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(217, 352);
+            this.groupBox4.Size = new System.Drawing.Size(217, 313);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             // 
@@ -239,9 +234,9 @@
             this.label8.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label8.Location = new System.Drawing.Point(2, 110);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(67, 20);
+            this.label8.Size = new System.Drawing.Size(65, 20);
             this.label8.TabIndex = 20;
-            this.label8.Text = "当  前  排";
+            this.label8.Text = "当前巷道";
             // 
             // txtRow5
             // 
@@ -250,30 +245,6 @@
             this.txtRow5.ReadOnly = true;
             this.txtRow5.Size = new System.Drawing.Size(129, 26);
             this.txtRow5.TabIndex = 19;
-            // 
-            // btnBack5
-            // 
-            this.btnBack5.BackColor = System.Drawing.Color.Lime;
-            this.btnBack5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBack5.Location = new System.Drawing.Point(18, 293);
-            this.btnBack5.Name = "btnBack5";
-            this.btnBack5.Size = new System.Drawing.Size(75, 30);
-            this.btnBack5.TabIndex = 16;
-            this.btnBack5.Text = "召回";
-            this.btnBack5.UseVisualStyleBackColor = false;
-            this.btnBack5.Click += new System.EventHandler(this.btnBack1_Click);
-            // 
-            // btnStop5
-            // 
-            this.btnStop5.BackColor = System.Drawing.Color.Red;
-            this.btnStop5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnStop5.Location = new System.Drawing.Point(113, 292);
-            this.btnStop5.Name = "btnStop5";
-            this.btnStop5.Size = new System.Drawing.Size(75, 30);
-            this.btnStop5.TabIndex = 9;
-            this.btnStop5.Text = "急停";
-            this.btnStop5.UseVisualStyleBackColor = false;
-            this.btnStop5.Click += new System.EventHandler(this.btnStop1_Click);
             // 
             // label1
             // 
@@ -332,7 +303,7 @@
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label20.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label20.Location = new System.Drawing.Point(4, 170);
+            this.label20.Location = new System.Drawing.Point(2, 170);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(67, 20);
             this.label20.TabIndex = 18;
@@ -392,13 +363,13 @@
             this.txtAlarmDesc5.Size = new System.Drawing.Size(129, 26);
             this.txtAlarmDesc5.TabIndex = 12;
             // 
-            // txtActionMode5
+            // txtWorkMode5
             // 
-            this.txtActionMode5.Location = new System.Drawing.Point(73, 78);
-            this.txtActionMode5.Name = "txtActionMode5";
-            this.txtActionMode5.ReadOnly = true;
-            this.txtActionMode5.Size = new System.Drawing.Size(129, 26);
-            this.txtActionMode5.TabIndex = 1;
+            this.txtWorkMode5.Location = new System.Drawing.Point(73, 78);
+            this.txtWorkMode5.Name = "txtWorkMode5";
+            this.txtWorkMode5.ReadOnly = true;
+            this.txtWorkMode5.Size = new System.Drawing.Size(129, 26);
+            this.txtWorkMode5.TabIndex = 1;
             // 
             // txtColumn5
             // 
@@ -442,8 +413,6 @@
             // 
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.txtRow6);
-            this.groupBox1.Controls.Add(this.btnBack6);
-            this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Controls.Add(this.label12);
@@ -456,7 +425,7 @@
             this.groupBox1.Controls.Add(this.txtForkStatus6);
             this.groupBox1.Controls.Add(this.label16);
             this.groupBox1.Controls.Add(this.txtAlarmDesc6);
-            this.groupBox1.Controls.Add(this.txtActionMode6);
+            this.groupBox1.Controls.Add(this.txtWorkMode6);
             this.groupBox1.Controls.Add(this.txtColumn6);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.txtTaskNo6);
@@ -464,7 +433,7 @@
             this.groupBox1.ForeColor = System.Drawing.Color.Red;
             this.groupBox1.Location = new System.Drawing.Point(5, 0);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(217, 352);
+            this.groupBox1.Size = new System.Drawing.Size(217, 302);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             // 
@@ -475,9 +444,9 @@
             this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label9.Location = new System.Drawing.Point(2, 110);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(67, 20);
+            this.label9.Size = new System.Drawing.Size(65, 20);
             this.label9.TabIndex = 20;
-            this.label9.Text = "当  前  排";
+            this.label9.Text = "当前巷道";
             // 
             // txtRow6
             // 
@@ -486,28 +455,6 @@
             this.txtRow6.ReadOnly = true;
             this.txtRow6.Size = new System.Drawing.Size(129, 26);
             this.txtRow6.TabIndex = 19;
-            // 
-            // btnBack6
-            // 
-            this.btnBack6.BackColor = System.Drawing.Color.Lime;
-            this.btnBack6.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.btnBack6.Location = new System.Drawing.Point(18, 291);
-            this.btnBack6.Name = "btnBack6";
-            this.btnBack6.Size = new System.Drawing.Size(75, 30);
-            this.btnBack6.TabIndex = 16;
-            this.btnBack6.Text = "召回";
-            this.btnBack6.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            this.button2.BackColor = System.Drawing.Color.Red;
-            this.button2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button2.Location = new System.Drawing.Point(113, 290);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 30);
-            this.button2.TabIndex = 9;
-            this.button2.Text = "急停";
-            this.button2.UseVisualStyleBackColor = false;
             // 
             // label10
             // 
@@ -626,13 +573,13 @@
             this.txtAlarmDesc6.Size = new System.Drawing.Size(129, 26);
             this.txtAlarmDesc6.TabIndex = 12;
             // 
-            // txtActionMode6
+            // txtWorkMode6
             // 
-            this.txtActionMode6.Location = new System.Drawing.Point(73, 78);
-            this.txtActionMode6.Name = "txtActionMode6";
-            this.txtActionMode6.ReadOnly = true;
-            this.txtActionMode6.Size = new System.Drawing.Size(129, 26);
-            this.txtActionMode6.TabIndex = 1;
+            this.txtWorkMode6.Location = new System.Drawing.Point(73, 78);
+            this.txtWorkMode6.Name = "txtWorkMode6";
+            this.txtWorkMode6.ReadOnly = true;
+            this.txtWorkMode6.Size = new System.Drawing.Size(129, 26);
+            this.txtWorkMode6.TabIndex = 1;
             // 
             // txtColumn6
             // 
@@ -674,30 +621,28 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label18);
-            this.groupBox2.Controls.Add(this.txtRow3);
-            this.groupBox2.Controls.Add(this.button3);
-            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.txtRow7);
             this.groupBox2.Controls.Add(this.label19);
             this.groupBox2.Controls.Add(this.label21);
             this.groupBox2.Controls.Add(this.label22);
             this.groupBox2.Controls.Add(this.label23);
-            this.groupBox2.Controls.Add(this.txtStatus3);
+            this.groupBox2.Controls.Add(this.txtStatus7);
             this.groupBox2.Controls.Add(this.label24);
-            this.groupBox2.Controls.Add(this.txtAlarmCode3);
-            this.groupBox2.Controls.Add(this.txtLayer3);
+            this.groupBox2.Controls.Add(this.txtAlarmCode7);
+            this.groupBox2.Controls.Add(this.txtLayer7);
             this.groupBox2.Controls.Add(this.label25);
-            this.groupBox2.Controls.Add(this.txtForkStatus3);
+            this.groupBox2.Controls.Add(this.txtForkStatus7);
             this.groupBox2.Controls.Add(this.label26);
-            this.groupBox2.Controls.Add(this.txtAlarmDesc3);
-            this.groupBox2.Controls.Add(this.txtActionMode3);
-            this.groupBox2.Controls.Add(this.txtColumn3);
+            this.groupBox2.Controls.Add(this.txtAlarmDesc7);
+            this.groupBox2.Controls.Add(this.txtWorkMode7);
+            this.groupBox2.Controls.Add(this.txtColumn7);
             this.groupBox2.Controls.Add(this.label27);
-            this.groupBox2.Controls.Add(this.txtTaskNo3);
+            this.groupBox2.Controls.Add(this.txtTaskNo7);
             this.groupBox2.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox2.ForeColor = System.Drawing.Color.Red;
             this.groupBox2.Location = new System.Drawing.Point(5, 0);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(217, 352);
+            this.groupBox2.Size = new System.Drawing.Size(217, 304);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             // 
@@ -708,39 +653,17 @@
             this.label18.ForeColor = System.Drawing.SystemColors.ControlText;
             this.label18.Location = new System.Drawing.Point(2, 110);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(67, 20);
+            this.label18.Size = new System.Drawing.Size(65, 20);
             this.label18.TabIndex = 20;
-            this.label18.Text = "当  前  排";
+            this.label18.Text = "当前巷道";
             // 
-            // txtRow3
+            // txtRow7
             // 
-            this.txtRow3.Location = new System.Drawing.Point(73, 108);
-            this.txtRow3.Name = "txtRow3";
-            this.txtRow3.ReadOnly = true;
-            this.txtRow3.Size = new System.Drawing.Size(129, 26);
-            this.txtRow3.TabIndex = 19;
-            // 
-            // button3
-            // 
-            this.button3.BackColor = System.Drawing.Color.Lime;
-            this.button3.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button3.Location = new System.Drawing.Point(18, 293);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 30);
-            this.button3.TabIndex = 16;
-            this.button3.Text = "召回";
-            this.button3.UseVisualStyleBackColor = false;
-            // 
-            // button4
-            // 
-            this.button4.BackColor = System.Drawing.Color.Red;
-            this.button4.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.button4.Location = new System.Drawing.Point(113, 292);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 30);
-            this.button4.TabIndex = 9;
-            this.button4.Text = "急停";
-            this.button4.UseVisualStyleBackColor = false;
+            this.txtRow7.Location = new System.Drawing.Point(73, 108);
+            this.txtRow7.Name = "txtRow7";
+            this.txtRow7.ReadOnly = true;
+            this.txtRow7.Size = new System.Drawing.Size(129, 26);
+            this.txtRow7.TabIndex = 19;
             // 
             // label19
             // 
@@ -786,13 +709,13 @@
             this.label23.TabIndex = 5;
             this.label23.Text = "工作方式";
             // 
-            // txtStatus3
+            // txtStatus7
             // 
-            this.txtStatus3.Location = new System.Drawing.Point(73, 50);
-            this.txtStatus3.Name = "txtStatus3";
-            this.txtStatus3.ReadOnly = true;
-            this.txtStatus3.Size = new System.Drawing.Size(129, 26);
-            this.txtStatus3.TabIndex = 10;
+            this.txtStatus7.Location = new System.Drawing.Point(73, 50);
+            this.txtStatus7.Name = "txtStatus7";
+            this.txtStatus7.ReadOnly = true;
+            this.txtStatus7.Size = new System.Drawing.Size(129, 26);
+            this.txtStatus7.TabIndex = 10;
             // 
             // label24
             // 
@@ -805,21 +728,21 @@
             this.label24.TabIndex = 18;
             this.label24.Text = "当  前  层";
             // 
-            // txtAlarmCode3
+            // txtAlarmCode7
             // 
-            this.txtAlarmCode3.Location = new System.Drawing.Point(73, 226);
-            this.txtAlarmCode3.Name = "txtAlarmCode3";
-            this.txtAlarmCode3.ReadOnly = true;
-            this.txtAlarmCode3.Size = new System.Drawing.Size(129, 26);
-            this.txtAlarmCode3.TabIndex = 3;
+            this.txtAlarmCode7.Location = new System.Drawing.Point(73, 226);
+            this.txtAlarmCode7.Name = "txtAlarmCode7";
+            this.txtAlarmCode7.ReadOnly = true;
+            this.txtAlarmCode7.Size = new System.Drawing.Size(129, 26);
+            this.txtAlarmCode7.TabIndex = 3;
             // 
-            // txtLayer3
+            // txtLayer7
             // 
-            this.txtLayer3.Location = new System.Drawing.Point(73, 167);
-            this.txtLayer3.Name = "txtLayer3";
-            this.txtLayer3.ReadOnly = true;
-            this.txtLayer3.Size = new System.Drawing.Size(129, 26);
-            this.txtLayer3.TabIndex = 17;
+            this.txtLayer7.Location = new System.Drawing.Point(73, 167);
+            this.txtLayer7.Name = "txtLayer7";
+            this.txtLayer7.ReadOnly = true;
+            this.txtLayer7.Size = new System.Drawing.Size(129, 26);
+            this.txtLayer7.TabIndex = 17;
             // 
             // label25
             // 
@@ -832,13 +755,13 @@
             this.label25.TabIndex = 11;
             this.label25.Text = "工作状态";
             // 
-            // txtForkStatus3
+            // txtForkStatus7
             // 
-            this.txtForkStatus3.Location = new System.Drawing.Point(73, 197);
-            this.txtForkStatus3.Name = "txtForkStatus3";
-            this.txtForkStatus3.ReadOnly = true;
-            this.txtForkStatus3.Size = new System.Drawing.Size(129, 26);
-            this.txtForkStatus3.TabIndex = 2;
+            this.txtForkStatus7.Location = new System.Drawing.Point(73, 197);
+            this.txtForkStatus7.Name = "txtForkStatus7";
+            this.txtForkStatus7.ReadOnly = true;
+            this.txtForkStatus7.Size = new System.Drawing.Size(129, 26);
+            this.txtForkStatus7.TabIndex = 2;
             // 
             // label26
             // 
@@ -851,29 +774,29 @@
             this.label26.TabIndex = 15;
             this.label26.Text = "当  前  列";
             // 
-            // txtAlarmDesc3
+            // txtAlarmDesc7
             // 
-            this.txtAlarmDesc3.Location = new System.Drawing.Point(73, 256);
-            this.txtAlarmDesc3.Name = "txtAlarmDesc3";
-            this.txtAlarmDesc3.ReadOnly = true;
-            this.txtAlarmDesc3.Size = new System.Drawing.Size(129, 26);
-            this.txtAlarmDesc3.TabIndex = 12;
+            this.txtAlarmDesc7.Location = new System.Drawing.Point(73, 256);
+            this.txtAlarmDesc7.Name = "txtAlarmDesc7";
+            this.txtAlarmDesc7.ReadOnly = true;
+            this.txtAlarmDesc7.Size = new System.Drawing.Size(129, 26);
+            this.txtAlarmDesc7.TabIndex = 12;
             // 
-            // txtActionMode3
+            // txtWorkMode7
             // 
-            this.txtActionMode3.Location = new System.Drawing.Point(73, 78);
-            this.txtActionMode3.Name = "txtActionMode3";
-            this.txtActionMode3.ReadOnly = true;
-            this.txtActionMode3.Size = new System.Drawing.Size(129, 26);
-            this.txtActionMode3.TabIndex = 1;
+            this.txtWorkMode7.Location = new System.Drawing.Point(73, 78);
+            this.txtWorkMode7.Name = "txtWorkMode7";
+            this.txtWorkMode7.ReadOnly = true;
+            this.txtWorkMode7.Size = new System.Drawing.Size(129, 26);
+            this.txtWorkMode7.TabIndex = 1;
             // 
-            // txtColumn3
+            // txtColumn7
             // 
-            this.txtColumn3.Location = new System.Drawing.Point(73, 137);
-            this.txtColumn3.Name = "txtColumn3";
-            this.txtColumn3.ReadOnly = true;
-            this.txtColumn3.Size = new System.Drawing.Size(129, 26);
-            this.txtColumn3.TabIndex = 14;
+            this.txtColumn7.Location = new System.Drawing.Point(73, 137);
+            this.txtColumn7.Name = "txtColumn7";
+            this.txtColumn7.ReadOnly = true;
+            this.txtColumn7.Size = new System.Drawing.Size(129, 26);
+            this.txtColumn7.TabIndex = 14;
             // 
             // label27
             // 
@@ -886,13 +809,37 @@
             this.label27.TabIndex = 13;
             this.label27.Text = "报警描述";
             // 
-            // txtTaskNo3
+            // txtTaskNo7
             // 
-            this.txtTaskNo3.Location = new System.Drawing.Point(73, 19);
-            this.txtTaskNo3.Name = "txtTaskNo3";
-            this.txtTaskNo3.ReadOnly = true;
-            this.txtTaskNo3.Size = new System.Drawing.Size(129, 26);
-            this.txtTaskNo3.TabIndex = 0;
+            this.txtTaskNo7.Location = new System.Drawing.Point(73, 19);
+            this.txtTaskNo7.Name = "txtTaskNo7";
+            this.txtTaskNo7.ReadOnly = true;
+            this.txtTaskNo7.Size = new System.Drawing.Size(129, 26);
+            this.txtTaskNo7.TabIndex = 0;
+            // 
+            // btnSRM6
+            // 
+            this.btnSRM6.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM6.Font = new System.Drawing.Font("Microsoft YaHei", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSRM6.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM6.Location = new System.Drawing.Point(72, 132);
+            this.btnSRM6.Name = "btnSRM6";
+            this.btnSRM6.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM6.TabIndex = 157;
+            this.btnSRM6.Text = "6";
+            this.btnSRM6.UseVisualStyleBackColor = false;
+            // 
+            // btnSRM5
+            // 
+            this.btnSRM5.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM5.Font = new System.Drawing.Font("Microsoft YaHei", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnSRM5.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM5.Location = new System.Drawing.Point(72, 221);
+            this.btnSRM5.Name = "btnSRM5";
+            this.btnSRM5.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM5.TabIndex = 158;
+            this.btnSRM5.Text = "5";
+            this.btnSRM5.UseVisualStyleBackColor = false;
             // 
             // frmMonitorB
             // 
@@ -904,13 +851,13 @@
             this.Name = "frmMonitorB";
             this.Text = "监控";
             this.Load += new System.EventHandler(this.frmMonitorB_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picCrane1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -922,7 +869,6 @@
             this.tabPage4.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -933,9 +879,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtAlarmCode5;
         private System.Windows.Forms.TextBox txtForkStatus5;
-        private System.Windows.Forms.TextBox txtActionMode5;
+        private System.Windows.Forms.TextBox txtWorkMode5;
         private System.Windows.Forms.TextBox txtTaskNo5;
-        private System.Windows.Forms.Button btnStop5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
@@ -947,7 +892,6 @@
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtColumn5;
         private System.Windows.Forms.BindingSource bsMain;
-        private System.Windows.Forms.Button btnBack5;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.TextBox txtLayer5;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -962,8 +906,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txtRow6;
-        private System.Windows.Forms.Button btnBack6;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label12;
@@ -976,32 +918,32 @@
         private System.Windows.Forms.TextBox txtForkStatus6;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtAlarmDesc6;
-        private System.Windows.Forms.TextBox txtActionMode6;
+        private System.Windows.Forms.TextBox txtWorkMode6;
         private System.Windows.Forms.TextBox txtColumn6;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TextBox txtTaskNo6;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox txtRow3;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.TextBox txtRow7;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox txtStatus3;
+        private System.Windows.Forms.TextBox txtStatus7;
         private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox txtAlarmCode3;
-        private System.Windows.Forms.TextBox txtLayer3;
+        private System.Windows.Forms.TextBox txtAlarmCode7;
+        private System.Windows.Forms.TextBox txtLayer7;
         private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox txtForkStatus3;
+        private System.Windows.Forms.TextBox txtForkStatus7;
         private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox txtAlarmDesc3;
-        private System.Windows.Forms.TextBox txtActionMode3;
-        private System.Windows.Forms.TextBox txtColumn3;
+        private System.Windows.Forms.TextBox txtAlarmDesc7;
+        private System.Windows.Forms.TextBox txtWorkMode7;
+        private System.Windows.Forms.TextBox txtColumn7;
         private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox txtTaskNo3;
-        private System.Windows.Forms.PictureBox picCrane1;
+        private System.Windows.Forms.TextBox txtTaskNo7;
+        private System.Windows.Forms.Button btnSRM7;
+        private System.Windows.Forms.Button btnSRM5;
+        private System.Windows.Forms.Button btnSRM6;
     }
 }

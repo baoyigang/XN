@@ -70,8 +70,13 @@ namespace WindowsFormsApplication1
             url = "http://192.168.0.235:3000/AW/ROBO2XN/" + method;
             url = "http://192.200.105.198:8080/api/RB2MJ/" + method;
             url = "http://localhost/ServiceHost/SRMDataService.svc/" + method;
+            url = "http://192.200.105.219:8080/api/RB2MJ/" + method;
+            url = "http://10.153.1.22:3000/aw/ROBO2XN/" + method;
+            url = "http://192.200.105.44:82/api/" + method;
+            url = "http://192.200.104.136:8080/api/RB2MJ/" + method;
+
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            request.Headers.Add("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTQ5MDI1MjQwNH0.1WP9IMZuZzeHOo3Y9WEBtSnYgvSmi1nqBDUVdC4wNM-WsbyzE3IN5QdT4Ffbf6As_iSIQ5KHv27hEs6CULsshw");
+            //request.Headers.Add("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTQ5MDI1MjQwNH0.1WP9IMZuZzeHOo3Y9WEBtSnYgvSmi1nqBDUVdC4wNM-WsbyzE3IN5QdT4Ffbf6As_iSIQ5KHv27hEs6CULsshw");
             request.Method = "POST";
             
             //request.
@@ -175,6 +180,13 @@ namespace WindowsFormsApplication1
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            string json = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"123\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"12345678\"}";
+
+            RtnMessage rtn = JsonHelper.JSONToObject<RtnMessage>(json);
         }       
     }
 }

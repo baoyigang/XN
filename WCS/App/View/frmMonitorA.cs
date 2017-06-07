@@ -27,9 +27,9 @@ namespace App.View
         // private System.Timers.Timer tmWorkTimer = new System.Timers.Timer();
         private System.Timers.Timer tmCrane1 = new System.Timers.Timer();
         BLL.BLLBase bll = new BLL.BLLBase();
-        Dictionary<int, string> dicCraneFork = new Dictionary<int, string>();
-        Dictionary<int, string> dicCraneStatus = new Dictionary<int, string>();
-        Dictionary<int, string> dicCraneAction = new Dictionary<int, string>();
+        Dictionary<int, string> dicFork = new Dictionary<int, string>();
+        Dictionary<int, string> dicStatus = new Dictionary<int, string>();
+        Dictionary<int, string> dicWorkMode = new Dictionary<int, string>();
 
         DataTable dtDeviceAlarm;
 
@@ -171,8 +171,8 @@ namespace App.View
                     txt.Text = crane.Layer.ToString();
 
                 txt = GetTextBox("txtForkStatus", crane.CraneNo);
-                if (txt != null && dicCraneFork.ContainsKey(crane.ForkStatus))
-                    txt.Text = dicCraneFork[crane.ForkStatus];
+                if (txt != null && dicFork.ContainsKey(crane.ForkStatus))
+                    txt.Text = dicFork[crane.ForkStatus];
                 txt = GetTextBox("txtErrorNo", crane.CraneNo);
                 if (txt != null)
                     txt.Text = crane.AlarmCode.ToString();
@@ -228,18 +228,29 @@ namespace App.View
 
         private void AddDicKeyValue()
         {
-            dicCraneFork.Add(0, "非原点");
-            dicCraneFork.Add(1, "原点");
+            dicFork.Add(0, "货叉在原位");
+            dicFork.Add(1, "货叉在左侧");
+            dicFork.Add(2, "货叉在右侧");
 
-            dicCraneStatus.Add(0, "空闲");
-            dicCraneStatus.Add(1, "等待");
-            dicCraneStatus.Add(2, "定位");
-            dicCraneStatus.Add(3, "取货");
-            dicCraneStatus.Add(4, "放货");
-            dicCraneStatus.Add(98, "维修");
+            dicStatus.Add(0, "未知");
+            dicStatus.Add(1, "空闲");
+            //dicStatus.Add(2, "检查任务数据");
+            //dicStatus.Add(3, "定位到取货位");
+            //dicStatus.Add(4, "取货中");
+            //dicStatus.Add(7, "取货完成");
+            //dicStatus.Add(8, "等待调度柜");
+            //dicStatus.Add(9, "取货完成");
+            //dicStatus.Add(10, "取货完成");
+            //dicStatus.Add(13, "取货完成");
+            //dicStatus.Add(14, "取货完成");
+            //dicStatus.Add(15, "取货完成");
+            //dicStatus.Add(20, "检查源位置");
 
-            dicCraneAction.Add(0, "非自动");
-            dicCraneAction.Add(1, "自动");
+            dicWorkMode.Add(0, "关机");
+            dicWorkMode.Add(1, "自动");
+            dicWorkMode.Add(2, "手动");
+            dicWorkMode.Add(3, "半自动");
+            dicWorkMode.Add(4, "维修");
 
                        
             dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "1=1") });

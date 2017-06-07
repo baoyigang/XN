@@ -18,4 +18,12 @@ namespace WindowsFormsApplication1
             Application.Run(new Form1());
         }
     }
+    public class RtnMessage
+    {
+        public string id { get; set; }
+        public string returnCode { get; set; }
+        public string message { get; set; }
+        public string finishDate { get; set; }
+        public string field1 { get; set; }
+    }
 }

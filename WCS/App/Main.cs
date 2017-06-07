@@ -41,7 +41,7 @@ namespace App
                 context = new Context();
 
                 ContextInitialize initialize = new ContextInitialize();
-                //initialize.InitializeContext(context);
+                initialize.InitializeContext(context);
                 View.BaseForm f;
                 if (Program.WarehouseCode == "A")
                     f = new View.frmMonitorA();
@@ -426,17 +426,20 @@ namespace App
         {
             if (this.toolStripButton_StartCrane.Text == "联机自动")
             {
-                //context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 1);
-                context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 1);
-                context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 1);
+                if(Program.WarehouseCode=="S")
+                    context.ProcessDispatcher.WriteToProcess("ElevatorProcess", "Run", 1);
+                else
+                    context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 1);
+                
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_accept;
                 this.toolStripButton_StartCrane.Text = "脱机";
             }
             else
             {
-                //context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 0);
-                context.ProcessDispatcher.WriteToProcess("CarProcess", "Run", 0);
-                context.ProcessDispatcher.WriteToProcess("MiniLoadProcess", "Run", 0);
+                if (Program.WarehouseCode == "S")
+                    context.ProcessDispatcher.WriteToProcess("ElevatorProcess", "Run", 0);
+                else
+                    context.ProcessDispatcher.WriteToProcess("CraneProcess", "Run", 0);
                 this.toolStripButton_StartCrane.Image = App.Properties.Resources.process_remove;
                 this.toolStripButton_StartCrane.Text = "联机自动";
             }            
@@ -487,7 +490,7 @@ namespace App
                     this.bsMain.DataSource = dt;
                     for (int i = 0; i < this.dgvMain.Rows.Count; i++)
                     {
-                        if (dgvMain.Rows[i].Cells["colErrCode"].Value.ToString() != "0")
+                        if (dgvMain.Rows[i].Cells["colAlarmCode"].Value.ToString() != "0")
                             this.dgvMain.Rows[i].DefaultCellStyle.BackColor = Color.Red;
                         else
                         {
@@ -549,8 +552,8 @@ namespace App
                         this.ToolStripMenuItem12.Visible = false;
                         this.ToolStripMenuItem13.Visible = false;
                         this.ToolStripMenuItem14.Visible = true;
-                        this.ToolStripMenuItem15.Visible = true;
-                        this.ToolStripMenuItem16.Visible = true;
+                        this.ToolStripMenuItem15.Visible = false;
+                        this.ToolStripMenuItem16.Visible = false;
                         this.ToolStripMenuItem17.Visible = true;
                         this.ToolStripMenuItem18.Visible = false;
                         this.ToolStripMenuItem19.Visible = true;
@@ -648,19 +651,56 @@ namespace App
             {
                 DataRowView drv =dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
                 DataRow dr = drv.Row;
-                string State = dr["State"].ToString(); ;
+                string State = dr["State"].ToString();
+                string DeviceNo = dr["DeviceNo"].ToString();
+                string serviceName = "PLC" + DeviceNo;
                 string TaskNo = dr["TaskNo"].ToString();
+                string NewCellCode = dr["NewCellCode"].ToString();
+                string NewAddress = dr["TaskNo"].ToString();
+                int AlarmCode = int.Parse(dr["AlarmCode"].ToString());
 
                 string fromStation = dr["FromStation"].ToString();
                 string toStation = dr["ToStation"].ToString();
+                string FromStationAdd = dr["FromAddress"].ToString();
+                string ToStationAdd = dr["ToAddress"].ToString();
                 
                 if (fromStation.Trim() == "" || toStation.Trim() == "")
                 {
                     Logger.Info(TaskNo + "目标位置或者起始位置错误,无法重新下达任务！");
                     return;
                 }
+                int[] cellAddr = new int[12];
+                //判断是否要用MJ-WCS重新下发的货位下发任务
+                if (AlarmCode > 500 && AlarmCode < 503)
+                {
+                    fromStation = NewCellCode;
+                    FromStationAdd = NewAddress;
+                    cellAddr[6] = 1;
+                }
+                if (AlarmCode > 502 && AlarmCode < 505)
+                {
+                    toStation = NewCellCode;
+                    ToStationAdd = NewAddress;
+                    cellAddr[6] = 2;
+                }
                 if (State == "3" || State == "4")
-                    Send2PLC(dr);
+                {
+                    
+                    cellAddr[0] = byte.Parse(FromStationAdd.Substring(4, 3));
+                    cellAddr[1] = byte.Parse(FromStationAdd.Substring(7, 3));
+                    cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
+                    cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
+                    cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
+                    cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));                    
+
+                    sbyte[] taskNo = new sbyte[20];
+                    Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
+                    context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                    context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                    context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+
+                    Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                }
                 else
                 {
                     Logger.Info("非正在上下架的任务无法重新下发");
@@ -697,37 +737,25 @@ namespace App
 
         private void ToolStripMenuItemDelCraneTask_Click(object sender, EventArgs e)
         {
-            string CraneNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colCraneNo"].Value.ToString();
-            string CarNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colCarNo"].Value.ToString();
-
-            string serviceName = "";
-            int[] cellAddr = new int[9];
-            if (CraneNo == "01")
-            {
-                serviceName = "CranePLC1";
-            }
-            else if (CraneNo == "02")
-            {
-                serviceName = "MiniLoad02";
-                cellAddr = new int[19];
-            }
-            else if (CraneNo.Trim().Length <= 0)
-            {
-                cellAddr = new int[10];
-                if(CarNo.Length>0)
-                    serviceName = "CarPLC01" + CarNo;
-            }
+            string DeviceNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colDeviceNo"].Value.ToString();
+            if (DeviceNo.Trim().Length <= 0)
+                return;
+            string serviceName = "PLC" + DeviceNo;
+            int[] cellAddr = new int[12];
             
-            cellAddr[0] = 0;
-            cellAddr[1] = 1;
+            object obj = MCP.ObjectUtil.GetObject(context.ProcessDispatcher.WriteToService(serviceName, "AlarmCode")).ToString();
+            if (obj.ToString() != "0")
+            {
+                cellAddr[6] = 5;
+                //sbyte[] taskNo = new sbyte[20];
+                //Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
+                //Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
-
-            MCP.Logger.Info("已下发取消任务指令");
-        }        
-
-
+                MCP.Logger.Info("已下发取消任务指令");
+            }
+        }
         #endregion
 
         private void toolStripButton2_Click(object sender, EventArgs e)
@@ -761,126 +789,39 @@ namespace App
             else if (TaskType == "14" && State=="3")
                 taskType = 10;
             return taskType;
-        }
+        }        
         private void Send2PLC(DataRow dr)
         {
-            string AreaCode = dr["AreaCode"].ToString();
-            if (AreaCode == "001")
-                Send2PLC1(dr);
-            else if(AreaCode == "002")
-                Send2PLC2(dr);
-            else if(AreaCode == "003")
-                Send2PLC3(dr);
-        }
-        private void Send2PLC1(DataRow dr)
-        {
-            string serviceName = "CranePLC1";
+            string DeviceNo = dr["DeviceNo"].ToString();
+            string serviceName = "PLC" + DeviceNo;
             string TaskNo = dr["TaskNo"].ToString();
-
-            int taskType = getTaskType(dr["TaskType"].ToString(), dr["State"].ToString());           
 
             string fromStation = dr["FromStation"].ToString();
             string toStation = dr["ToStation"].ToString();
 
-            int[] cellAddr = new int[10];
+            int[] cellAddr = new int[12];
 
-            cellAddr[0] = 0;
-            cellAddr[1] = 0;
-            cellAddr[2] = 0;
+            string FromStationAdd = dr["FromAddress"].ToString();
+            string ToStationAdd = dr["ToAddress"].ToString();
 
-            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
-            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
-            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
-            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
-            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
-            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
-            cellAddr[9] = taskType;
+            cellAddr[0] = byte.Parse(FromStationAdd.Substring(4, 3));
+            cellAddr[1] = byte.Parse(FromStationAdd.Substring(7, 3));
+            cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
+            cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
+            cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
+            cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
 
-            int taskNo = int.Parse(TaskNo);
+            cellAddr[6] = 1;
 
-            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+            sbyte[] taskNo = new sbyte[20];
+            Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
             context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
-
-            //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
-        }
-        private void Send2PLC2(DataRow dr)
-        {
-            string CarNo = dr["CarNo"].ToString();
-            string serviceName = "CarPLC01" + CarNo;
-            string TaskNo = dr["TaskNo"].ToString();
-            int taskType = getTaskType(dr["TaskType"].ToString(), dr["State"].ToString()); 
-
-            string fromStation = dr["FromStation"].ToString();
-            string toStation = dr["ToStation"].ToString();
-
-            int[] cellAddr = new int[10];
-
-            cellAddr[0] = 0;
-            cellAddr[1] = 0;
-            cellAddr[2] = 0;
-
-            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
-            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
-            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
-            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
-            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
-            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
-            cellAddr[9] = taskType;
-
-            int taskNo = int.Parse(TaskNo);
-
             context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-            Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + CarNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
+            Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
         }
-        private void Send2PLC3(DataRow dr)
-        {
-            string serviceName = "MiniLoad02";
-            string TaskNo = dr["TaskNo"].ToString();
-            string TaskType = dr["TaskType"].ToString();
-            string state = dr["State"].ToString();
-            int taskType = 10;
-
-            if (state == "0")
-            {
-                if (TaskType == "13")
-                {
-                    taskType = 9;
-                }
-                else
-                {
-                    taskType = 11;
-                }
-            }
-
-            string fromStation = dr["FromStation"].ToString();
-            string toStation = dr["ToStation"].ToString();
-
-            int[] cellAddr = new int[10];
-
-            cellAddr[0] = 0;
-            cellAddr[1] = 0;
-            cellAddr[2] = 0;
-
-            cellAddr[3] = byte.Parse(fromStation.Substring(0, 3));
-            cellAddr[4] = byte.Parse(fromStation.Substring(3, 3));
-            cellAddr[5] = byte.Parse(fromStation.Substring(6, 3));
-            cellAddr[6] = byte.Parse(toStation.Substring(0, 3));
-            cellAddr[7] = byte.Parse(toStation.Substring(3, 3));
-            cellAddr[8] = byte.Parse(toStation.Substring(6, 3));
-            cellAddr[9] = taskType;
-
-            int taskNo = int.Parse(TaskNo);
-
-            context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
-
-            //Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + fromStation + ",目标地址:" + toStation);
-        }
+        
 
         private void ToolStripMenuItem_User_Click(object sender, EventArgs e)
         {

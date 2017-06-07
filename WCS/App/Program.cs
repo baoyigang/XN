@@ -58,35 +58,42 @@ namespace App
         }
         public static string send(string method, string data)
         {
-            string url = WcsUrl + method;
-
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            request.Headers.Add("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTQ5MDI1MjQwNH0.1WP9IMZuZzeHOo3Y9WEBtSnYgvSmi1nqBDUVdC4wNM-WsbyzE3IN5QdT4Ffbf6As_iSIQ5KHv27hEs6CULsshw");
-            request.Method = "POST";
-
-            //request.
-            request.ContentType = "application/json";
-
-            //request.Accept = "text/html, application/xhtml+xml, */*";
-            //request.ContentType = "application/x-www-form-urlencoded";
-
-            //string data = "{\n\"header\": {\n\"token\": \"30xxx6aaxxx93ac8cxx8668xx39xxxx\",\n\"username\": \"jdads\",\n\"password\": \"liuqiangdong2010\",\n\"action\": \"\"\n},\n\"body\": {}\n}";
-
-            byte[] byteData = UTF8Encoding.UTF8.GetBytes(data.ToString());
-            request.ContentLength = byteData.Length;
-
-            using (Stream postStream = request.GetRequestStream())
+            try
             {
-                postStream.Write(byteData, 0, byteData.Length);
-            }
+                string url = WcsUrl + method;
 
-            string rtnString = "";
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
-            {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-                rtnString = reader.ReadToEnd();
+                HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
+                //request.Headers.Add("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTQ5MDI1MjQwNH0.1WP9IMZuZzeHOo3Y9WEBtSnYgvSmi1nqBDUVdC4wNM-WsbyzE3IN5QdT4Ffbf6As_iSIQ5KHv27hEs6CULsshw");
+                request.Method = "POST";
+
+                //request.
+                request.ContentType = "application/json";
+
+                //request.Accept = "text/html, application/xhtml+xml, */*";
+                //request.ContentType = "application/x-www-form-urlencoded";
+
+                //string data = "{\n\"header\": {\n\"token\": \"30xxx6aaxxx93ac8cxx8668xx39xxxx\",\n\"username\": \"jdads\",\n\"password\": \"liuqiangdong2010\",\n\"action\": \"\"\n},\n\"body\": {}\n}";
+
+                byte[] byteData = UTF8Encoding.UTF8.GetBytes(data.ToString());
+                request.ContentLength = byteData.Length;
+
+                using (Stream postStream = request.GetRequestStream())
+                {
+                    postStream.Write(byteData, 0, byteData.Length);
+                }
+
+                string rtnString = "";
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    rtnString = reader.ReadToEnd();
+                }
+                return rtnString;
             }
-            return rtnString;
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

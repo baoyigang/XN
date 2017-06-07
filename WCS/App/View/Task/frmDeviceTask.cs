@@ -24,7 +24,7 @@ namespace App.View.Task
             try
             {
                 this.cmbTaskType.SelectedIndex = 0;
-                this.txtTaskNo1.Text = "0000000001";
+                this.txtTaskNo1.Text = "MJ2RB170605000001";
                 BindAisleNo();
                 BindDeviceNo();                
             }
@@ -147,84 +147,30 @@ namespace App.View.Task
             string FromStationAdd = "";
             string ToStationNo = "";
             string ToStationAdd = "";
-            int[] cellAddr = new int[14];
-            cellAddr[0] = 0;
-            cellAddr[1] = 0;
+            int[] cellAddr = new int[12];
 
             FromStationNo = this.cbFromRow.Text + "-" + (100 + int.Parse(this.cbFromColumn.Text)).ToString().Substring(1, 2) + "-" + (100 + int.Parse(this.cbFromHeight.Text)).ToString().Substring(1, 2);
             FromStationAdd = GetStationAdd(FromStationNo);
-            cellAddr[2] = int.Parse(FromStationAdd.Substring(4, 3));
-            cellAddr[3] = int.Parse(FromStationAdd.Substring(7, 3));
-            cellAddr[4] = int.Parse(FromStationAdd.Substring(1, 3));
+            cellAddr[0] = int.Parse(FromStationAdd.Substring(4, 3));
+            cellAddr[1] = int.Parse(FromStationAdd.Substring(7, 3));
+            cellAddr[2] = int.Parse(FromStationAdd.Substring(1, 3));
 
             ToStationNo = this.cbToRow.Text + "-" + (100 + int.Parse(this.cbToColumn.Text)).ToString().Substring(1, 2) + "-" + (100 + int.Parse(this.cbToHeight.Text)).ToString().Substring(1, 2);
             ToStationAdd = GetStationAdd(ToStationNo);
-            cellAddr[5] = int.Parse(ToStationAdd.Substring(4, 3));
-            cellAddr[6] = int.Parse(ToStationAdd.Substring(7, 3));
-            cellAddr[7] = int.Parse(ToStationAdd.Substring(1, 3));
-            //if (this.cmbTaskType.SelectedIndex == 0)
-            //{
-            //    //获取站台地址
-            //    StationNo = this.cbFromRow.Text + "-" + this.cbFromColumn.Text + "-" + this.cbFromHeight.Text;
-            //    add = GetStationAdd(StationNo);
+            cellAddr[3] = int.Parse(ToStationAdd.Substring(4, 3));
+            cellAddr[4] = int.Parse(ToStationAdd.Substring(7, 3));
+            cellAddr[5] = int.Parse(ToStationAdd.Substring(1, 3));
 
-            //    cellAddr[2] = add[0];
-            //    cellAddr[3] = add[1];
-            //    cellAddr[4] = add[2];
-
-            //    //如果是从入库站台直接到出库站台
-            //    if (this.cbToRow.Text.IndexOf("Y") >= 0)
-            //    {
-            //        StationNo = this.cbToRow.Text + "-" + this.cbToColumn.Text + "-" + this.cbToHeight.Text;
-            //        add = GetStationAdd(StationNo);
-            //        cellAddr[5] = add[0];
-            //        cellAddr[6] = add[1];
-            //        cellAddr[7] = add[2];
-            //    }
-            //    else
-            //    {
-            //        cellAddr[5] = int.Parse(this.cbToColumn.Text);
-            //        cellAddr[6] = int.Parse(this.cbToHeight.Text);
-            //        cellAddr[7] = int.Parse(this.cbToRow.Text.Substring(3, 3));
-            //    }
-            //}
-            //else
-            //{
-            //    cellAddr[2] = int.Parse(this.cbFromColumn.Text);
-            //    cellAddr[3] = int.Parse(this.cbFromHeight.Text);
-            //    cellAddr[4] = int.Parse(this.cbFromRow.Text.Substring(3, 3));
-
-            //    if (this.cbToRow.Text.IndexOf("X") >= 0 || this.cbToRow.Text.IndexOf("Y") >= 0)
-            //    {
-            //        StationNo = this.cbToRow.Text + "-" + this.cbToColumn.Text + "-" + this.cbToHeight.Text;
-            //        add = GetStationAdd(StationNo);
-            //        cellAddr[5] = add[0];
-            //        cellAddr[6] = add[1];
-            //        cellAddr[7] = add[2];
-            //    }
-            //    else
-            //    {
-            //        cellAddr[5] = int.Parse(this.cbToColumn.Text);
-            //        cellAddr[6] = int.Parse(this.cbToHeight.Text);
-            //        cellAddr[7] = int.Parse(this.cbToRow.Text.Substring(3, 3));
-            //    }
-            //}
-            cellAddr[8] = this.cmbTaskType.SelectedIndex + 1;
-            cellAddr[9] = 0;
-            cellAddr[10] = 0;
-            cellAddr[11] = 0;
-            cellAddr[12] = 0;
-            cellAddr[13] = 0;
-
-            sbyte[] taskNo = new sbyte[10];
-            Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 20).CopyTo(taskNo, 0);
-
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            if (int.Parse((this.cmbTaskType.SelectedIndex).ToString()) == 3)
-                Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 2);
+            if (this.cmbTaskType.SelectedIndex == 3)
+                cellAddr[6] = 3;
             else
-                Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
+                cellAddr[6] = 1;
+
+            sbyte[] taskNo = new sbyte[20];
+            Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 20).CopyTo(taskNo, 0);
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);            
+            Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
             MCP.Logger.Info("测试任务已下发给" + this.cmbDeviceNo.Text + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
         }
@@ -245,15 +191,22 @@ namespace App.View.Task
         
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            string serviceName = "CranePLC" + this.cmbDeviceNo.Text.Substring(1, 1);
-            int[] cellAddr = new int[9];
-            cellAddr[0] = 0;
-            cellAddr[1] = 1;
+            string serviceName = this.cmbDeviceNo.SelectedValue.ToString();
 
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 0);
+            object obj = MCP.ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "AlarmCode")).ToString();
+            if (obj.ToString() != "0")
+            {
+                int[] cellAddr = new int[12];
 
-            MCP.Logger.Info("取消任务已下发给" + this.cmbDeviceNo.Text + "取消任务指令");
+                cellAddr[6] = 5;
+                //sbyte[] taskNo = new sbyte[20];
+                //Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
+                //Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+
+                MCP.Logger.Info("取消任务已下发给" + this.cmbDeviceNo.Text + "取消任务指令");
+            }
         }
 
         private void cmbTaskType_SelectedIndexChanged(object sender, EventArgs e)

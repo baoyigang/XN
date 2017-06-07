@@ -137,9 +137,9 @@
             this.pnlContent.Controls.Add(this.pnlData);
             this.pnlContent.Controls.Add(this.pnlChart);
             this.pnlContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlContent.Location = new System.Drawing.Point(0, 47);
+            this.pnlContent.Location = new System.Drawing.Point(0, 50);
             this.pnlContent.Name = "pnlContent";
-            this.pnlContent.Size = new System.Drawing.Size(1057, 458);
+            this.pnlContent.Size = new System.Drawing.Size(1057, 455);
             this.pnlContent.TabIndex = 3;
             // 
             // pnlData
@@ -311,7 +311,7 @@
             this.pnlChart.BackColor = System.Drawing.Color.WhiteSmoke;
             this.pnlChart.Controls.Add(this.sbShelf);
             this.pnlChart.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlChart.Location = new System.Drawing.Point(0, 377);
+            this.pnlChart.Location = new System.Drawing.Point(0, 374);
             this.pnlChart.Name = "pnlChart";
             this.pnlChart.Size = new System.Drawing.Size(1057, 81);
             this.pnlChart.TabIndex = 2;
@@ -345,7 +345,7 @@
             this.pnlTool.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTool.Location = new System.Drawing.Point(0, 0);
             this.pnlTool.Name = "pnlTool";
-            this.pnlTool.Size = new System.Drawing.Size(1057, 47);
+            this.pnlTool.Size = new System.Drawing.Size(1057, 50);
             this.pnlTool.TabIndex = 2;
             // 
             // PColor
@@ -498,11 +498,12 @@
             // btnExit
             // 
             this.btnExit.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnExit.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnExit.Image = global::App.Properties.Resources.close;
             this.btnExit.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnExit.Location = new System.Drawing.Point(96, 0);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(48, 45);
+            this.btnExit.Size = new System.Drawing.Size(48, 48);
             this.btnExit.TabIndex = 50;
             this.btnExit.Text = "退出";
             this.btnExit.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -512,11 +513,12 @@
             // btnChart
             // 
             this.btnChart.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnChart.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnChart.Image = global::App.Properties.Resources.report;
             this.btnChart.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnChart.Location = new System.Drawing.Point(48, 0);
             this.btnChart.Name = "btnChart";
-            this.btnChart.Size = new System.Drawing.Size(48, 45);
+            this.btnChart.Size = new System.Drawing.Size(48, 48);
             this.btnChart.TabIndex = 49;
             this.btnChart.Text = "图形";
             this.btnChart.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
@@ -526,11 +528,12 @@
             // btnRefresh
             // 
             this.btnRefresh.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnRefresh.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.btnRefresh.Image = global::App.Properties.Resources.zoom;
             this.btnRefresh.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.btnRefresh.Location = new System.Drawing.Point(0, 0);
             this.btnRefresh.Name = "btnRefresh";
-            this.btnRefresh.Size = new System.Drawing.Size(48, 45);
+            this.btnRefresh.Size = new System.Drawing.Size(48, 48);
             this.btnRefresh.TabIndex = 48;
             this.btnRefresh.Text = "查询";
             this.btnRefresh.TextAlign = System.Drawing.ContentAlignment.BottomCenter;

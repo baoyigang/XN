@@ -2,7 +2,7 @@
 <Config>
   <OPCServer ConnectionString="OPC.SimaticNET">
     <!--<OPCGroup GroupName="PLCGroup" GroupString="S7:[@LOCALSERVER]" UpdateRate="350">-->
-    <OPCGroup GroupName="PLCGroup" GroupString="S7:[PLC0101]" UpdateRate="350">
+    <OPCGroup GroupName="PLCGroup" GroupString="S7:[PLC0103]" UpdateRate="350">
       <!--握手信号-->
       <OPCItem ItemName="ReadHandShake" ClientHandler="1" OPCItemName="DB541,INT0,1"  ItemType="READ" IsActive="false"/>
       <OPCItem ItemName="WorkMode" ClientHandler="2" OPCItemName="DB541,INT4,1" ItemType="READ" IsActive="false"/>

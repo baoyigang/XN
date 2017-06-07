@@ -546,5 +546,4 @@
       order by TaskCount,AisleNo
     </CommandString>
   </Command>
-
 </SqlCommand>

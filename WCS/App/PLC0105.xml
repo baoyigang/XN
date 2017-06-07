@@ -2,7 +2,7 @@
 <Config>
   <OPCServer ConnectionString="OPC.SimaticNET">
     <!--<OPCGroup GroupName="PLCGroup" GroupString="S7:[@LOCALSERVER]" UpdateRate="350">-->
-    <OPCGroup GroupName="PLCGroup" GroupString="S7:[PLC0101]" UpdateRate="350">
+    <OPCGroup GroupName="PLCGroup" GroupString="S7:[PLC0105]" UpdateRate="350">
       <!--握手信号-->
       <OPCItem ItemName="ReadHandShake" ClientHandler="1" OPCItemName="DB541,INT0,1"  ItemType="READ" IsActive="false"/>
       <OPCItem ItemName="WorkMode" ClientHandler="2" OPCItemName="DB541,INT4,1" ItemType="READ" IsActive="false"/>
@@ -11,7 +11,7 @@
       <!--堆垛机负载-->
       <OPCItem ItemName="Status" ClientHandler="4" OPCItemName="DB541,INT8,4"  ItemType="READ" IsActive="false"/>
       <!--堆垛机位置-->
-      <OPCItem ItemName="Position" ClientHandler="5" OPCItemName="DB541,DINT16,3"  ItemType="READ" IsActive="false"/>
+      <OPCItem ItemName="Position" ClientHandler="5" OPCItemName="DB541,DINT16,3"  ItemType="READ" IsActive="false"/>      
       <!--取放货-->
       <OPCItem ItemName="Pick" ClientHandler="7" OPCItemName="DB541,INT28,2"  ItemType="READ" IsActive="false"/>
       <!--任务完成-->
@@ -23,9 +23,9 @@
       <!--任务号-->
       <OPCItem ItemName="ACK" ClientHandler="11" OPCItemName="DB540,INT32,1"  ItemType="READ" IsActive="true"/>
       <!--到达入库站台1-->
-      <OPCItem ItemName="ToInStation1" ClientHandler="12" OPCItemName="DB541,STRING68.18"  ItemType="READ" IsActive="true"/>
+      <OPCItem ItemName="ToInStation1" ClientHandler="12" OPCItemName="DB541,STRING68.20"  ItemType="READ" IsActive="true"/>
       <!--到达入库站台2-->
-      <OPCItem ItemName="ToInStation2" ClientHandler="13" OPCItemName="DB541,STRING88.18"  ItemType="READ" IsActive="true"/>
+      <OPCItem ItemName="ToInStation2" ClientHandler="13" OPCItemName="DB541,STRING88.20"  ItemType="READ" IsActive="true"/>
       <!--握手信号-->
       <OPCItem ItemName="HandShake" ClientHandler="15" OPCItemName="DB540,INT0,1"  ItemType="WRITE"/>
       <!--任务类型、起始地址、目标地址-->
