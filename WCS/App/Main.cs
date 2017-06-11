@@ -70,27 +70,34 @@ namespace App
         private void PermissionControl()
         {            
             DataTable dt = Program.dtUserPermission;
-            //监控任务--删除堆垛机任务
+            //监控任务--取消堆垛机任务
             string filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='1'";
             DataRow[] drs = dt.Select(filter);
             if (drs.Length <= 0)
-            {
-                this.ToolStripMenuItemDelCraneTask.Visible = false;                
-            }
+                this.ToolStripMenuItemDelCraneTask.Visible = false;  
+            else
+                this.ToolStripMenuItemDelCraneTask.Visible = true;  
             //监控任务--重新下发堆垛机任务
             filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='2'";
             drs = dt.Select(filter);
             if (drs.Length <= 0)
-            {
                 this.ToolStripMenuItemReassign.Visible = false;
-            }
+            else
+                this.ToolStripMenuItemReassign.Visible = true;
             //监控任务--任务状态切换
             filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='3'";
             drs = dt.Select(filter);
             if (drs.Length <= 0)
-            {
                 this.ToolStripMenuItemStateChange.Visible = false;
-            }
+            else
+                this.ToolStripMenuItemStateChange.Visible = true;
+            //监控任务--重新申请货位
+            filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='4'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItemCellCode.Visible = true;
+            else
+                this.ToolStripMenuItemCellCode.Visible = false;
             //入库任务
             filter = "SubModuleCode='MNU_W00A_00B' and OperatorCode='1'";
             drs = dt.Select(filter);
@@ -98,6 +105,11 @@ namespace App
             {
                 this.toolStripButton_InStockTask.Visible = false;
                 this.inStockToolStripMenuItem.Visible = false;
+            }
+            else
+            {
+                this.toolStripButton_InStockTask.Visible = true;
+                this.inStockToolStripMenuItem.Visible = true;
             }
             //出库任务
             filter = "SubModuleCode='MNU_W00A_00C' and OperatorCode='1'";
@@ -107,6 +119,11 @@ namespace App
                 this.toolStripButton_OutStock.Visible = false;
                 this.OutStockToolStripMenuItem.Visible = false;
             }
+            else
+            {
+                this.toolStripButton_OutStock.Visible = true;
+                this.OutStockToolStripMenuItem.Visible = true;
+            }
             //盘点任务
             filter = "SubModuleCode='MNU_W00A_00D' and OperatorCode='1'";
             drs = dt.Select(filter);
@@ -115,6 +132,7 @@ namespace App
                 this.toolStripButton_Inventor.Visible = false;
                 this.InventortoolStripMenuItem.Visible = false;
             }
+
             //移库任务
             filter = "SubModuleCode='MNU_W00A_00E' and OperatorCode='1'";
             drs = dt.Select(filter);
@@ -127,9 +145,9 @@ namespace App
             filter = "SubModuleCode='MNU_W00B_00A' and OperatorCode='1'";
             drs = dt.Select(filter);
             if (drs.Length <= 0)
-            {
                 this.toolStripButton_UnitLoad.Visible = false;
-            }
+            else
+                this.toolStripButton_UnitLoad.Visible = true;
             //货位监控
             filter = "SubModuleCode='MNU_W00B_00C' and OperatorCode='1'";
             drs = dt.Select(filter);
@@ -138,20 +156,67 @@ namespace App
                 this.toolStripButton_CellMonitor.Visible = false;
                 this.ToolStripMenuItem_Cell.Visible = false;
             }
+            else
+            {
+                this.toolStripButton_CellMonitor.Visible = true;
+                this.ToolStripMenuItem_Cell.Visible = true;
+            }
             //联机自动
             filter = "SubModuleCode='MNU_W00B_00D' and OperatorCode='1'";
             drs = dt.Select(filter);
             if (drs.Length <= 0)
-            {
                 this.toolStripButton_StartCrane.Visible = false;
-            }
+            else
+                this.toolStripButton_StartCrane.Visible = true;
             //退出系统
             filter = "SubModuleCode='MNU_W00B_00E' and OperatorCode='1'";
             drs = dt.Select(filter);
             if (drs.Length <= 0)
-            {
                 this.toolStripButton_Close.Visible = false;
-            }
+            else
+                this.toolStripButton_Close.Visible = true;
+            //参数设定
+            filter = "SubModuleCode='MNU_W00C_00A' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItem_Param.Visible = false;
+            else
+                this.ToolStripMenuItem_Param.Visible = true;
+            //设备管理
+            filter = "SubModuleCode='MNU_W00C_00B' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItem_Device.Visible = false;
+            else
+                this.ToolStripMenuItem_Device.Visible = true;
+            //用户资料
+            filter = "SubModuleCode='MNU_W00C_00C' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItem_Device.Visible = false;
+            else
+                this.ToolStripMenuItem_Device.Visible = true;
+            //用户组管理
+            filter = "SubModuleCode='MNU_W00C_00D' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItem_Group.Visible = false;
+            else
+                this.ToolStripMenuItem_Group.Visible = true;
+            //权限管理
+            filter = "SubModuleCode='MNU_W00C_00E' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItem_Power.Visible = false;
+            else
+                this.ToolStripMenuItem_Power.Visible = true;
+            //密码修改
+            filter = "SubModuleCode='MNU_W00C_00F' and OperatorCode='1'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItem_ChangPwd.Visible = false;
+            else
+                this.ToolStripMenuItem_ChangPwd.Visible = true;
         }
         private void tmWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
@@ -221,8 +286,7 @@ namespace App
                     View.Dispatcher.frmScan frm = new View.Dispatcher.frmScan(int.Parse(args.Message[0]), args.dtInfo);
                     if (frm.ShowDialog() == DialogResult.OK)
                     {
-                        strValue = frm.strValue;
-                        
+                        strValue = frm.strValue;                        
                     }
                 }
             }
@@ -300,7 +364,6 @@ namespace App
                 }
             }
             return true;
-
         }
         
         private void AddTabPage(string strKey, string strText)
@@ -596,52 +659,10 @@ namespace App
                 BLL.BLLBase bll = new BLL.BLLBase();
                 string TaskNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 string TaskType = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colTaskType"].Value.ToString();
-                string ErrCode = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colErrCode"].ToString();
+                string AlarmCode = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colAlarmCode"].ToString();
 
-                if (TaskType == "11" || TaskType == "16")
-                {
-                    DataGridViewSelectedRowCollection rowColl = dgvMain.SelectedRows;
-                    if (rowColl == null)
-                        return;
-                    DataRow dr = (rowColl[0].DataBoundItem as DataRowView).Row;
-                    App.View.frmReassignEmptyCell f = new App.View.frmReassignEmptyCell(dr);
-                    if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        this.BindData();
-                }
-                else if (TaskType == "12" || TaskType == "14" || TaskType == "15")
-                {
-                    DataGridViewSelectedRowCollection rowColl = dgvMain.SelectedRows;
-                    if (rowColl == null)
-                        return;
-                    DataRow dr = (rowColl[0].DataBoundItem as DataRowView).Row;
-                    App.View.frmReassign f = new App.View.frmReassign(dr);
-                    if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        this.BindData();
-                }
-                else if (TaskType == "13")
-                {
-                    DataGridViewSelectedRowCollection rowColl = dgvMain.SelectedRows;
-                    if (rowColl == null)
-                        return;
-                    DataRow dr = (rowColl[0].DataBoundItem as DataRowView).Row;
-
-                    App.View.frmReassignOption fo = new App.View.frmReassignOption();
-                    if (fo.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    {
-                        if (fo.option == 0)
-                        {
-                            App.View.frmReassign f = new App.View.frmReassign(dr);
-                            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                                this.BindData();
-                        }
-                        else
-                        {
-                            App.View.frmReassignEmptyCell fe = new App.View.frmReassignEmptyCell(dr);
-                            if (fe.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                                this.BindData();
-                        }
-                    }
-                }
+                App.Dispatching.Process.Report report = new Dispatching.Process.Report();
+                report.Send2MJWcs(context, 4, TaskNo);
             }
         }
 
@@ -656,7 +677,7 @@ namespace App
                 string serviceName = "PLC" + DeviceNo;
                 string TaskNo = dr["TaskNo"].ToString();
                 string NewCellCode = dr["NewCellCode"].ToString();
-                string NewAddress = dr["TaskNo"].ToString();
+                string NewAddress = dr["NewAddress"].ToString();
                 int AlarmCode = int.Parse(dr["AlarmCode"].ToString());
 
                 string fromStation = dr["FromStation"].ToString();
@@ -723,15 +744,20 @@ namespace App
                 DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@State", State) };
                 bll.ExecNonQueryTran("WCS.Sp_UpdateTaskState", param);
 
-                //bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", State), new DataParameter("@TaskNo", TaskNo) });
-
-                ////堆垛机完成执行
-                //if (State == "7")
-                //{
-                //    DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                //    bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
-                //}
                 BindData();
+
+                try
+                {
+                    App.Dispatching.Process.Report report = new Dispatching.Process.Report();
+                    if (State == "7")
+                        report.Send2MJWcs(context, 3, TaskNo);
+                    else if (State == "9")
+                        report.Send2MJWcs(context, 5, TaskNo);
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error("切换状态，上报MJ-WCS时发生错误：" + ex.Message);
+                }
             }
         }
 
@@ -747,13 +773,15 @@ namespace App
             if (obj.ToString() != "0")
             {
                 cellAddr[6] = 5;
-                //sbyte[] taskNo = new sbyte[20];
+                sbyte[] taskNo = new sbyte[20];
+                for (int i = 0; i < 20; i++)
+                    taskNo[i] = 32;
                 //Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
-                //Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
                 context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
                 context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-                MCP.Logger.Info("已下发取消任务指令");
+                MCP.Logger.Info("已给设备" + DeviceNo + "下发取消任务指令");
             }
         }
         #endregion
@@ -775,21 +803,7 @@ namespace App
             View.Base.frmBarcode f = new View.Base.frmBarcode();
             ShowForm(f);
         }
-        private int getTaskType(string TaskType, string State)
-        {
-            int taskType = 10;
-            if (TaskType == "11" || TaskType == "16")
-                taskType = 10;
-            else if (TaskType == "12" || TaskType == "15")
-                taskType = 11;
-            else if (TaskType == "13")
-                taskType = 9;
-            else if (TaskType == "14" && State=="4")
-                taskType = 11;
-            else if (TaskType == "14" && State=="3")
-                taskType = 10;
-            return taskType;
-        }        
+    
         private void Send2PLC(DataRow dr)
         {
             string DeviceNo = dr["DeviceNo"].ToString();

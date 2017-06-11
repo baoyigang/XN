@@ -20,8 +20,8 @@ namespace App.View.Param
         MCP.Service.Siemens.Config.Configuration PLC3 = new MCP.Service.Siemens.Config.Configuration("PLC0103.xml");
         MCP.Service.Siemens.Config.Configuration PLC4 = new MCP.Service.Siemens.Config.Configuration("PLC0104.xml");
         MCP.Service.Siemens.Config.Configuration PLC5 = new MCP.Service.Siemens.Config.Configuration("PLC0105.xml");
-        MCP.Service.Siemens.Config.Configuration PLC6 = new MCP.Service.Siemens.Config.Configuration("PLC0105.xml");
-        MCP.Service.Siemens.Config.Configuration PLC7 = new MCP.Service.Siemens.Config.Configuration("PLC0105.xml");
+        MCP.Service.Siemens.Config.Configuration PLC6 = new MCP.Service.Siemens.Config.Configuration("PLC0106.xml");
+        MCP.Service.Siemens.Config.Configuration PLC7 = new MCP.Service.Siemens.Config.Configuration("PLC0107.xml");
        
         private Dictionary<string, string> attributes = null;
 
@@ -33,11 +33,6 @@ namespace App.View.Param
 
         private void ReadParameter()
         {
-            //本机数据库连接参数
-            //parameter.ServerName = config.Parameters["server"].ToString();
-            //parameter.DBUser = config.Parameters["uid"].ToString();
-            //parameter.Password = config.Parameters["pwd"].ToString();
-
 
             //扫描枪--由于使用USB接口，而屏蔽
             ConfigUtil configUtil = new ConfigUtil();
@@ -45,7 +40,7 @@ namespace App.View.Param
             parameter.WarehouseCode = attributes["WarehouseCode"];
             parameter.WcsUrl = attributes["WcsUrl"];
             parameter.SendInterval = attributes["SendInterval"];
-
+            parameter.RequireAPReady = attributes["RequireAPReady"];
             //PLC1
             parameter.PLC1ServerName = PLC1.ProgID;
             parameter.PLC1ServerIP = PLC1.ServerName;

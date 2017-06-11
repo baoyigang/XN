@@ -29,7 +29,22 @@ namespace App.Account
             bll.ExecNonQuery("Security.InsertGroupOperationList");
             colbtn.Name = "Detail";
             colbtn.DefaultCellStyle.NullValue = "删除用户";
-            InitSmartTree();           
+            InitSmartTree();
+
+            DataTable dt = Program.dtUserPermission;
+            //用户资料
+            string filter = "SubModuleCode='MNU_W00C_00E' and OperatorCode='2'";
+            DataRow[] drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.toolStripButton_AddUser.Visible = false;
+            else
+                this.toolStripButton_AddUser.Visible = true;
+            filter = "SubModuleCode='MNU_W00C_00E' and OperatorCode='3'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.dgvGroupUser.Columns[2].Visible = false;
+            else
+                this.dgvGroupUser.Columns[2].Visible = true;
         }
         private void frmUserList_Activated(object sender, EventArgs e)
         {

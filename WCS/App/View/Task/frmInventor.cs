@@ -64,6 +64,21 @@ namespace App.View.Task
             //this.BindData();
             for (int i = 0; i < this.dgvMain.Columns.Count - 1; i++)
                 ((DataGridViewAutoFilterTextBoxColumn)this.dgvMain.Columns[i]).FilteringEnabled = true;
+
+            //DataTable dt = Program.dtUserPermission;
+            ////盘点任务--取消任务
+            //string filter = "SubModuleCode='MNU_W00A_00D' and OperatorCode='2'";
+            //DataRow[] drs = dt.Select(filter);
+            //if (drs.Length <= 0)
+            //    this.toolStripButton_Cancel.Visible = false;
+            //else
+            //    this.toolStripButton_Cancel.Visible = true;
+            //filter = "SubModuleCode='MNU_W00A_00D' and OperatorCode='3'";
+            //drs = dt.Select(filter);
+            //if (drs.Length <= 0)
+            //    this.ToolStripMenuItemState.Visible = false;
+            //else
+            //    this.ToolStripMenuItemState.Visible = true;
         }
         private void dgvMain_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {

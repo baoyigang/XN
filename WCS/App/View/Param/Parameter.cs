@@ -8,41 +8,6 @@ namespace App.View.Param
 {
     public class Parameter: BaseObject
     {
-        private string serverName;
-
-        //[CategoryAttribute("服务器数据库连接参数"), DescriptionAttribute("数据库服务器名称"), Chinese("服务器名称")]
-        //public string ServerName
-        //{
-        //    get { return serverName; }
-        //    set { serverName = value; }
-        //}
-
-        //private string dbName;
-
-        //[CategoryAttribute("服务器数据库连接参数"), DescriptionAttribute("数据库名称"), Chinese("数据库名")]
-        //public string DBName
-        //{
-        //    get { return dbName; }
-        //    set { dbName = value; }
-        //}
-
-        //private string dbUser;
-
-        //[CategoryAttribute("服务器数据库连接参数"), DescriptionAttribute("数据库连接用户名"), Chinese("用户名")]
-        //public string DBUser
-        //{
-        //    get { return dbUser; }
-        //    set { dbUser = value; }
-        //}
-        //private string password;
-
-        //[CategoryAttribute("服务器数据库连接参数"), DescriptionAttribute("数据库连接密码"), Chinese("密码")]
-        //public string Password
-        //{
-        //    get { return password; }
-        //    set { password = value; }
-        //}
-
         private string wcsUrl;
         [CategoryAttribute("立体库连接参数"), DescriptionAttribute("总控WCS WebService地址"), Chinese("Url")]
         public string WcsUrl
@@ -67,6 +32,14 @@ namespace App.View.Param
         {
             get { return sendInterval; }
             set { sendInterval = value; }
+        }
+        private string requireAPReady;
+
+        [CategoryAttribute("立体库连接参数"), DescriptionAttribute("判断出库站台Ready"), Chinese("判断出库站台Ready")]
+        public string RequireAPReady
+        {
+            get { return requireAPReady; }
+            set { requireAPReady = value; }
         }
         private string plc1ServerName;
         [CategoryAttribute("1号堆垛机PLC通信参数"), DescriptionAttribute("服务名称"), Chinese("服务名称")]

@@ -76,6 +76,21 @@ namespace App.View.Task
             //this.BindData();
             for (int i = 0; i < this.dgvMain.Columns.Count - 1; i++)
                 ((DataGridViewAutoFilterTextBoxColumn)this.dgvMain.Columns[i]).FilteringEnabled = true;
+
+            DataTable dt = Program.dtUserPermission;
+            //出库任务--取消任务
+            string filter = "SubModuleCode='MNU_W00A_00C' and OperatorCode='2'";
+            DataRow[] drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.toolStripButton_Cancel.Visible = false;
+            else
+                this.toolStripButton_Cancel.Visible = true;
+            filter = "SubModuleCode='MNU_W00A_00C' and OperatorCode='3'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.ToolStripMenuItemState.Visible = false;
+            else
+                this.ToolStripMenuItemState.Visible = true;
         }
         private void dgvMain_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -124,6 +139,7 @@ namespace App.View.Task
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
                 string TaskNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                string state = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[2].Value.ToString();
                 bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", State), new DataParameter("@TaskNo", TaskNo) });
 
                 //堆垛机完成执行
@@ -131,6 +147,11 @@ namespace App.View.Task
                 {
                     DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
                     bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
+                }
+                if (State == "9" && state!="完成" && state!="取消")
+                {
+                    App.Dispatching.Process.Report report = new Dispatching.Process.Report();
+                    report.Send2MJWcs(base.Context, 5, TaskNo);
                 }
                 BindData();
             }

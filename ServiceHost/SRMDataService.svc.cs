@@ -38,15 +38,28 @@ namespace ServiceHost
 
                 bll.ExecNonQuery("WCS.DeleteWcsTemp");
                 bll.BatchInsertTable(dt, "WCS_TaskTemp");
-               // bll.ExecNonQueryTran("WCS.Sp_ImportWmsTask");
-                
-                taskRtn.id = id;
-                taskRtn.returnCode = "000";
-                taskRtn.message = "成功";
-                taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                taskRtn.field1 = "null";
+                DataTable dtTask = bll.FillDataTable("WCS.Sp_ImportWmsTask");
 
-                rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
+                if (dtTask.Rows.Count > 0)
+                {
+                    taskRtn.id = id;
+                    taskRtn.returnCode = "000";
+                    taskRtn.message = "成功";
+                    taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    taskRtn.field1 = "null";
+
+                    rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
+                }
+                else
+                {
+                    taskRtn.id = id;
+                    taskRtn.returnCode = "001";
+                    taskRtn.message = "没有收到任务数据，请检查数据是否异常！";
+                    taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    taskRtn.field1 = "null";
+                    rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + taskRtn.message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
+
+                }
             }
             catch (Exception ex)
             {
@@ -94,7 +107,7 @@ namespace ServiceHost
                 bll.BatchInsertTable(dt, "WCS_AisleTemp");
 
 
-                DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest", new DataParameter("{0}", string.Format("WarehouseCode='{0}'", WarehouseCode)));
+                DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest", new DataParameter("{0}", string.Format("WarehouseCode='{0}'", WarehouseCode.Substring(3,1))));
                 //DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest");
                 if(dtSelectAisle.Rows.Count>0)
                     Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();

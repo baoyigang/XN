@@ -168,13 +168,13 @@
       <DependentUpon>frmSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Crane.cs" />
+    <Compile Include="Dispatching\Process\CraneAlarmProcess.cs" />
     <Compile Include="Dispatching\Process\ElevatorProcess.cs" />
     <Compile Include="Dispatching\Process\CraneProcess.cs" />
     <Compile Include="Dispatching\Process\InStockToStationProcess.cs" />
     <Compile Include="Dispatching\Process\OutStockFinishProcess.cs" />
-    <Compile Include="Dispatching\Process\ReadProcess.cs" />
+    <Compile Include="Dispatching\Process\Report.cs" />
     <Compile Include="Dispatching\Process\RtnMessage.cs" />
-    <Compile Include="Dispatching\Process\StockRequestProcess.cs" />
     <Compile Include="Dispatching\TCPMessageParse.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
@@ -512,7 +512,6 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Help.chm" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -571,10 +570,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="PLC0301.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Crane.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

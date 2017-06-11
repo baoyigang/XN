@@ -2,21 +2,21 @@
 <publishData>
   <publishProfile publishUrl="C:\inetpub\wwwroot\ServiceHost" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
     <file relUrl="bin/Util.dll" publishTime="02/24/2017 16:55:35" />
-    <file relUrl="bin/ServiceHost.dll" publishTime="06/06/2017 10:25:20" />
+    <file relUrl="bin/ServiceHost.dll" publishTime="06/10/2017 17:52:04" />
     <file relUrl="bin/Services.dll" publishTime="01/11/2017 11:27:59" />
     <file relUrl="DB.xml" publishTime="02/08/2017 08:46:16" />
     <file relUrl="bin/Newtonsoft.Json.xml" publishTime="06/06/2013 13:33:36" />
+    <file relUrl="bin/BLL.dll" publishTime="09/18/2016 17:43:18" />
     <file relUrl="transSRMTask.ashx" publishTime="03/15/2017 22:20:59" />
-    <file relUrl="transSRMTaskAisle.ashx" publishTime="03/16/2017 09:10:47" />
     <file relUrl="WCSDataService.svc" publishTime="06/01/2017 10:36:22" />
     <file relUrl="BLLBaseService.svc" publishTime="05/05/2016 16:10:06" />
+    <file relUrl="bin/IServices.dll" publishTime="01/11/2017 12:34:43" />
     <file relUrl="SRMDataService.svc" publishTime="03/16/2017 17:24:49" />
     <file relUrl="bin/Newtonsoft.Json.dll" publishTime="06/06/2013 13:33:36" />
     <file relUrl="bin/IDAL.dll" publishTime="10/28/2016 16:04:09" />
-    <file relUrl="bin/SQLDAL.dll" publishTime="06/06/2017 10:25:10" />
     <file relUrl="SecurityService.svc" publishTime="05/05/2016 16:10:06" />
-    <file relUrl="Web.config" publishTime="06/06/2017 10:25:20" />
-    <file relUrl="bin/IServices.dll" publishTime="01/11/2017 12:34:43" />
-    <file relUrl="bin/BLL.dll" publishTime="09/18/2016 17:43:18" />
+    <file relUrl="Web.config" publishTime="06/10/2017 17:52:04" />
+    <file relUrl="transSRMTaskAisle.ashx" publishTime="03/16/2017 09:10:47" />
+    <file relUrl="bin/SQLDAL.dll" publishTime="06/10/2017 17:51:51" />
   </publishProfile>
 </publishData>

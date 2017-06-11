@@ -15,6 +15,8 @@ namespace App
         public static DataTable dtUserPermission;
         public static string WarehouseCode;
         private static string WcsUrl;
+        public static int SendInterval;
+        public static int RequireAPReady;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -52,6 +54,8 @@ namespace App
                     conf.Load("Config.xml");
                     WarehouseCode = conf.Attributes["WarehouseCode"];
                     WcsUrl = conf.Attributes["WcsUrl"];
+                    SendInterval = int.Parse(conf.Attributes["SendInterval"]);
+                    RequireAPReady = int.Parse(conf.Attributes["RequireAPReady"]);
                     Application.Run(mainForm);
                 }
             }
@@ -60,7 +64,8 @@ namespace App
         {
             try
             {
-                string url = WcsUrl + method;
+                string url = WcsUrl + method;                
+               
 
                 HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
                 //request.Headers.Add("Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTQ5MDI1MjQwNH0.1WP9IMZuZzeHOo3Y9WEBtSnYgvSmi1nqBDUVdC4wNM-WsbyzE3IN5QdT4Ffbf6As_iSIQ5KHv27hEs6CULsshw");

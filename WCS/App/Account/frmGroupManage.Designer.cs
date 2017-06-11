@@ -53,7 +53,7 @@
             this.colbtn = new System.Windows.Forms.DataGridViewButtonColumn();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton_EmptyIn = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_AddUser = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Save = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
             this.pnlBottom = new System.Windows.Forms.Panel();
@@ -290,7 +290,7 @@
             this.toolStrip1.AutoSize = false;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton_EmptyIn,
+            this.toolStripButton_AddUser,
             this.toolStripButton_Save,
             this.toolStripButton_Close});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -299,16 +299,16 @@
             this.toolStrip1.TabIndex = 11;
             this.toolStrip1.Text = "toolStrip1";
             // 
-            // toolStripButton_EmptyIn
+            // toolStripButton_AddUser
             // 
-            this.toolStripButton_EmptyIn.AutoSize = false;
-            this.toolStripButton_EmptyIn.Image = global::App.Properties.Resources.user_add;
-            this.toolStripButton_EmptyIn.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_EmptyIn.Name = "toolStripButton_EmptyIn";
-            this.toolStripButton_EmptyIn.Size = new System.Drawing.Size(60, 50);
-            this.toolStripButton_EmptyIn.Text = "添加用户";
-            this.toolStripButton_EmptyIn.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_EmptyIn.Click += new System.EventHandler(this.btnAddUser_Click);
+            this.toolStripButton_AddUser.AutoSize = false;
+            this.toolStripButton_AddUser.Image = global::App.Properties.Resources.user_add;
+            this.toolStripButton_AddUser.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_AddUser.Name = "toolStripButton_AddUser";
+            this.toolStripButton_AddUser.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_AddUser.Text = "添加用户";
+            this.toolStripButton_AddUser.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_AddUser.Click += new System.EventHandler(this.btnAddUser_Click);
             // 
             // toolStripButton_Save
             // 
@@ -380,7 +380,7 @@
         private System.Windows.Forms.BindingSource bsMain;
         private System.Windows.Forms.BindingSource bsSub;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripButton toolStripButton_EmptyIn;
+        private System.Windows.Forms.ToolStripButton toolStripButton_AddUser;
         private System.Windows.Forms.ToolStripButton toolStripButton_Save;
         private System.Windows.Forms.ToolStripButton toolStripButton_Close;
         private System.Windows.Forms.Panel pnlContent;

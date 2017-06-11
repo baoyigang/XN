@@ -6,7 +6,8 @@
     <Attribute Name="InTaskCount" Value="2" />
     <Attribute Name="UserName" Value="Admin" />
     <Attribute Name="WcsUrl" Value="http://192.200.104.136:8080/api/RB2MJ/" />
-    <Attribute Name="SendInterval" Value="30000" />
+    <Attribute Name="SendInterval" Value="60000" />
+    <Attribute Name="RequireAPReady" Value="1" />
   </Attributes>
   <Services>
     <Service Name="PLC0105" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0105.xml" />
@@ -17,15 +18,18 @@
     <!--CraneProcess-->
     <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
       <Item ServiceName="PLC0105" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0105" ItemName="AlarmCode" />
       <Item ServiceName="PLC0105" ItemName="ACK" />
       <Item ServiceName="PLC0106" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0106" ItemName="AlarmCode" />
       <Item ServiceName="PLC0106" ItemName="ACK" />
       <Item ServiceName="PLC0107" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0107" ItemName="AlarmCode" />
       <Item ServiceName="PLC0107" ItemName="ACK" />
-    </Process>    
+    </Process>
+    <!--CraneProcess-->
+    <Process Name="CraneAlarmProcess" Type="App.exe, App.Dispatching.Process.CraneAlarmProcess">
+      <Item ServiceName="PLC0105" ItemName="AlarmCode" />
+      <Item ServiceName="PLC0106" ItemName="AlarmCode" />
+      <Item ServiceName="PLC0107" ItemName="AlarmCode" />
+    </Process>
     <!--输送线Process,到达入库口-->
     <Process Name="InStockToStationProcess" Type="App.exe, App.Dispatching.Process.InStockToStationProcess">
       <Item ServiceName="PLC0105" ItemName="ToInStation1" />

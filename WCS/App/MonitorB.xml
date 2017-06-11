@@ -7,6 +7,7 @@
       <OPCItem ItemName="Position" ClientHandler="3" OPCItemName="DB541,DINT16,3" />
       <OPCItem ItemName="Status" ClientHandler="4" OPCItemName="DB541,INT28,10" />
       <OPCItem ItemName="TaskNo" ClientHandler="5" OPCItemName="DB541,CHAR48,20" />
+      <OPCItem ItemName="STB" ClientHandler="6" OPCItemName="DB540,INT30,2" />
     </Server>
     <Server Name="PLC0106" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0106]" UpdateRate="350">
       <OPCItem ItemName="HandShake" ClientHandler="1" OPCItemName="DB541,INT0,1 "/>
@@ -14,6 +15,7 @@
       <OPCItem ItemName="Position" ClientHandler="3" OPCItemName="DB541,DINT16,3" />
       <OPCItem ItemName="Status" ClientHandler="4" OPCItemName="DB541,INT28,10" />
       <OPCItem ItemName="TaskNo" ClientHandler="5" OPCItemName="DB541,CHAR48,20" />
+      <OPCItem ItemName="STB" ClientHandler="6" OPCItemName="DB540,INT30,2" />
     </Server>
     <Server Name="PLC0107" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0107]" UpdateRate="350">
       <OPCItem ItemName="HandShake" ClientHandler="1" OPCItemName="DB541,INT0,1 "/>
@@ -21,6 +23,7 @@
       <OPCItem ItemName="Position" ClientHandler="3" OPCItemName="DB541,DINT16,3" />
       <OPCItem ItemName="Status" ClientHandler="4" OPCItemName="DB541,INT28,10" />
       <OPCItem ItemName="TaskNo" ClientHandler="5" OPCItemName="DB541,CHAR48,20" />
+      <OPCItem ItemName="STB" ClientHandler="6" OPCItemName="DB540,INT30,2" />
     </Server>
   </Servers>
 </Configuration>

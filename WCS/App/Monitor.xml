@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Configuration>
   <Servers>
-    <Server Name="Car0101Server" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[CarPLC0101]" UpdateRate="350">
+    <Server Name="PLC0301" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0301]" UpdateRate="350">
       <OPCItem ItemName="Status01" ClientHandler="3" OPCItemName="DB541,INT2,13"/>
       <OPCItem ItemName="CarTaskNo01" ClientHandler="4" OPCItemName="DB541,DINT108,1"/>
       <OPCItem ItemName="AlarmCode01" ClientHandler="5" OPCItemName="DB541,DINT104,1"/>
     </Server>
-    <Server Name="Car0102Server" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[CarPLC0102]" UpdateRate="350">
+    <Server Name="PLC0302" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0302]" UpdateRate="350">
       <OPCItem ItemName="Status02" ClientHandler="7" OPCItemName="DB541,INT2,13"/>
       <OPCItem ItemName="CarTaskNo02" ClientHandler="8" OPCItemName="DB541,DINT108,1"/>
       <OPCItem ItemName="AlarmCode02" ClientHandler="9" OPCItemName="DB541,DINT104,1"/>

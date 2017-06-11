@@ -26,10 +26,6 @@ namespace App.Dispatching.Process
                 tmWorkTimer.Interval = 1000;
                 tmWorkTimer.Elapsed += new ElapsedEventHandler(tmWorker);
 
-                //MCP.Config.Configuration conf = new MCP.Config.Configuration();
-                //conf.Load("Config.xml");
-                //WarehouseCode = conf.Attributes["WarehouseCode"];
-
                 base.Initialize(context);
             }
             catch (Exception ex)

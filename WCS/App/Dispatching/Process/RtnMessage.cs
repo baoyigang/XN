@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+
 namespace App.Dispatching.Process
 {
     public class RtnMessage
@@ -13,4 +14,5 @@ namespace App.Dispatching.Process
         public string finishDate { get; set; }
         public string field1 { get; set; }
     }
+    
 }

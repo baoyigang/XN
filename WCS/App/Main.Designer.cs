@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemDelCraneTask = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCellCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -135,8 +135,7 @@
             // 
             this.ToolStripMenuItemCellCode.Name = "ToolStripMenuItemCellCode";
             this.ToolStripMenuItemCellCode.Size = new System.Drawing.Size(148, 22);
-            this.ToolStripMenuItemCellCode.Text = "重新分配货位";
-            this.ToolStripMenuItemCellCode.Visible = false;
+            this.ToolStripMenuItemCellCode.Text = "重新申请货位";
             this.ToolStripMenuItemCellCode.Click += new System.EventHandler(this.ToolStripMenuItemCellCode_Click);
             // 
             // ToolStripMenuItemReassign
@@ -391,9 +390,9 @@
             // 
             this.pnlBottom.Controls.Add(this.splitContainer1);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 300);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 200);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(1020, 260);
+            this.pnlBottom.Size = new System.Drawing.Size(1020, 360);
             this.pnlBottom.TabIndex = 9;
             // 
             // splitContainer1
@@ -411,26 +410,26 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lbLog);
-            this.splitContainer1.Size = new System.Drawing.Size(1020, 260);
-            this.splitContainer1.SplitterDistance = 148;
+            this.splitContainer1.Size = new System.Drawing.Size(1020, 360);
+            this.splitContainer1.SplitterDistance = 204;
             this.splitContainer1.TabIndex = 2;
             // 
             // dgvMain
             // 
             this.dgvMain.AllowUserToAddRows = false;
             this.dgvMain.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvMain.AutoGenerateColumns = false;
             this.dgvMain.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column5,
@@ -459,7 +458,7 @@
             this.dgvMain.RowHeadersWidth = 40;
             this.dgvMain.RowTemplate.Height = 23;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(1020, 148);
+            this.dgvMain.Size = new System.Drawing.Size(1020, 204);
             this.dgvMain.TabIndex = 7;
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
@@ -472,6 +471,7 @@
             this.Column5.Name = "Column5";
             this.Column5.ReadOnly = true;
             this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column5.Width = 140;
             // 
             // Column1
             // 
@@ -643,7 +643,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 0);
             this.lbLog.Name = "lbLog";
             this.lbLog.ShowGroups = false;
-            this.lbLog.Size = new System.Drawing.Size(1020, 108);
+            this.lbLog.Size = new System.Drawing.Size(1020, 152);
             this.lbLog.TabIndex = 10;
             this.lbLog.UseCompatibleStateImageBehavior = false;
             this.lbLog.View = System.Windows.Forms.View.Details;
@@ -661,7 +661,7 @@
             // columnHeader3
             // 
             this.columnHeader3.Text = "Log";
-            this.columnHeader3.Width = 800;
+            this.columnHeader3.Width = 1200;
             // 
             // menuStrip1
             // 

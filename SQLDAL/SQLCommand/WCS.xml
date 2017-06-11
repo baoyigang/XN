@@ -314,16 +314,44 @@
   </Command>
   <Command ID="SelectTaskWcsStart">
     <CommandString>
-      select '0001' id,taskNo,palletBarcode,startDate,getdate() sendDate,'admin' sender, deviceNo,tasker,'' field1 from Wcs_Task   where TaskNo='{0}'
+      select NEWID() id,taskNo,palletBarcode,'EXECUTING' status,startDate,getdate() sendDate,'ROBO_WCS' sender, deviceNo,tasker,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task
+      where TaskNo='{0}'
     </CommandString>
   </Command>
 
   <Command ID="SelectTaskWcsFinish">
     <CommandString>
-      select '0001' id,taskNo,palletBarcode,'FINISHED' status,alarmCode errorCode,getdate() sendDate,'admin' sender,deviceNo,tasker,finishDate,'' field1 from Wcs_Task   where TaskNo='{0}'
+      select NEWID() id,taskNo,palletBarcode,'FINISHED' status,alarmCode errorCode,getdate() sendDate,'ROBO_WCS' sender,deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task
+      where TaskNo='{0}'
     </CommandString>
   </Command>
-  
+  <Command ID="SelectTaskWcsTerminated">
+    <CommandString>
+      select NEWID() id,taskNo,palletBarcode,'TERMINATED' status,alarmCode errorCode,getdate() sendDate,'ROBO_WCS' sender,deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task
+      where TaskNo='{0}'
+    </CommandString>
+  </Command>
+  <Command ID="SelectTaskWcsAlarm">
+    <CommandString>
+      select NEWID() id,taskNo,palletBarcode,'ERROR' status,
+      (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then  '02'
+      when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='11' then  '02'
+      when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='13' then  '03'
+      when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='13' then  '03'
+      when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='13' then  '04'
+      when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='13' then  '04'
+      when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='12' then  '05'
+      when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='12' then  '06'
+      else T.AlarmCode end) errorCode,
+      getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task T
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo
+      where TaskNo='{0}'
+    </CommandString>
+  </Command>
   <Command ID="SelectTaskTemp">
     <CommandString>
       select * from WCS_TaskTemp where taskNo={0} and taskFlag!=9
@@ -359,13 +387,18 @@
   </Command>
   <Command ID="UpdateTaskNewCellCode">
     <CommandString>
-      update WCS_Task set NewCellCode=@field1,NewAddress=(select StationAddress from Vew_StationAddress where StationNo=@field1) where TaskNo=@TaskNo and NewCellCode=''
+      update WCS_Task set NewCellCode=isnull(@field1,''),NewAddress=isnull((select StationAddress from Vew_StationAddress where StationNo=@field1),'') where TaskNo=@TaskNo and NewCellCode=''
+    </CommandString>
+  </Command>
+  <Command ID="UpdateTaskNewCellCode2">
+    <CommandString>
+      update WCS_Task set NewCellCode=isnull(@field1,''),NewAddress=isnull(select StationAddress from Vew_StationAddress where StationNo=@field1),'') where TaskNo=@TaskNo
     </CommandString>
   </Command>
   <Command ID="UpdateTaskReturnCode">
     <CommandString>
       update WCS_Task set StartReturnCode=(case when @Flag=1 then @ReturnCode else StartReturnCode end),
-      AlarmReturnCode=(case when @Flag=2 then @ReturnCode else AlarmReturnCode end),FinishReturnCode=(case when @Flag=3 then @ReturnCode else FinishReturnCode end)
+      AlarmReturnCode=(case when @Flag=2 then @ReturnCode else AlarmReturnCode end),FinishReturnCode=(case when @Flag in(3,5) then @ReturnCode else FinishReturnCode end)
       where TaskNo=@TaskNo
     </CommandString>
   </Command>

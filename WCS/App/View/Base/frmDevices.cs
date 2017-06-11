@@ -33,8 +33,8 @@ namespace App.View.Base
 
         private void BindData()
         {
-            //DataTable dt = bll.FillDataTable("WCS.SelectProducePlan", new DataParameter[] { new DataParameter("{0}", "WCS_TASK.State in('0','1','2','3') and WCS_TASK.TaskType='11'") });
-            DataTable dt = bll.FillDataTable("CMD.SelectDevice");
+            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode = '{0}'",Program.WarehouseCode)) };
+            DataTable dt = bll.FillDataTable("CMD.SelectDevice", param);
             bsMain.DataSource = dt;
         }
 

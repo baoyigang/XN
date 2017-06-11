@@ -39,7 +39,22 @@ namespace App.View
 
         private void frmMonitorB_Load(object sender, EventArgs e)
         {
-
+            DataTable dt = Program.dtUserPermission;
+            //监控任务--取消堆垛机任务
+            string filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='1'";
+            DataRow[] drs = dt.Select(filter);
+            if (drs.Length <= 0)
+            {
+                this.btnCancel5.Visible = false;
+                this.btnCancel6.Visible = false;
+                this.btnCancel7.Visible = false;
+            }
+            else
+            {
+                this.btnCancel5.Visible = true;
+                this.btnCancel6.Visible = true;
+                this.btnCancel7.Visible = true;
+            }
             Cranes.OnCrane += new CraneEventHandler(Monitor_OnCrane);
             
             InitialP5 = btnSRM5.Location;
@@ -71,7 +86,7 @@ namespace App.View
                 Logger.Error(ex.Message);
             }
 
-            tmWorkTimer.Interval = 30000;
+            tmWorkTimer.Interval = Program.SendInterval;
             tmWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmWorker);
             tmWorkTimer.Start();
         }
@@ -95,13 +110,19 @@ namespace App.View
                     string column = kvp.Value.Column.ToString();
                     string layer = kvp.Value.Layer.ToString();
                     string alarmCode = kvp.Value.AlarmCode.ToString();
+                    DataRow[] drs = dtDeviceAlarm.Select(string.Format("AlarmCode={0}", alarmCode));
+                    string alarmDesc = "";
+                    if (drs.Length > 0)
+                        alarmDesc = drs[0]["AlarmDesc"].ToString();
+                    else
+                        alarmDesc = "堆垛机未知错误！";
                     string sender1 = "admin";
 
-                    string Json = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender1 + "\",\"field1\":\"\",\"field2\":\"\",\"field3\":\"\"" + "}]";
-                    Logger.Info("上报设备状态");
+                    string Json = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender1 + "\",\"field1\":\"\",\"field2\":\"" + alarmDesc + "\",\"field3\":\"\"" + "}]";
+                    Logger.Info("上报设备编号[" + deviceNo + "]的状态");
                     string message = Program.send("transWCSDevice", Json);
                     App.Dispatching.Process.RtnMessage rtnMessage = JsonHelper.JSONToObject<App.Dispatching.Process.RtnMessage>(message);
-                    Logger.Info("上报设备状态,收到反馈：" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Info("上报设备编号[" + deviceNo + "]的状态,收到反馈：" + rtnMessage.returnCode + ":" + rtnMessage.message);
                 }
             }
             catch (Exception ex)
@@ -137,6 +158,11 @@ namespace App.View
             }
             else if (e.ItemName.IndexOf("TaskNo") >= 0)
                 dicCrane[CraneNo].TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(e.States));
+            if (e.ItemName.IndexOf("STB") >= 0)
+            {
+                dicCrane[CraneNo].STB = int.Parse(e.States[0].ToString());
+                dicCrane[CraneNo].ACK = int.Parse(e.States[1].ToString());
+            }
             Cranes.CraneInfo(dicCrane[CraneNo]);
         }
 
@@ -233,7 +259,12 @@ namespace App.View
                     }
                     txt.Text = strAlarmDesc;
                 }
-
+                txt = GetTextBox("txtSTB", crane.CraneNo);
+                if (txt != null)
+                    txt.Text = crane.STB.ToString();
+                txt = GetTextBox("txtACK", crane.CraneNo);
+                if (txt != null)
+                    txt.Text = crane.ACK.ToString();
                 //更新错误代码、错误描述
                 //更新任务状态为执行中
                 //bll.ExecNonQuery("WCS.UpdateTaskError", new DataParameter[] { new DataParameter("@CraneErrCode", crane.ErrCode.ToString()), new DataParameter("@CraneErrDesc", dicCraneError[crane.ErrCode]), new DataParameter("@TaskNo", crane.TaskNo) });
@@ -299,6 +330,42 @@ namespace App.View
                 return (TextBox)ctl[0];
             else
                 return null;
-        }   
+        }
+
+        private void Send2Cmd(string DeviceNo)
+        {
+            string serviceName = "PLC" + DeviceNo;
+            int[] cellAddr = new int[12];
+
+            object obj = MCP.ObjectUtil.GetObject(base.Context.ProcessDispatcher.WriteToService(serviceName, "AlarmCode")).ToString();
+            if (obj.ToString() != "0")
+            {
+                cellAddr[6] = 5;
+                sbyte[] taskNo = new sbyte[20];
+                for (int i = 0; i < 20; i++)
+                    taskNo[i] = 32;
+                
+                base.Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                base.Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                base.Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+
+                MCP.Logger.Info("已给设备" + DeviceNo + "下发取消任务指令");
+            }
+        }
+
+        private void btnCancel7_Click(object sender, EventArgs e)
+        {
+            Send2Cmd("0107");
+        }
+
+        private void btnCancel6_Click(object sender, EventArgs e)
+        {
+            Send2Cmd("0106");
+        }
+
+        private void btnCancel5_Click(object sender, EventArgs e)
+        {
+            Send2Cmd("0105");
+        }
     }
 }

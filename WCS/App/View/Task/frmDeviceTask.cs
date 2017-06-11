@@ -23,10 +23,14 @@ namespace App.View.Task
         {
             try
             {
+                //MessageBox.Show("0");
                 this.cmbTaskType.SelectedIndex = 0;
                 this.txtTaskNo1.Text = "MJ2RB170605000001";
+                //MessageBox.Show("1");
                 BindAisleNo();
-                BindDeviceNo();                
+                //MessageBox.Show("2");
+                BindDeviceNo();
+                //MessageBox.Show("3");
             }
 
             catch (Exception ex)
@@ -319,9 +323,11 @@ namespace App.View.Task
                 return;
             if (this.cbFromColumn.SelectedValue == null)
                 return;
+            if (this.cbFromColumn.SelectedValue.ToString() == "")
+                return;
             if (this.cbFromColumn.SelectedValue.ToString() == "System.Data.DataRowView")
                 return;
-
+            
             DataParameter[] param = new DataParameter[] 
             { 
                 new DataParameter("{0}", string.Format("CMD_Shelf.ShelfName='{0}' and CellColumn={1}",this.cbFromRow.Text,this.cbFromColumn.SelectedValue.ToString()))
@@ -361,7 +367,7 @@ namespace App.View.Task
                 return;
             if (this.cbToColumn.SelectedValue == null)
                 return;
-            if (this.cbToColumn.SelectedValue == "")
+            if (this.cbToColumn.SelectedValue.ToString() == "")
                 return;
             if (this.cbToRow.SelectedValue.ToString() == "System.Data.DataRowView")
                 return;

@@ -18,6 +18,8 @@ namespace App
         public int ForkStatus { get; set; }
         public int AlarmCode { get; set; }
         public int Load { get; set; }
+        public int STB { get; set; }
+        public int ACK { get; set; }
     }
 
     public delegate void CraneEventHandler(CraneEventArgs args);

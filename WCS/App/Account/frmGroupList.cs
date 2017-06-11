@@ -23,7 +23,26 @@ namespace App.Account
 
         private void frmUserList_Load(object sender, EventArgs e)
         {
-           
+            DataTable dt = Program.dtUserPermission;
+            //用户资料
+            string filter = "SubModuleCode='MNU_W00C_00D' and OperatorCode='2'";
+            DataRow[] drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.toolStripButton_Add.Visible = false;
+            else
+                this.toolStripButton_Add.Visible = true;
+            filter = "SubModuleCode='MNU_W00C_00D' and OperatorCode='3'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.toolStripButton_Edit.Visible = false;
+            else
+                this.toolStripButton_Edit.Visible = true;
+            filter = "SubModuleCode='MNU_W00C_00D' and OperatorCode='4'";
+            drs = dt.Select(filter);
+            if (drs.Length <= 0)
+                this.toolStripButton_Del.Visible = false;
+            else
+                this.toolStripButton_Del.Visible = true; 
         }
         private void frmUserList_Activated(object sender, EventArgs e)
         {

@@ -43,13 +43,6 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.dgvMain = new System.Windows.Forms.DataGridView();
-            this.pnlTool = new System.Windows.Forms.Panel();
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripButton_Refresh = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_Cancel = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_EmptyOut = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
-            this.pnlBottom = new System.Windows.Forms.Panel();
             this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
@@ -61,6 +54,13 @@
             this.Column10 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column12 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.Column13 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.pnlTool = new System.Windows.Forms.Panel();
+            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripButton_Refresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Cancel = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_EmptyOut = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
+            this.pnlBottom = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.pnlMain.SuspendLayout();
@@ -187,85 +187,6 @@
             this.dgvMain.TabIndex = 5;
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
-            // pnlTool
-            // 
-            this.pnlTool.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.pnlTool.Controls.Add(this.toolStrip1);
-            this.pnlTool.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTool.Location = new System.Drawing.Point(0, 0);
-            this.pnlTool.Name = "pnlTool";
-            this.pnlTool.Size = new System.Drawing.Size(800, 56);
-            this.pnlTool.TabIndex = 0;
-            // 
-            // toolStrip1
-            // 
-            this.toolStrip1.AutoSize = false;
-            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripButton_Refresh,
-            this.toolStripButton_Cancel,
-            this.toolStripButton_EmptyOut,
-            this.toolStripButton_Close});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 52);
-            this.toolStrip1.TabIndex = 2;
-            this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripButton_Refresh
-            // 
-            this.toolStripButton_Refresh.AutoSize = false;
-            this.toolStripButton_Refresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Refresh.Image")));
-            this.toolStripButton_Refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Refresh.Name = "toolStripButton_Refresh";
-            this.toolStripButton_Refresh.Size = new System.Drawing.Size(60, 50);
-            this.toolStripButton_Refresh.Text = "刷新";
-            this.toolStripButton_Refresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_Refresh.Click += new System.EventHandler(this.toolStripButton_Refresh_Click);
-            // 
-            // toolStripButton_Cancel
-            // 
-            this.toolStripButton_Cancel.AutoSize = false;
-            this.toolStripButton_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Cancel.Image")));
-            this.toolStripButton_Cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Cancel.Name = "toolStripButton_Cancel";
-            this.toolStripButton_Cancel.Size = new System.Drawing.Size(60, 50);
-            this.toolStripButton_Cancel.Text = "取消";
-            this.toolStripButton_Cancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_Cancel.Click += new System.EventHandler(this.toolStripButton_Cancel_Click);
-            // 
-            // toolStripButton_EmptyOut
-            // 
-            this.toolStripButton_EmptyOut.AutoSize = false;
-            this.toolStripButton_EmptyOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_EmptyOut.Image")));
-            this.toolStripButton_EmptyOut.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_EmptyOut.Name = "toolStripButton_EmptyOut";
-            this.toolStripButton_EmptyOut.Size = new System.Drawing.Size(60, 50);
-            this.toolStripButton_EmptyOut.Text = "盘/箱出库";
-            this.toolStripButton_EmptyOut.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_EmptyOut.Click += new System.EventHandler(this.toolStripButton_EmptyOut_Click);
-            // 
-            // toolStripButton_Close
-            // 
-            this.toolStripButton_Close.AutoSize = false;
-            this.toolStripButton_Close.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Close.Image")));
-            this.toolStripButton_Close.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton_Close.Name = "toolStripButton_Close";
-            this.toolStripButton_Close.Size = new System.Drawing.Size(60, 50);
-            this.toolStripButton_Close.Text = "关闭";
-            this.toolStripButton_Close.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton_Close.Click += new System.EventHandler(this.toolStripButton_Close_Click);
-            // 
-            // pnlBottom
-            // 
-            this.pnlBottom.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 365);
-            this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(800, 56);
-            this.pnlBottom.TabIndex = 2;
-            this.pnlBottom.Visible = false;
-            // 
             // colTaskNo
             // 
             this.colTaskNo.DataPropertyName = "TaskNo";
@@ -364,6 +285,86 @@
             this.Column13.Name = "Column13";
             this.Column13.ReadOnly = true;
             this.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // pnlTool
+            // 
+            this.pnlTool.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.pnlTool.Controls.Add(this.toolStrip1);
+            this.pnlTool.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnlTool.Location = new System.Drawing.Point(0, 0);
+            this.pnlTool.Name = "pnlTool";
+            this.pnlTool.Size = new System.Drawing.Size(800, 56);
+            this.pnlTool.TabIndex = 0;
+            // 
+            // toolStrip1
+            // 
+            this.toolStrip1.AutoSize = false;
+            this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripButton_Refresh,
+            this.toolStripButton_Cancel,
+            this.toolStripButton_EmptyOut,
+            this.toolStripButton_Close});
+            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
+            this.toolStrip1.Name = "toolStrip1";
+            this.toolStrip1.Size = new System.Drawing.Size(800, 52);
+            this.toolStrip1.TabIndex = 2;
+            this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripButton_Refresh
+            // 
+            this.toolStripButton_Refresh.AutoSize = false;
+            this.toolStripButton_Refresh.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Refresh.Image")));
+            this.toolStripButton_Refresh.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Refresh.Name = "toolStripButton_Refresh";
+            this.toolStripButton_Refresh.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_Refresh.Text = "刷新";
+            this.toolStripButton_Refresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Refresh.Click += new System.EventHandler(this.toolStripButton_Refresh_Click);
+            // 
+            // toolStripButton_Cancel
+            // 
+            this.toolStripButton_Cancel.AutoSize = false;
+            this.toolStripButton_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Cancel.Image")));
+            this.toolStripButton_Cancel.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Cancel.Name = "toolStripButton_Cancel";
+            this.toolStripButton_Cancel.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_Cancel.Text = "取消";
+            this.toolStripButton_Cancel.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Cancel.Click += new System.EventHandler(this.toolStripButton_Cancel_Click);
+            // 
+            // toolStripButton_EmptyOut
+            // 
+            this.toolStripButton_EmptyOut.AutoSize = false;
+            this.toolStripButton_EmptyOut.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_EmptyOut.Image")));
+            this.toolStripButton_EmptyOut.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_EmptyOut.Name = "toolStripButton_EmptyOut";
+            this.toolStripButton_EmptyOut.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_EmptyOut.Text = "盘/箱出库";
+            this.toolStripButton_EmptyOut.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_EmptyOut.Visible = false;
+            this.toolStripButton_EmptyOut.Click += new System.EventHandler(this.toolStripButton_EmptyOut_Click);
+            // 
+            // toolStripButton_Close
+            // 
+            this.toolStripButton_Close.AutoSize = false;
+            this.toolStripButton_Close.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton_Close.Image")));
+            this.toolStripButton_Close.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Close.Name = "toolStripButton_Close";
+            this.toolStripButton_Close.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_Close.Text = "关闭";
+            this.toolStripButton_Close.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Close.Click += new System.EventHandler(this.toolStripButton_Close_Click);
+            // 
+            // pnlBottom
+            // 
+            this.pnlBottom.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBottom.Location = new System.Drawing.Point(0, 365);
+            this.pnlBottom.Name = "pnlBottom";
+            this.pnlBottom.Size = new System.Drawing.Size(800, 56);
+            this.pnlBottom.TabIndex = 2;
+            this.pnlBottom.Visible = false;
             // 
             // frmOutStock
             // 
