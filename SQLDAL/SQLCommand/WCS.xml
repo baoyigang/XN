@@ -337,7 +337,7 @@
   <Command ID="SelectTaskWcsAlarm">
     <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status,
-      (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then  '02'
+      (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
       when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='11' then  '02'
       when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='13' then  '03'
       when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='13' then  '03'
