@@ -122,27 +122,28 @@
             this.ToolStripMenuItemReassign,
             this.ToolStripMenuItemStateChange});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(149, 92);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 114);
             // 
             // ToolStripMenuItemDelCraneTask
             // 
             this.ToolStripMenuItemDelCraneTask.Name = "ToolStripMenuItemDelCraneTask";
-            this.ToolStripMenuItemDelCraneTask.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemDelCraneTask.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemDelCraneTask.Text = "下发取消任务";
+            this.ToolStripMenuItemDelCraneTask.Visible = false;
             this.ToolStripMenuItemDelCraneTask.Click += new System.EventHandler(this.ToolStripMenuItemDelCraneTask_Click);
             // 
             // ToolStripMenuItemCellCode
             // 
             this.ToolStripMenuItemCellCode.Name = "ToolStripMenuItemCellCode";
-            this.ToolStripMenuItemCellCode.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemCellCode.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemCellCode.Text = "重新申请货位";
             this.ToolStripMenuItemCellCode.Click += new System.EventHandler(this.ToolStripMenuItemCellCode_Click);
             // 
             // ToolStripMenuItemReassign
             // 
             this.ToolStripMenuItemReassign.Name = "ToolStripMenuItemReassign";
-            this.ToolStripMenuItemReassign.Size = new System.Drawing.Size(148, 22);
-            this.ToolStripMenuItemReassign.Text = "重新下发任务";
+            this.ToolStripMenuItemReassign.Size = new System.Drawing.Size(180, 22);
+            this.ToolStripMenuItemReassign.Text = "重新下发任务(重入)";
             this.ToolStripMenuItemReassign.Click += new System.EventHandler(this.ToolStripMenuItemReassign_Click);
             // 
             // ToolStripMenuItemStateChange
@@ -159,7 +160,7 @@
             this.ToolStripMenuItem18,
             this.ToolStripMenuItem19});
             this.ToolStripMenuItemStateChange.Name = "ToolStripMenuItemStateChange";
-            this.ToolStripMenuItemStateChange.Size = new System.Drawing.Size(148, 22);
+            this.ToolStripMenuItemStateChange.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItemStateChange.Text = "任务状态切换";
             // 
             // ToolStripMenuItem10
@@ -705,6 +706,7 @@
             this.InventortoolStripMenuItem.Name = "InventortoolStripMenuItem";
             this.InventortoolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.InventortoolStripMenuItem.Text = "盘点任务";
+            this.InventortoolStripMenuItem.Visible = false;
             this.InventortoolStripMenuItem.Click += new System.EventHandler(this.InventortoolStripMenuItem_Click);
             // 
             // MoveStockToolStripMenuItem

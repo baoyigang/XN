@@ -166,9 +166,9 @@
             // 
             // btnSRM5
             // 
-            this.btnSRM5.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM5.BackColor = System.Drawing.Color.Red;
             this.btnSRM5.Font = new System.Drawing.Font("Microsoft YaHei", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSRM5.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM5.ForeColor = System.Drawing.Color.Black;
             this.btnSRM5.Location = new System.Drawing.Point(72, 221);
             this.btnSRM5.Name = "btnSRM5";
             this.btnSRM5.Size = new System.Drawing.Size(25, 20);
@@ -178,9 +178,9 @@
             // 
             // btnSRM6
             // 
-            this.btnSRM6.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM6.BackColor = System.Drawing.Color.Yellow;
             this.btnSRM6.Font = new System.Drawing.Font("Microsoft YaHei", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnSRM6.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM6.ForeColor = System.Drawing.Color.Black;
             this.btnSRM6.Location = new System.Drawing.Point(72, 132);
             this.btnSRM6.Name = "btnSRM6";
             this.btnSRM6.Size = new System.Drawing.Size(25, 20);
@@ -190,9 +190,9 @@
             // 
             // btnSRM7
             // 
-            this.btnSRM7.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM7.BackColor = System.Drawing.Color.Lime;
             this.btnSRM7.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
-            this.btnSRM7.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM7.ForeColor = System.Drawing.Color.Black;
             this.btnSRM7.Location = new System.Drawing.Point(72, 40);
             this.btnSRM7.Name = "btnSRM7";
             this.btnSRM7.Size = new System.Drawing.Size(25, 20);

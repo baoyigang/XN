@@ -244,12 +244,6 @@
     <Compile Include="View\Dispatcher\frmScan.Designer.cs">
       <DependentUpon>frmScan.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\frmTaskInfo.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="View\frmTaskInfo.Designer.cs">
-      <DependentUpon>frmTaskInfo.cs</DependentUpon>
-    </Compile>
     <Compile Include="View\TaskCarNo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -377,6 +371,12 @@
     </Compile>
     <Compile Include="View\Task\frmPalletInTask.Designer.cs">
       <DependentUpon>frmPalletInTask.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Task\frmTaskDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Task\frmTaskDialog.Designer.cs">
+      <DependentUpon>frmTaskDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Web References\WCSDataService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -507,6 +507,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Task\frmPalletInTask.resx">
       <DependentUpon>frmPalletInTask.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Task\frmTaskDialog.resx">
+      <DependentUpon>frmTaskDialog.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>

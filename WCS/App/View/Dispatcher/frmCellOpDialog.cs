@@ -209,7 +209,7 @@ namespace App.View.Dispatcher
 
         private void btnTaskID_Click(object sender, EventArgs e)
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.TaskType='11' and WCS_TASK.CellCode='{0}'",CellCode)) });
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.TaskType='11' and WCS_TASK.ToAddress='{0}'",CellCode)) });
 
             SelectDialog selectDialog = new SelectDialog(dt, TaskFields, false);
             if (selectDialog.ShowDialog() == DialogResult.OK)

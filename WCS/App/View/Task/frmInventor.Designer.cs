@@ -38,9 +38,20 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContent = new System.Windows.Forms.Panel();
             this.dgvMain = new System.Windows.Forms.DataGridView();
+            this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column5 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column14 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column15 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column10 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column12 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
+            this.Column13 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             this.pnlTool = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton_Refresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Query = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Cancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
             this.pnlBottom = new System.Windows.Forms.Panel();
@@ -53,16 +64,6 @@
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.colTaskNo = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column1 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.colState = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column4 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column5 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column14 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column15 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column10 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column12 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
-            this.Column13 = new DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).BeginInit();
             this.pnlMain.SuspendLayout();
             this.pnlContent.SuspendLayout();
@@ -149,6 +150,98 @@
             this.dgvMain.Size = new System.Drawing.Size(800, 309);
             this.dgvMain.TabIndex = 5;
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
+            this.dgvMain.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvMain_RowPostPaint);
+            // 
+            // colTaskNo
+            // 
+            this.colTaskNo.DataPropertyName = "TaskNo";
+            this.colTaskNo.FilteringEnabled = false;
+            this.colTaskNo.HeaderText = "任务号";
+            this.colTaskNo.Name = "colTaskNo";
+            this.colTaskNo.ReadOnly = true;
+            this.colTaskNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "BillTypeName";
+            this.Column1.FilteringEnabled = false;
+            this.Column1.HeaderText = "任务类型";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // colState
+            // 
+            this.colState.DataPropertyName = "StateDesc";
+            this.colState.FilteringEnabled = false;
+            this.colState.HeaderText = "状态";
+            this.colState.Name = "colState";
+            this.colState.ReadOnly = true;
+            this.colState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colState.Width = 80;
+            // 
+            // Column4
+            // 
+            this.Column4.DataPropertyName = "CellCode";
+            this.Column4.FilteringEnabled = false;
+            this.Column4.HeaderText = "货位编号";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column5
+            // 
+            this.Column5.DataPropertyName = "DeviceNo";
+            this.Column5.FilteringEnabled = false;
+            this.Column5.HeaderText = "设备编号";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column14
+            // 
+            this.Column14.DataPropertyName = "StartDate";
+            this.Column14.FilteringEnabled = false;
+            this.Column14.HeaderText = "开始时间";
+            this.Column14.Name = "Column14";
+            this.Column14.ReadOnly = true;
+            this.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column15
+            // 
+            this.Column15.DataPropertyName = "FinishDate";
+            this.Column15.FilteringEnabled = false;
+            this.Column15.HeaderText = "结束时间";
+            this.Column15.Name = "Column15";
+            this.Column15.ReadOnly = true;
+            this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column10
+            // 
+            this.Column10.DataPropertyName = "PalletBarcode";
+            this.Column10.FilteringEnabled = false;
+            this.Column10.HeaderText = "托盘条码";
+            this.Column10.Name = "Column10";
+            this.Column10.ReadOnly = true;
+            this.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column12
+            // 
+            this.Column12.DataPropertyName = "TaskDate";
+            this.Column12.FilteringEnabled = false;
+            this.Column12.HeaderText = "作业日期";
+            this.Column12.Name = "Column12";
+            this.Column12.ReadOnly = true;
+            this.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column13
+            // 
+            this.Column13.DataPropertyName = "Tasker";
+            this.Column13.FilteringEnabled = false;
+            this.Column13.HeaderText = "作业人员";
+            this.Column13.Name = "Column13";
+            this.Column13.ReadOnly = true;
+            this.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // pnlTool
             // 
@@ -166,6 +259,7 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton_Refresh,
+            this.toolStripButton_Query,
             this.toolStripButton_Cancel,
             this.toolStripButton_Close});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -184,6 +278,17 @@
             this.toolStripButton_Refresh.Text = "刷新";
             this.toolStripButton_Refresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton_Refresh.Click += new System.EventHandler(this.toolStripButton_Refresh_Click);
+            // 
+            // toolStripButton_Query
+            // 
+            this.toolStripButton_Query.AutoSize = false;
+            this.toolStripButton_Query.Image = global::App.Properties.Resources.zoom;
+            this.toolStripButton_Query.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Query.Name = "toolStripButton_Query";
+            this.toolStripButton_Query.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_Query.Text = "查询";
+            this.toolStripButton_Query.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Query.Click += new System.EventHandler(this.toolStripButton_Query_Click);
             // 
             // toolStripButton_Cancel
             // 
@@ -288,97 +393,6 @@
             this.toolStripMenuItem5.Text = "取消";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
-            // colTaskNo
-            // 
-            this.colTaskNo.DataPropertyName = "TaskNo";
-            this.colTaskNo.FilteringEnabled = false;
-            this.colTaskNo.HeaderText = "任务号";
-            this.colTaskNo.Name = "colTaskNo";
-            this.colTaskNo.ReadOnly = true;
-            this.colTaskNo.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "BillTypeName";
-            this.Column1.FilteringEnabled = false;
-            this.Column1.HeaderText = "任务类型";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // colState
-            // 
-            this.colState.DataPropertyName = "StateDesc";
-            this.colState.FilteringEnabled = false;
-            this.colState.HeaderText = "状态";
-            this.colState.Name = "colState";
-            this.colState.ReadOnly = true;
-            this.colState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colState.Width = 80;
-            // 
-            // Column4
-            // 
-            this.Column4.DataPropertyName = "CellCode";
-            this.Column4.FilteringEnabled = false;
-            this.Column4.HeaderText = "货位编号";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column5
-            // 
-            this.Column5.DataPropertyName = "DeviceNo";
-            this.Column5.FilteringEnabled = false;
-            this.Column5.HeaderText = "设备编号";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column14
-            // 
-            this.Column14.DataPropertyName = "StartDate";
-            this.Column14.FilteringEnabled = false;
-            this.Column14.HeaderText = "开始时间";
-            this.Column14.Name = "Column14";
-            this.Column14.ReadOnly = true;
-            this.Column14.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column15
-            // 
-            this.Column15.DataPropertyName = "FinishDate";
-            this.Column15.FilteringEnabled = false;
-            this.Column15.HeaderText = "结束时间";
-            this.Column15.Name = "Column15";
-            this.Column15.ReadOnly = true;
-            this.Column15.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column10
-            // 
-            this.Column10.DataPropertyName = "PalletBarcode";
-            this.Column10.FilteringEnabled = false;
-            this.Column10.HeaderText = "托盘条码";
-            this.Column10.Name = "Column10";
-            this.Column10.ReadOnly = true;
-            this.Column10.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column12
-            // 
-            this.Column12.DataPropertyName = "TaskDate";
-            this.Column12.FilteringEnabled = false;
-            this.Column12.HeaderText = "作业日期";
-            this.Column12.Name = "Column12";
-            this.Column12.ReadOnly = true;
-            this.Column12.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
-            // Column13
-            // 
-            this.Column13.DataPropertyName = "Tasker";
-            this.Column13.FilteringEnabled = false;
-            this.Column13.HeaderText = "作业人员";
-            this.Column13.Name = "Column13";
-            this.Column13.ReadOnly = true;
-            this.Column13.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            // 
             // frmInventor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -433,5 +447,6 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column10;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column12;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column13;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Query;
     }
 }

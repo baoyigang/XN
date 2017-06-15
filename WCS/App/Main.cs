@@ -73,10 +73,10 @@ namespace App
             //监控任务--取消堆垛机任务
             string filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='1'";
             DataRow[] drs = dt.Select(filter);
-            if (drs.Length <= 0)
-                this.ToolStripMenuItemDelCraneTask.Visible = false;  
-            else
-                this.ToolStripMenuItemDelCraneTask.Visible = true;  
+            //if (drs.Length <= 0)
+            //    this.ToolStripMenuItemDelCraneTask.Visible = false;  
+            //else
+            //    this.ToolStripMenuItemDelCraneTask.Visible = true;  
             //监控任务--重新下发堆垛机任务
             filter = "SubModuleCode='MNU_W00A_00A' and OperatorCode='2'";
             drs = dt.Select(filter);
@@ -660,9 +660,13 @@ namespace App
                 string TaskNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[0].Value.ToString();
                 string TaskType = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colTaskType"].Value.ToString();
                 string AlarmCode = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells["colAlarmCode"].ToString();
-
-                App.Dispatching.Process.Report report = new Dispatching.Process.Report();
-                report.Send2MJWcs(context, 4, TaskNo);
+                if (AlarmCode == "503" || AlarmCode == "504")
+                {
+                    App.Dispatching.Process.Report report = new Dispatching.Process.Report();
+                    report.Send2MJWcs(context, 4, TaskNo);
+                }
+                else
+                    Logger.Info("非重入或入库货位阻塞不可重新申请货位");
             }
         }
 
@@ -712,8 +716,8 @@ namespace App
                     cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
                     cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
                     cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
-                    cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));                    
-
+                    cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
+                    cellAddr[6] = 1;
                     sbyte[] taskNo = new sbyte[20];
                     Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
                     context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);

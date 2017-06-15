@@ -249,9 +249,9 @@
   </Command>
   <Command ID="UpdateCellByTaskNo">
     <CommandString>
-      update CMD_Cell Set IsLock='0',ProductCode=Task.ProductCode,PalletCode=Task.PalletCode,Quantity=1,InDate=Task.FinishDate,BillNo=Task.BillID
+      update CMD_Cell Set IsLock='0',PalletBarcode=Task.PalletBarcode,InDate=Task.FinishDate,BillNo=Task.TaskNo
       from CMD_Cell
-      Inner Join WCS_Task Task On CMD_Cell.CellCode=Task.CellCode
+      Inner Join WCS_Task Task On CMD_Cell.CellCode=Task.ToAddress
       where Task.TaskNo=@TaskNo
     </CommandString>
   </Command>

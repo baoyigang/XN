@@ -57,10 +57,14 @@ namespace App.View.Task
 
         private void BindData()
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", "WCS_TASK.State in('0','1','2','3') and WCS_TASK.TaskType='13'") });
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.WarehouseCode = '{0}' and WCS_TASK.State in('0','1','2','3','4','7') and convert(varchar(10),WCS_TASK.TaskDate,120)=convert(varchar(10),getdate(),120) and WCS_TASK.TaskType='13'", Program.WarehouseCode)) });
             bsMain.DataSource = dt;
         }
-
+        private void BindData(string filter)
+        {
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.WarehouseCode = '{0}' and WCS_TASK.State in('0','1','2','3','4','7') and WCS_TASK.TaskType='13' and {1}", Program.WarehouseCode, filter)) });
+            bsMain.DataSource = dt;
+        }
         private void frmMoveStock_Load(object sender, EventArgs e)
         {
             //this.BindData();
@@ -150,6 +154,29 @@ namespace App.View.Task
         private void frmMoveStock_Activated(object sender, EventArgs e)
         {
             this.BindData();
-        }        
+        }
+
+        private void toolStripButton_Query_Click(object sender, EventArgs e)
+        {
+            frmTaskDialog f = new frmTaskDialog("13");
+            if (f.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.BindData(f.filter);
+            }
+        }
+        private void dgvMain_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
+        {
+            Rectangle rectangle = new Rectangle(e.RowBounds.Location.X,
+                e.RowBounds.Location.Y,
+                this.dgvMain.RowHeadersWidth - 4,
+                e.RowBounds.Height);
+
+            TextRenderer.DrawText(e.Graphics, (e.RowIndex + 1).ToString(),
+                dgvMain.RowHeadersDefaultCellStyle.Font,
+                rectangle,
+                dgvMain.RowHeadersDefaultCellStyle.ForeColor,
+                TextFormatFlags.VerticalCenter | TextFormatFlags.Right);
+
+        }
     }
 }

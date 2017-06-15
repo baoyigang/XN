@@ -35,16 +35,6 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.picCar01 = new System.Windows.Forms.PictureBox();
             this.picCar02 = new System.Windows.Forms.PictureBox();
-            this.label56 = new System.Windows.Forms.Label();
-            this.button21 = new System.Windows.Forms.Button();
-            this.label55 = new System.Windows.Forms.Label();
-            this.button22 = new System.Windows.Forms.Button();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
-            this.button24 = new System.Windows.Forms.Button();
-            this.label40 = new System.Windows.Forms.Label();
-            this.button26 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -189,16 +179,6 @@
             // 
             this.panel1.Controls.Add(this.picCar01);
             this.panel1.Controls.Add(this.picCar02);
-            this.panel1.Controls.Add(this.label56);
-            this.panel1.Controls.Add(this.button21);
-            this.panel1.Controls.Add(this.label55);
-            this.panel1.Controls.Add(this.button22);
-            this.panel1.Controls.Add(this.label44);
-            this.panel1.Controls.Add(this.label39);
-            this.panel1.Controls.Add(this.button23);
-            this.panel1.Controls.Add(this.button24);
-            this.panel1.Controls.Add(this.label40);
-            this.panel1.Controls.Add(this.button26);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -227,121 +207,6 @@
             this.picCar02.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.picCar02.TabIndex = 156;
             this.picCar02.TabStop = false;
-            // 
-            // label56
-            // 
-            this.label56.AutoSize = true;
-            this.label56.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label56.ForeColor = System.Drawing.Color.Red;
-            this.label56.Location = new System.Drawing.Point(508, 501);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(65, 20);
-            this.label56.TabIndex = 151;
-            this.label56.Text = "下降到位";
-            // 
-            // button21
-            // 
-            this.button21.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button21.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold);
-            this.button21.ForeColor = System.Drawing.Color.Blue;
-            this.button21.Location = new System.Drawing.Point(476, 498);
-            this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(31, 27);
-            this.button21.TabIndex = 150;
-            this.button21.Text = "◎";
-            this.button21.UseVisualStyleBackColor = false;
-            // 
-            // label55
-            // 
-            this.label55.AutoSize = true;
-            this.label55.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label55.ForeColor = System.Drawing.Color.Red;
-            this.label55.Location = new System.Drawing.Point(615, 501);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(79, 20);
-            this.label55.TabIndex = 149;
-            this.label55.Text = "输送机有货";
-            // 
-            // button22
-            // 
-            this.button22.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button22.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button22.ForeColor = System.Drawing.Color.Blue;
-            this.button22.Location = new System.Drawing.Point(582, 498);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(31, 26);
-            this.button22.TabIndex = 148;
-            this.button22.Text = "■";
-            this.button22.UseVisualStyleBackColor = false;
-            // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label44.ForeColor = System.Drawing.Color.Red;
-            this.label44.Location = new System.Drawing.Point(828, 501);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(65, 20);
-            this.label44.TabIndex = 147;
-            this.label44.Text = "传动方向";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label39.ForeColor = System.Drawing.Color.Red;
-            this.label39.Location = new System.Drawing.Point(731, 501);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(65, 20);
-            this.label39.TabIndex = 146;
-            this.label39.Text = "传动方向";
-            // 
-            // button23
-            // 
-            this.button23.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button23.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button23.ForeColor = System.Drawing.Color.Blue;
-            this.button23.Location = new System.Drawing.Point(795, 498);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(31, 26);
-            this.button23.TabIndex = 145;
-            this.button23.Text = "↑";
-            this.button23.UseVisualStyleBackColor = false;
-            // 
-            // button24
-            // 
-            this.button24.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button24.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button24.ForeColor = System.Drawing.Color.Blue;
-            this.button24.Location = new System.Drawing.Point(698, 497);
-            this.button24.Name = "button24";
-            this.button24.Size = new System.Drawing.Size(31, 27);
-            this.button24.TabIndex = 144;
-            this.button24.Text = "→";
-            this.button24.UseVisualStyleBackColor = false;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label40.ForeColor = System.Drawing.Color.Red;
-            this.label40.Location = new System.Drawing.Point(404, 501);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(65, 20);
-            this.label40.TabIndex = 141;
-            this.label40.Text = "上升到位";
-            // 
-            // button26
-            // 
-            this.button26.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.button26.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold);
-            this.button26.ForeColor = System.Drawing.Color.Blue;
-            this.button26.Location = new System.Drawing.Point(372, 497);
-            this.button26.Name = "button26";
-            this.button26.Size = new System.Drawing.Size(31, 27);
-            this.button26.TabIndex = 140;
-            this.button26.Text = "●";
-            this.button26.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
@@ -1339,7 +1204,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picCar01)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCar02)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -1389,16 +1253,6 @@
         private System.Windows.Forms.TextBox txtRow1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.Button button21;
-        private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.Button button22;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Button button23;
-        private System.Windows.Forms.Button button24;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Button button26;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;

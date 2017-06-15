@@ -98,6 +98,7 @@ namespace App.View.Param
                 attributes["WcsUrl"] = parameter.WcsUrl;
                 attributes["UserName"] = "admin";
                 attributes["SendInterval"] = parameter.SendInterval;
+                attributes["RequireAPReady"] = parameter.RequireAPReady;
                 ConfigUtil configUtil = new ConfigUtil();
                 configUtil.Save(attributes);
 

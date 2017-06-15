@@ -57,6 +57,7 @@
             this.pnlTool = new System.Windows.Forms.Panel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton_Refresh = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton_Query = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Cancel = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_EmptyOut = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton_Close = new System.Windows.Forms.ToolStripButton();
@@ -186,6 +187,7 @@
             this.dgvMain.Size = new System.Drawing.Size(800, 309);
             this.dgvMain.TabIndex = 5;
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
+            this.dgvMain.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvMain_RowPostPaint);
             // 
             // colTaskNo
             // 
@@ -302,6 +304,7 @@
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton_Refresh,
+            this.toolStripButton_Query,
             this.toolStripButton_Cancel,
             this.toolStripButton_EmptyOut,
             this.toolStripButton_Close});
@@ -321,6 +324,17 @@
             this.toolStripButton_Refresh.Text = "刷新";
             this.toolStripButton_Refresh.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
             this.toolStripButton_Refresh.Click += new System.EventHandler(this.toolStripButton_Refresh_Click);
+            // 
+            // toolStripButton_Query
+            // 
+            this.toolStripButton_Query.AutoSize = false;
+            this.toolStripButton_Query.Image = global::App.Properties.Resources.zoom;
+            this.toolStripButton_Query.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton_Query.Name = "toolStripButton_Query";
+            this.toolStripButton_Query.Size = new System.Drawing.Size(60, 50);
+            this.toolStripButton_Query.Text = "查询";
+            this.toolStripButton_Query.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Query.Click += new System.EventHandler(this.toolStripButton_Query_Click);
             // 
             // toolStripButton_Cancel
             // 
@@ -419,5 +433,6 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column10;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column12;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column13;
+        private System.Windows.Forms.ToolStripButton toolStripButton_Query;
     }
 }
