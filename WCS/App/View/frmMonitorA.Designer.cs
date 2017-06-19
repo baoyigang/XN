@@ -34,6 +34,10 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnSRM1 = new System.Windows.Forms.Button();
+            this.btnSRM2 = new System.Windows.Forms.Button();
+            this.btnSRM3 = new System.Windows.Forms.Button();
+            this.btnSRM4 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.groupBox8 = new System.Windows.Forms.GroupBox();
             this.btnCancel1 = new System.Windows.Forms.Button();
@@ -132,10 +136,6 @@
             this.txtLayer4 = new System.Windows.Forms.TextBox();
             this.txtAlarmCode4 = new System.Windows.Forms.TextBox();
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
-            this.btnSRM4 = new System.Windows.Forms.Button();
-            this.btnSRM3 = new System.Windows.Forms.Button();
-            this.btnSRM2 = new System.Windows.Forms.Button();
-            this.btnSRM1 = new System.Windows.Forms.Button();
             this.pnlMain.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -177,7 +177,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.groupBox6);
             this.splitContainer1.Panel2.Controls.Add(this.groupBox5);
             this.splitContainer1.Size = new System.Drawing.Size(1362, 418);
-            this.splitContainer1.SplitterDistance = 320;
+            this.splitContainer1.SplitterDistance = 442;
             this.splitContainer1.TabIndex = 11;
             // 
             // panel1
@@ -190,8 +190,56 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(320, 418);
+            this.panel1.Size = new System.Drawing.Size(442, 418);
             this.panel1.TabIndex = 9;
+            // 
+            // btnSRM1
+            // 
+            this.btnSRM1.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM1.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
+            this.btnSRM1.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM1.Location = new System.Drawing.Point(83, 265);
+            this.btnSRM1.Name = "btnSRM1";
+            this.btnSRM1.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM1.TabIndex = 160;
+            this.btnSRM1.Text = "1";
+            this.btnSRM1.UseVisualStyleBackColor = false;
+            // 
+            // btnSRM2
+            // 
+            this.btnSRM2.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM2.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
+            this.btnSRM2.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM2.Location = new System.Drawing.Point(83, 210);
+            this.btnSRM2.Name = "btnSRM2";
+            this.btnSRM2.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM2.TabIndex = 159;
+            this.btnSRM2.Text = "2";
+            this.btnSRM2.UseVisualStyleBackColor = false;
+            // 
+            // btnSRM3
+            // 
+            this.btnSRM3.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM3.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
+            this.btnSRM3.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM3.Location = new System.Drawing.Point(83, 117);
+            this.btnSRM3.Name = "btnSRM3";
+            this.btnSRM3.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM3.TabIndex = 158;
+            this.btnSRM3.Text = "3";
+            this.btnSRM3.UseVisualStyleBackColor = false;
+            // 
+            // btnSRM4
+            // 
+            this.btnSRM4.BackColor = System.Drawing.SystemColors.Info;
+            this.btnSRM4.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
+            this.btnSRM4.ForeColor = System.Drawing.Color.Red;
+            this.btnSRM4.Location = new System.Drawing.Point(83, 44);
+            this.btnSRM4.Name = "btnSRM4";
+            this.btnSRM4.Size = new System.Drawing.Size(25, 20);
+            this.btnSRM4.TabIndex = 157;
+            this.btnSRM4.Text = "4";
+            this.btnSRM4.UseVisualStyleBackColor = false;
             // 
             // pictureBox1
             // 
@@ -1213,54 +1261,6 @@
             this.txtAlarmCode4.ReadOnly = true;
             this.txtAlarmCode4.Size = new System.Drawing.Size(129, 26);
             this.txtAlarmCode4.TabIndex = 3;
-            // 
-            // btnSRM4
-            // 
-            this.btnSRM4.BackColor = System.Drawing.SystemColors.Info;
-            this.btnSRM4.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
-            this.btnSRM4.ForeColor = System.Drawing.Color.Red;
-            this.btnSRM4.Location = new System.Drawing.Point(83, 44);
-            this.btnSRM4.Name = "btnSRM4";
-            this.btnSRM4.Size = new System.Drawing.Size(25, 20);
-            this.btnSRM4.TabIndex = 157;
-            this.btnSRM4.Text = "4";
-            this.btnSRM4.UseVisualStyleBackColor = false;
-            // 
-            // btnSRM3
-            // 
-            this.btnSRM3.BackColor = System.Drawing.SystemColors.Info;
-            this.btnSRM3.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
-            this.btnSRM3.ForeColor = System.Drawing.Color.Red;
-            this.btnSRM3.Location = new System.Drawing.Point(83, 117);
-            this.btnSRM3.Name = "btnSRM3";
-            this.btnSRM3.Size = new System.Drawing.Size(25, 20);
-            this.btnSRM3.TabIndex = 158;
-            this.btnSRM3.Text = "3";
-            this.btnSRM3.UseVisualStyleBackColor = false;
-            // 
-            // btnSRM2
-            // 
-            this.btnSRM2.BackColor = System.Drawing.SystemColors.Info;
-            this.btnSRM2.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
-            this.btnSRM2.ForeColor = System.Drawing.Color.Red;
-            this.btnSRM2.Location = new System.Drawing.Point(83, 210);
-            this.btnSRM2.Name = "btnSRM2";
-            this.btnSRM2.Size = new System.Drawing.Size(25, 20);
-            this.btnSRM2.TabIndex = 159;
-            this.btnSRM2.Text = "2";
-            this.btnSRM2.UseVisualStyleBackColor = false;
-            // 
-            // btnSRM1
-            // 
-            this.btnSRM1.BackColor = System.Drawing.SystemColors.Info;
-            this.btnSRM1.Font = new System.Drawing.Font("Microsoft YaHei", 7F);
-            this.btnSRM1.ForeColor = System.Drawing.Color.Red;
-            this.btnSRM1.Location = new System.Drawing.Point(83, 265);
-            this.btnSRM1.Name = "btnSRM1";
-            this.btnSRM1.Size = new System.Drawing.Size(25, 20);
-            this.btnSRM1.TabIndex = 160;
-            this.btnSRM1.Text = "1";
-            this.btnSRM1.UseVisualStyleBackColor = false;
             // 
             // frmMonitorA
             // 
