@@ -322,7 +322,7 @@
 
   <Command ID="SelectTaskWcsFinish">
     <CommandString>
-      select NEWID() id,taskNo,palletBarcode,'FINISHED' status,alarmCode errorCode,getdate() sendDate,'ROBO_WCS' sender,deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      select NEWID() id,taskNo,palletBarcode,'FINISHED' status,'' errorCode,getdate() sendDate,'ROBO_WCS' sender,deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
       from Wcs_Task
       where TaskNo='{0}'
     </CommandString>
