@@ -695,6 +695,7 @@ namespace App
                     return;
                 }
                 int[] cellAddr = new int[12];
+                cellAddr[6] = 1;
                 //判断是否要用MJ-WCS重新下发的货位下发任务
                 if (AlarmCode > 500 && AlarmCode < 503)
                 {
@@ -717,7 +718,6 @@ namespace App
                     cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
                     cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
                     cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
-                    cellAddr[6] = 1;
                     sbyte[] taskNo = new sbyte[20];
                     Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
                     context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
