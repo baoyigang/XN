@@ -182,30 +182,12 @@ namespace App.View
 
                 txt = GetTextBox("txtStatus", crane.CraneNo);
                 if (txt != null && dicStatus.ContainsKey(crane.Status))
-                {
                     txt.Text = dicStatus[crane.Status];
-                    if (txt.Text=="空闲")
-                    {
-                        txt.BackColor = Color.Lime;
-                    }
-                    else
-                    {
-                        txt.BackColor = Color.Yellow;
-                    }
-                }
+
                 txt = GetTextBox("txtWorkMode", crane.CraneNo);
                 if (txt != null && dicWorkMode.ContainsKey(crane.Mode))
-                {
                     txt.Text = dicWorkMode[crane.Mode];
-                    if (crane.Mode == 1)
-                    {
-                        txt.BackColor = Color.Lime;
-                    }
-                    else
-                    {
-                        txt.BackColor = Color.Yellow;
-                    }
-                }
+
                 if (crane.Mode == 1)
                     btn.BackColor = Color.Lime;
                 else
@@ -263,17 +245,8 @@ namespace App.View
                     txt.Text = dicFork[crane.ForkStatus];
                 txt = GetTextBox("txtAlarmCode", crane.CraneNo);
                 if (txt != null)
-                {
                     txt.Text = crane.AlarmCode.ToString();
-                    if (txt.Text=="0")
-                    {
-                        txt.BackColor = DefaultBackColor;
-                    }
-                    else
-                    {
-                        txt.BackColor = Color.Red;
-                    }
-                }
+
                 string strAlarmDesc = "";
                 txt = GetTextBox("txtAlarmDesc", crane.CraneNo);
                 if (txt != null)
@@ -291,14 +264,6 @@ namespace App.View
                         strAlarmDesc = "";
                     }
                     txt.Text = strAlarmDesc;
-                    if (txt.Text == "")
-                    {
-                        txt.BackColor = DefaultBackColor;
-                    }
-                    else
-                    {
-                        txt.BackColor = Color.Red;
-                    }
                 }
                 txt = GetTextBox("txtSTB", crane.CraneNo);
                 if (txt != null)
@@ -342,7 +307,7 @@ namespace App.View
             dicFork.Add(1, "货叉在左侧");
             dicFork.Add(2, "货叉在右侧");
 
-            dicStatus.Add(0, "运行");
+            dicStatus.Add(0, "未知");
             dicStatus.Add(1, "空闲");
             //dicStatus.Add(2, "检查任务数据");
             //dicStatus.Add(3, "定位到取货位");
