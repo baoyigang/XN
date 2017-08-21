@@ -97,7 +97,7 @@ namespace App.Dispatching.Process
                         string ack = obj.ToString();
                         if (ack.Equals("True") || ack.Equals("1"))
                             WriteToService(stateItem.Name, "STB", 0);
-                        break;                    
+                        break;
                     case "Run":
                         blRun = (int)stateItem.State == 1;
                         if (blRun)
@@ -154,7 +154,7 @@ namespace App.Dispatching.Process
 
                     //查找入库任务>2的先执行
                     string filter = string.Format("AisleNo='{0}' and TaskType='11' and State in('0','1','2')", dtAisle.Rows[i]["AisleNo"].ToString());
-                    DataRow[] drs = dt.Select(filter, "State");
+                    DataRow[] drs = dt.Select(filter, "State desc");
                     if (drs.Length > InTaskCount)
                     {
                         //if (drs[0]["State"].ToString() == "2")

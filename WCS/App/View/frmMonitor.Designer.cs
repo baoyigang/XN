@@ -33,7 +33,7 @@
             this.pnlMain = new System.Windows.Forms.Panel();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.picCar01 = new System.Windows.Forms.PictureBox();
+            this.pic0301 = new System.Windows.Forms.PictureBox();
             this.picCar02 = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -134,7 +134,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picCar01)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic0301)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCar02)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -177,7 +177,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.picCar01);
+            this.panel1.Controls.Add(this.pic0301);
             this.panel1.Controls.Add(this.picCar02);
             this.panel1.Controls.Add(this.pictureBox1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -186,22 +186,22 @@
             this.panel1.Size = new System.Drawing.Size(1124, 746);
             this.panel1.TabIndex = 9;
             // 
-            // picCar01
+            // pic0301
             // 
-            this.picCar01.BackColor = System.Drawing.Color.Transparent;
-            this.picCar01.Image = global::App.Properties.Resources.car11;
-            this.picCar01.Location = new System.Drawing.Point(949, 396);
-            this.picCar01.Name = "picCar01";
-            this.picCar01.Size = new System.Drawing.Size(37, 28);
-            this.picCar01.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picCar01.TabIndex = 152;
-            this.picCar01.TabStop = false;
+            this.pic0301.BackColor = System.Drawing.Color.Transparent;
+            this.pic0301.Image = global::App.Properties.Resources.car11;
+            this.pic0301.Location = new System.Drawing.Point(964, 435);
+            this.pic0301.Name = "pic0301";
+            this.pic0301.Size = new System.Drawing.Size(31, 28);
+            this.pic0301.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pic0301.TabIndex = 152;
+            this.pic0301.TabStop = false;
             // 
             // picCar02
             // 
             this.picCar02.BackColor = System.Drawing.Color.Transparent;
             this.picCar02.Image = global::App.Properties.Resources.car12;
-            this.picCar02.Location = new System.Drawing.Point(892, 396);
+            this.picCar02.Location = new System.Drawing.Point(861, 435);
             this.picCar02.Name = "picCar02";
             this.picCar02.Size = new System.Drawing.Size(37, 28);
             this.picCar02.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -1204,7 +1204,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picCar01)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pic0301)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picCar02)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.tabControl1.ResumeLayout(false);
@@ -1258,7 +1258,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.PictureBox picCar01;
+        private System.Windows.Forms.PictureBox pic0301;
         private System.Windows.Forms.PictureBox picCar02;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label9;

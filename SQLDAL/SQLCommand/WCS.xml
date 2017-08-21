@@ -4,7 +4,8 @@
   <Command ID="SelectTask">
     <CommandString>
       SELECT WCS_TASK.*, CMD_BillType.BillTypeName,Sys_TableState.StateDesc,
-      WCS_TASK.Cellcode FromStation,WCS_TASK.ToCellCode ToStation,A1.AreaName,isnull(A2.DeviceNo,'') AisleDeviceNo,CD.ServiceName
+      WCS_TASK.Cellcode FromStation,WCS_TASK.ToCellCode ToStation,cast(substring(WCS_TASK.FromAddress,8,3) as int) FromLayer,cast(substring(WCS_TASK.ToAddress,8,3) as int) ToLayer,
+      A1.AreaName,isnull(A2.DeviceNo,'') AisleDeviceNo,CD.ServiceName
       FROM WCS_TASK
       left join CMD_Area A1 on WCS_TASK.AreaCode=A1.AreaCode
       left join Vew_AisleDevice A2 on A2.AreaCode=WCS_TASK.AreaCode and A2.WarehouseCode=WCS_TASK.WarehouseCode and A2.AisleNo=WCS_TASK.AisleNo

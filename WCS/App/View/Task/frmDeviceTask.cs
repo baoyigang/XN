@@ -43,7 +43,10 @@ namespace App.View.Task
             DataTable dt = bll.FillDataTable("CMD.SelectAisleDevice2", new DataParameter("{0}", string.Format("A.WarehouseCode='{0}' and A.AisleNo='{1}'", Program.WarehouseCode, this.cmbAisleNo.Text)));
 
             this.cmbDeviceNo.ValueMember = "ServiceName";
-            this.cmbDeviceNo.DisplayMember = "DeviceNo";
+            if(Program.WarehouseCode=="S")
+                this.cmbDeviceNo.DisplayMember = "DeviceNo2";
+            else
+                this.cmbDeviceNo.DisplayMember = "DeviceNo";
             this.cmbDeviceNo.DataSource = dt.DefaultView;
         }
         private void BindAisleNo()
@@ -147,6 +150,8 @@ namespace App.View.Task
         private void btnAction_Click(object sender, EventArgs e)
         {
             string serviceName = this.cmbDeviceNo.SelectedValue.ToString();
+            string carNo = this.cmbDeviceNo.Text.Substring(2,2);
+
             string FromStationNo = "";
             string FromStationAdd = "";
             string ToStationNo = "";
@@ -155,26 +160,62 @@ namespace App.View.Task
 
             FromStationNo = this.cbFromRow.Text + "-" + (100 + int.Parse(this.cbFromColumn.Text)).ToString().Substring(1, 2) + "-" + (100 + int.Parse(this.cbFromHeight.Text)).ToString().Substring(1, 2);
             FromStationAdd = GetStationAdd(FromStationNo);
-            cellAddr[0] = int.Parse(FromStationAdd.Substring(4, 3));
-            cellAddr[1] = int.Parse(FromStationAdd.Substring(7, 3));
-            cellAddr[2] = int.Parse(FromStationAdd.Substring(1, 3));
-
             ToStationNo = this.cbToRow.Text + "-" + (100 + int.Parse(this.cbToColumn.Text)).ToString().Substring(1, 2) + "-" + (100 + int.Parse(this.cbToHeight.Text)).ToString().Substring(1, 2);
             ToStationAdd = GetStationAdd(ToStationNo);
-            cellAddr[3] = int.Parse(ToStationAdd.Substring(4, 3));
-            cellAddr[4] = int.Parse(ToStationAdd.Substring(7, 3));
-            cellAddr[5] = int.Parse(ToStationAdd.Substring(1, 3));
+            if (Program.WarehouseCode != "S")
+            {
+                cellAddr[0] = int.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[1] = int.Parse(FromStationAdd.Substring(7, 3));
+                cellAddr[2] = int.Parse(FromStationAdd.Substring(1, 3));
+                
+                cellAddr[3] = int.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[4] = int.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[5] = int.Parse(ToStationAdd.Substring(1, 3));
 
-            if (this.cmbTaskType.SelectedIndex == 3)
-                cellAddr[6] = 3;
+                if (this.cmbTaskType.SelectedIndex == 3)
+                    cellAddr[6] = 3;
+                else
+                    cellAddr[6] = 1;
+
+                sbyte[] taskNo = new sbyte[20];
+                Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 20).CopyTo(taskNo, 0);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+            }
             else
-                cellAddr[6] = 1;
+            {
+                object[] obj = MCP.ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
+                cellAddr[3] = int.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[4] = int.Parse(FromStationAdd.Substring(7, 3));
+                cellAddr[5] = int.Parse(FromStationAdd.Substring(1, 3));
 
-            sbyte[] taskNo = new sbyte[20];
-            Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 20).CopyTo(taskNo, 0);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);            
-            Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+                cellAddr[6] = int.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[7] = int.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[8] = int.Parse(ToStationAdd.Substring(1, 3));
+
+                if (this.cmbTaskType.SelectedIndex == 0)
+                {
+                    cellAddr[9] = 10;
+                    cellAddr[5] = int.Parse(obj[3].ToString());
+                }
+                else if (this.cmbTaskType.SelectedIndex == 1)
+                {
+                    cellAddr[9] = 11;
+                    cellAddr[8] = int.Parse(obj[3].ToString());
+                }
+                else if (this.cmbTaskType.SelectedIndex == 2)
+                    cellAddr[9] = 9;
+                else if (this.cmbTaskType.SelectedIndex == 3)
+                    cellAddr[9] = 1;
+
+                cellAddr[10] = 1;
+                sbyte[] taskNo = new sbyte[20];
+                Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 20).CopyTo(taskNo, 0);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
+            }
 
             MCP.Logger.Info("测试任务已下发给" + this.cmbDeviceNo.Text + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
         }

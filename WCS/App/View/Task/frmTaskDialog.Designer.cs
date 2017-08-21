@@ -159,6 +159,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmTaskDialog";
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "任务查询";
             this.ResumeLayout(false);

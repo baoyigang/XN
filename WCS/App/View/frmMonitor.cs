@@ -61,9 +61,9 @@ namespace App.View
             
             //picCrane1.BackColor = Color.Transparent;
 
-            InitialP2 = picCar01.Location;
-            picCar01.Parent = pictureBox1;
-            picCar01.BackColor = Color.Transparent;
+            InitialP2 = pic0301.Location;
+            pic0301.Parent = pictureBox1;
+            pic0301.BackColor = Color.Transparent;
 
             InitialP3 = picCar02.Location;
             picCar02.Parent = pictureBox1;
@@ -280,12 +280,12 @@ namespace App.View
 
                     if (car.CarNo == "01")
                     {
-                        this.picCar01.Visible = true;
+                        this.pic0301.Visible = true;
                         Point P2 = InitialP2;
 
                         int carColumn = int.Parse(car.Status[2].ToString());
                         P2 = dicCarLocation[carColumn];
-                        this.picCar01.Location = P2;
+                        this.pic0301.Location = P2;
                         
                         this.txtTaskNo2.Text = car.TaskNo;
                         this.txtStatus2.Text = dicCarStatus[int.Parse(car.Status[12].ToString())];

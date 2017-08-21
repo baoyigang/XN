@@ -2,7 +2,7 @@
 <Configuration>
   <LogLevel>DEBUG</LogLevel>
   <Attributes>
-    <Attribute Name="WarehouseCode" Value="B" />
+    <Attribute Name="WarehouseCode" Value="S" />
     <Attribute Name="InTaskCount" Value="2" />
     <Attribute Name="UserName" Value="Admin" />
     <Attribute Name="WcsUrl" Value="http://192.200.104.136:8080/api/RB2MJ/" />

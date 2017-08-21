@@ -72,7 +72,7 @@
   </Command>
   <Command ID="SelectAisleDevice2">
     <CommandString>
-      SELECT A.DeviceNo,isnull(D.ServiceName,'') ServiceName
+      SELECT A.DeviceNo,D.DeviceNo2,isnull(D.ServiceName,'') ServiceName
       FROM CMD_AisleDevice A
       left join CMD_Device D on D.DeviceNo=A.DeviceNo and D.State='1'
       where {0}
