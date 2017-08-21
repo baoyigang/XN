@@ -10,6 +10,7 @@ using Util;
 using System.ServiceModel.Activation;
 using System.IO;
 using System.Runtime.Serialization.Json;
+using System.ServiceModel.Web;
 
 
 namespace ServiceHost
@@ -24,7 +25,6 @@ namespace ServiceHost
             Log.WriteToLog("1", "transSRMTask--Rec", Json);
             string rtnMessage = "";
             string id = "";
-
             TaskRtn taskRtn = new TaskRtn();
             try
             {
@@ -43,7 +43,7 @@ namespace ServiceHost
                 if (dtTask.Rows.Count > 0)
                 {
                     taskRtn.id = id;
-                    taskRtn.returnCode = "000";
+                    taskRtn.returnCode = "000"; 
                     taskRtn.message = "成功";
                     taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     taskRtn.field1 = "null";
@@ -54,7 +54,7 @@ namespace ServiceHost
                 {
                     taskRtn.id = id;
                     taskRtn.returnCode = "001";
-                    taskRtn.message = "没有收到任务数据，请检查数据是否异常！";
+                    taskRtn.message = "失败";
                     taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                     taskRtn.field1 = "null";
                     rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + taskRtn.message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
@@ -73,6 +73,7 @@ namespace ServiceHost
             Log.WriteToLog("1", "transSRMTask-Rtn", rtnMessage);
             return taskRtn;
             //return rtnMessage;
+            
         }
 
         //总控WCS入库巷道请求
@@ -115,7 +116,7 @@ namespace ServiceHost
                 taskAisleRtn.id = id;
                 taskAisleRtn.taskNo = taskNo;
                 taskAisleRtn.aisleNo = Aisle;
-                taskAisleRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                taskAisleRtn.finishDate =DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
                 taskAisleRtn.field1 = "null";
 
                 rtnMessage = "{\"id\":\"" + id + "\",\"taskNo\":\"" + taskNo + "\",\"aisleNo\":\"" + Aisle + "\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";

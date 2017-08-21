@@ -179,18 +179,42 @@ namespace App.View
             else
             {
                 Crane crane = args.crane;
+                Button btn = GetButton(crane.CraneNo);
                 TextBox txt = GetTextBox("txtTaskNo", crane.CraneNo);
                 if (txt != null)
                     txt.Text = crane.TaskNo;
 
                 txt = GetTextBox("txtStatus", crane.CraneNo);
                 if (txt != null && dicStatus.ContainsKey(crane.Status))
+                {
                     txt.Text = dicStatus[crane.Status];
+                    if (txt.Text == "空闲")
+                    {
+                        txt.BackColor = Color.Lime;
+                    }
+                    else
+                    {
+                        txt.BackColor = Color.Yellow;
+                    }
+                }
 
                 txt = GetTextBox("txtWorkMode", crane.CraneNo);
                 if (txt != null && dicWorkMode.ContainsKey(crane.Mode))
+                {
                     txt.Text = dicWorkMode[crane.Mode];
-
+                    if (crane.Mode == 1)
+                    {
+                        txt.BackColor = Color.Lime;
+                    }
+                    else
+                    {
+                        txt.BackColor = Color.Yellow;
+                    }
+                }
+                if (crane.Mode == 1)
+                    btn.BackColor = Color.Lime;
+                else
+                    btn.BackColor = Color.Yellow;
                 txt = GetTextBox("txtRow", crane.CraneNo);
                 if (txt != null)
                     txt.Text = crane.Row.ToString();
@@ -231,7 +255,7 @@ namespace App.View
                         P = InitialP4;
 
                     P.X = P.X + (int)((45 - crane.Column) * colDis);
-                    this.btnSRM4.Location = P;
+                    this.btnSRM3.Location = P;
                 }
                 if (crane.CraneNo == "04")
                 {
@@ -242,7 +266,7 @@ namespace App.View
                         P = InitialP4;
 
                     P.X = P.X + (int)((45 - crane.Column) * colDis);
-                    this.btnSRM2.Location = P;
+                    this.btnSRM4.Location = P;
                 }
 
                 txt = GetTextBox("txtLayer", crane.CraneNo);
@@ -254,7 +278,17 @@ namespace App.View
                     txt.Text = dicFork[crane.ForkStatus];
                 txt = GetTextBox("txtAlarmCode", crane.CraneNo);
                 if (txt != null)
+                {
                     txt.Text = crane.AlarmCode.ToString();
+                    if (txt.Text == "0")
+                    {
+                        txt.BackColor = DefaultBackColor;
+                    }
+                    else
+                    {
+                        txt.BackColor = Color.Red;
+                    }
+                }
 
                 string strAlarmDesc = "";
                 txt = GetTextBox("txtAlarmDesc", crane.CraneNo);
@@ -273,6 +307,14 @@ namespace App.View
                         strAlarmDesc = "";
                     }
                     txt.Text = strAlarmDesc;
+                    if (txt.Text == "")
+                    {
+                        txt.BackColor = DefaultBackColor;
+                    }
+                    else
+                    {
+                        txt.BackColor = Color.Red;
+                    }
                 }
                 txt = GetTextBox("txtSTB", crane.CraneNo);
                 if (txt != null)
@@ -339,9 +381,9 @@ namespace App.View
         }
 
         
-        Button GetButton( string CraneNo)
+        Button GetButton(string CraneNo)
         {
-            Control[] ctl = this.Controls.Find("btn" + CraneNo, true);
+            Control[] ctl = this.Controls.Find("btnSRM" + int.Parse(CraneNo), true);
             if (ctl.Length > 0)
                 return (Button)ctl[0];
             else
