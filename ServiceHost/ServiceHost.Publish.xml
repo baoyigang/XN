@@ -1,22 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <publishData>
-  <publishProfile publishUrl="C:\inetpub\wwwroot\ServiceHost" deleteExistingFiles="True" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="False" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
-    <file relUrl="bin/Util.dll" publishTime="02/24/2017 16:55:35" />
-    <file relUrl="bin/ServiceHost.dll" publishTime="06/12/2017 09:02:32" />
-    <file relUrl="bin/Services.dll" publishTime="01/11/2017 11:27:59" />
-    <file relUrl="DB.xml" publishTime="02/08/2017 08:46:16" />
-    <file relUrl="bin/Newtonsoft.Json.xml" publishTime="06/06/2013 13:33:36" />
-    <file relUrl="transSRMTask.ashx" publishTime="03/15/2017 22:20:59" />
-    <file relUrl="transSRMTaskAisle.ashx" publishTime="03/16/2017 09:10:47" />
-    <file relUrl="WCSDataService.svc" publishTime="06/01/2017 10:36:22" />
-    <file relUrl="BLLBaseService.svc" publishTime="05/05/2016 16:10:06" />
-    <file relUrl="SRMDataService.svc" publishTime="03/16/2017 17:24:49" />
-    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="06/06/2013 13:33:36" />
-    <file relUrl="bin/IDAL.dll" publishTime="10/28/2016 16:04:09" />
-    <file relUrl="bin/SQLDAL.dll" publishTime="06/12/2017 09:02:26" />
-    <file relUrl="SecurityService.svc" publishTime="05/05/2016 16:10:06" />
-    <file relUrl="Web.config" publishTime="06/12/2017 09:02:32" />
-    <file relUrl="bin/IServices.dll" publishTime="01/11/2017 12:34:43" />
-    <file relUrl="bin/BLL.dll" publishTime="09/18/2016 17:43:18" />
+  <publishProfile publishUrl="C:\Users\b\Desktop\ROBO" deleteExistingFiles="False" ftpAnonymousLogin="False" ftpPassiveMode="True" msdeploySite="" msdeploySiteID="" msdeployRemoteSitePhysicalPath="" msdeployAllowUntrustedCertificate="False" msdeploySkipExtraFilesOnServer="True" msdeployMarkAsApp="False" profileName="配置文件1" publishMethod="FileSystem" replaceMatchingFiles="True" userName="" savePWD="False" userPWD="" SelectedForPublish="True">
+    <file relUrl="bin/Util.dll" publishTime="02/27/2017 15:27:54" />
+    <file relUrl="bin/ServiceHost.dll" publishTime="07/03/2017 17:42:21" />
+    <file relUrl="bin/Services.dll" publishTime="02/13/2017 17:23:58" />
+    <file relUrl="DB.xml" publishTime="02/16/2017 13:43:44" />
+    <file relUrl="transSRMTaskAisle.ashx" publishTime="03/20/2017 14:10:41" />
+    <file relUrl="transSRMTask.ashx" publishTime="03/20/2017 14:10:41" />
+    <file relUrl="WCSDataService.svc" publishTime="05/31/2017 09:21:49" />
+    <file relUrl="BLLBaseService.svc" publishTime="02/15/2017 10:16:30" />
+    <file relUrl="SRMDataService.svc" publishTime="03/20/2017 14:10:41" />
+    <file relUrl="bin/Newtonsoft.Json.dll" publishTime="10/14/2016 15:09:59" />
+    <file relUrl="bin/IDAL.dll" publishTime="11/22/2016 09:52:27" />
+    <file relUrl="bin/SQLDAL.dll" publishTime="06/30/2017 13:18:52" />
+    <file relUrl="SecurityService.svc" publishTime="02/15/2017 10:16:30" />
+    <file relUrl="Web.config" publishTime="07/03/2017 17:42:28" />
+    <file relUrl="bin/IServices.dll" publishTime="02/13/2017 17:23:58" />
+    <file relUrl="bin/BLL.dll" publishTime="10/14/2016 15:09:59" />
   </publishProfile>
 </publishData>

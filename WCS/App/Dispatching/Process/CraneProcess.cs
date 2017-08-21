@@ -151,6 +151,8 @@ namespace App.Dispatching.Process
                     //设备状态不符合
                     if (!Check_Device_Status_IsOk(ServiceName))
                         continue;
+                    if (!Check_Device_Status_IsOk(ServiceName,dtAisle.Rows[i]["AisleNo"].ToString()))
+                        continue;
 
                     //查找入库任务>2的先执行
                     string filter = string.Format("AisleNo='{0}' and TaskType='11' and State in('0','1','2')", dtAisle.Rows[i]["AisleNo"].ToString());
@@ -203,7 +205,7 @@ namespace App.Dispatching.Process
                         }
                     }
                     filter = string.Format("AisleNo='{0}' and TaskType='11' and State in('0','1','2')", dtAisle.Rows[i]["AisleNo"].ToString());
-                    drs = dt.Select(filter, "State");
+                    drs = dt.Select(filter, "State desc");
                     if (drs.Length > 0)
                     {
                         DataRow dr = drs[0];
@@ -244,6 +246,31 @@ namespace App.Dispatching.Process
                 return false;
             }            
         }
+        private bool Check_Device_Status_IsOk(string ServiceName,string AisleNo)
+        {
+            try
+            {
+                string plcTaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(ServiceName, "ReadTaskNo")));
+
+                string workMode = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(ServiceName, "WorkMode")).ToString();
+                object[] obj = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(ServiceName, "OtherStatus"));
+                int State = int.Parse(obj[1].ToString());
+                int AlarmCode = int.Parse(obj[0].ToString());
+                string CraneAisleNo = "0" + obj[2].ToString();
+
+                if (workMode == "1" && AlarmCode == 0 && State == 1 && AisleNo== CraneAisleNo)
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception ex)
+            {
+                //Logger.Error(ex.Message);
+                return false;
+            }
+        }
+
+
         private void Send2PLC(DataRow dr)
         {
             string DeviceNo = dr["AisleDeviceNo"].ToString();
