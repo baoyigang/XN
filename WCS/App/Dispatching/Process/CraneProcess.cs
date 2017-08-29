@@ -235,7 +235,7 @@ namespace App.Dispatching.Process
                 int State = int.Parse(obj[1].ToString());
                 int AlarmCode = int.Parse(obj[0].ToString());
 
-                if (workMode == "1" && AlarmCode == 0 && State == 1)
+                if (workMode == "1" && AlarmCode == 0 && State == 1 && liftFull != 1)
                     return true;
                 else
                     return false;
@@ -251,14 +251,15 @@ namespace App.Dispatching.Process
             try
             {
                 string plcTaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(ServiceName, "ReadTaskNo")));
-
+                object[] CraneStation = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(ServiceName, "Status"));
                 string workMode = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(ServiceName, "WorkMode")).ToString();
                 object[] obj = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(ServiceName, "OtherStatus"));
                 int State = int.Parse(obj[1].ToString());
                 int AlarmCode = int.Parse(obj[0].ToString());
                 string CraneAisleNo = "0" + obj[2].ToString();
+                int liftFull = int.Parse(CraneStation[0].ToString());
 
-                if (workMode == "1" && AlarmCode == 0 && State == 1 && AisleNo== CraneAisleNo)
+                if (workMode == "1" && AlarmCode == 0 && State == 1 && AisleNo== CraneAisleNo && liftFull != 1 )
                     return true;
                 else
                     return false;
