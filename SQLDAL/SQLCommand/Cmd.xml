@@ -92,7 +92,7 @@
   <Command ID="SelectAisleCar">
     <CommandString>
       SELECT CMD_AisleDevice.WarehouseCode, CMD_AisleDevice.AreaCode, CMD_AisleDevice.AisleNo, CMD_AisleDevice.Priority,
-      CMD_AisleDevice.DeviceNo, CMD_AisleDevice.DeviceNo2, CMD_AisleDevice.Memo, CMD_Device.State, CMD_Device.ServiceName
+      CMD_AisleDevice.DeviceNo, CMD_Device.DeviceNo2, CMD_AisleDevice.Memo, CMD_Device.State, CMD_Device.ServiceName
       FROM  CMD_AisleDevice
       LEFT OUTER JOIN CMD_Device ON CMD_AisleDevice.DeviceNo = CMD_Device.DeviceNo
       where {0} AND CMD_Device.State = '1'
@@ -537,13 +537,20 @@
       where cell.CellCode=@CellCode
     </CommandString>
   </Command>
-
   <Command ID="AisleRequest">
     <CommandString>
       select top 1 AisleNo
       from Vew_AisleTask
       where {0}
       order by TaskCount,AisleNo
+    </CommandString>
+  </Command>
+  <Command ID="AisleRequest2">
+    <CommandString>
+      select top 1 AisleNo
+      from Vew_AisleTask
+      where {0}
+      order by TaskCount,AisleNo desc
     </CommandString>
   </Command>
 </SqlCommand>

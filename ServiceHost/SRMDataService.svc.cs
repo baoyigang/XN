@@ -97,7 +97,7 @@ namespace ServiceHost
                 {
                     id = dt.Rows[0]["id"].ToString();
                     taskNo = dt.Rows[0]["taskNo"].ToString();
-                    WarehouseCode = dt.Rows[0]["warehouseCode"].ToString();
+                    WarehouseCode = dt.Rows[0]["warehouseCode"].ToString().Substring(3,1);
                 }
                 else
                 {
@@ -107,9 +107,12 @@ namespace ServiceHost
                 }
                 bll.BatchInsertTable(dt, "WCS_AisleTemp");
 
+                string sqlCmd = "Cmd.AisleRequest";
+                if (WarehouseCode.ToUpper() == "S")
+                    sqlCmd = "Cmd.AisleRequest2";
 
-                DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest", new DataParameter("{0}", string.Format("WarehouseCode='{0}'", WarehouseCode.Substring(3,1))));
-                //DataTable dtSelectAisle = bll.FillDataTable("Cmd.AisleRequest");
+                DataTable dtSelectAisle = bll.FillDataTable(sqlCmd, new DataParameter("{0}", string.Format("WarehouseCode='{0}'", WarehouseCode)));
+
                 if(dtSelectAisle.Rows.Count>0)
                     Aisle = dtSelectAisle.Rows[0]["AisleNo"].ToString();
 

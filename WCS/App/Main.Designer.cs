@@ -119,15 +119,15 @@
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemDelCraneTask,
             this.ToolStripMenuItemCellCode,
-            this.ToolStripMenuItemReassign,
-            this.ToolStripMenuItemStateChange});
+            this.ToolStripMenuItemStateChange,
+            this.ToolStripMenuItemReassign});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 114);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(217, 114);
             // 
             // ToolStripMenuItemDelCraneTask
             // 
             this.ToolStripMenuItemDelCraneTask.Name = "ToolStripMenuItemDelCraneTask";
-            this.ToolStripMenuItemDelCraneTask.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemDelCraneTask.Size = new System.Drawing.Size(180, 22);
             this.ToolStripMenuItemDelCraneTask.Text = "下发取消任务";
             this.ToolStripMenuItemDelCraneTask.Visible = false;
             this.ToolStripMenuItemDelCraneTask.Click += new System.EventHandler(this.ToolStripMenuItemDelCraneTask_Click);
@@ -135,15 +135,15 @@
             // ToolStripMenuItemCellCode
             // 
             this.ToolStripMenuItemCellCode.Name = "ToolStripMenuItemCellCode";
-            this.ToolStripMenuItemCellCode.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemCellCode.Size = new System.Drawing.Size(180, 22);
             this.ToolStripMenuItemCellCode.Text = "重新申请货位";
             this.ToolStripMenuItemCellCode.Click += new System.EventHandler(this.ToolStripMenuItemCellCode_Click);
             // 
             // ToolStripMenuItemReassign
             // 
             this.ToolStripMenuItemReassign.Name = "ToolStripMenuItemReassign";
-            this.ToolStripMenuItemReassign.Size = new System.Drawing.Size(180, 22);
-            this.ToolStripMenuItemReassign.Text = "重新下发任务(重入)";
+            this.ToolStripMenuItemReassign.Size = new System.Drawing.Size(216, 22);
+            this.ToolStripMenuItemReassign.Text = "重新下发任务(满入、空出)";
             this.ToolStripMenuItemReassign.Click += new System.EventHandler(this.ToolStripMenuItemReassign_Click);
             // 
             // ToolStripMenuItemStateChange
@@ -160,7 +160,7 @@
             this.ToolStripMenuItem18,
             this.ToolStripMenuItem19});
             this.ToolStripMenuItemStateChange.Name = "ToolStripMenuItemStateChange";
-            this.ToolStripMenuItemStateChange.Size = new System.Drawing.Size(152, 22);
+            this.ToolStripMenuItemStateChange.Size = new System.Drawing.Size(180, 22);
             this.ToolStripMenuItemStateChange.Text = "任务状态切换";
             // 
             // ToolStripMenuItem10
@@ -391,9 +391,9 @@
             // 
             this.pnlBottom.Controls.Add(this.splitContainer1);
             this.pnlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBottom.Location = new System.Drawing.Point(0, 200);
+            this.pnlBottom.Location = new System.Drawing.Point(0, 230);
             this.pnlBottom.Name = "pnlBottom";
-            this.pnlBottom.Size = new System.Drawing.Size(1020, 360);
+            this.pnlBottom.Size = new System.Drawing.Size(1020, 330);
             this.pnlBottom.TabIndex = 9;
             // 
             // splitContainer1
@@ -411,8 +411,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.lbLog);
-            this.splitContainer1.Size = new System.Drawing.Size(1020, 360);
-            this.splitContainer1.SplitterDistance = 204;
+            this.splitContainer1.Size = new System.Drawing.Size(1020, 330);
+            this.splitContainer1.SplitterDistance = 187;
             this.splitContainer1.TabIndex = 2;
             // 
             // dgvMain
@@ -459,7 +459,7 @@
             this.dgvMain.RowHeadersWidth = 40;
             this.dgvMain.RowTemplate.Height = 23;
             this.dgvMain.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvMain.Size = new System.Drawing.Size(1020, 204);
+            this.dgvMain.Size = new System.Drawing.Size(1020, 187);
             this.dgvMain.TabIndex = 7;
             this.dgvMain.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dgvMain_CellMouseClick);
             // 
@@ -644,7 +644,7 @@
             this.lbLog.Location = new System.Drawing.Point(0, 0);
             this.lbLog.Name = "lbLog";
             this.lbLog.ShowGroups = false;
-            this.lbLog.Size = new System.Drawing.Size(1020, 152);
+            this.lbLog.Size = new System.Drawing.Size(1020, 139);
             this.lbLog.TabIndex = 10;
             this.lbLog.UseCompatibleStateImageBehavior = false;
             this.lbLog.View = System.Windows.Forms.View.Details;

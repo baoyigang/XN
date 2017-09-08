@@ -168,6 +168,8 @@
       <DependentUpon>frmSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Crane.cs" />
+    <Compile Include="Dispatching\Process\ElevatorAlarmProcess.cs" />
+    <Compile Include="Dispatching\Process\InOutLocationProcess.cs" />
     <Compile Include="Dispatching\Process\CraneAlarmProcess.cs" />
     <Compile Include="Dispatching\Process\ElevatorProcess.cs" />
     <Compile Include="Dispatching\Process\CraneProcess.cs" />
@@ -536,6 +538,30 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="PLC0303.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0304.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0305.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0306.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0307.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="PLC0302.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="PLC0104.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -611,6 +637,7 @@
     <None Include="Resources\shuttlecar.png" />
     <None Include="Resources\S_Rack.png" />
     <None Include="Resources\save.png" />
+    <None Include="Resources\S_Rack0.png" />
     <Content Include="Resources\up.png" />
     <None Include="Resources\user_add.png" />
     <Content Include="TableXML\CMD_Cell.xml">

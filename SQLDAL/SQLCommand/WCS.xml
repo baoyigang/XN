@@ -346,10 +346,32 @@
       when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='13' then  '04'
       when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='12' then  '05'
       when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='12' then  '06'
+      when D.DeviceType='02' and T.alarmCode='14' and T.TaskType='11' then  '08'
+      when D.DeviceType='02' and T.alarmCode in('11','13') and T.TaskType='12' then  '09'
       else T.AlarmCode end) errorCode,
       getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
       from Wcs_Task T
-      left join CMD_Device D on T.DeviceNo=D.DeviceNo
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo and T.WarehouseCode=D.WarehouseCode
+      where TaskNo='{0}'
+    </CommandString>
+  </Command>
+  <Command ID="SelectTaskWcsAlarm2">
+    <CommandString>
+      select NEWID() id,taskNo,palletBarcode,'ERROR' status,
+      (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
+      when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='11' then  '02'
+      when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='13' then  '03'
+      when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='13' then  '03'
+      when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='13' then  '04'
+      when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='13' then  '04'
+      when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='12' then  '05'
+      when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='12' then  '06'
+      when D.DeviceType='02' and T.alarmCode='14' and T.TaskType='11' then  '08'
+      when D.DeviceType='02' and T.alarmCode in('11','13') and T.TaskType='12' then  '09'
+      else T.AlarmCode end) errorCode,
+      getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task T
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo2 and T.WarehouseCode=D.WarehouseCode
       where TaskNo='{0}'
     </CommandString>
   </Command>

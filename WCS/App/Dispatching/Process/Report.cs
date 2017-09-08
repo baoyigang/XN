@@ -34,7 +34,10 @@ namespace App.Dispatching.Process
             else if (Flag == 2)
             {
                 //上报任务故障
-                dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm", new DataParameter("{0}", TaskNo));
+                if(Program.WarehouseCode=="S")
+                    dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm2", new DataParameter("{0}", TaskNo));
+                else
+                    dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm", new DataParameter("{0}", TaskNo));
                 string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
                 Logger.Info("任务" + TaskNo + "报警上报");
                 string message = Program.send("transWCSTaskStatus", Json);
@@ -65,7 +68,10 @@ namespace App.Dispatching.Process
             else if (Flag == 4)
             {
                 //手动申请上报任务故障
-                dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm", new DataParameter("{0}", TaskNo));
+                if (Program.WarehouseCode == "S")
+                    dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm2", new DataParameter("{0}", TaskNo));
+                else
+                    dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm", new DataParameter("{0}", TaskNo));
                 string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
                 Logger.Info("任务" + TaskNo + "报警上报");
                 string message = Program.send("transWCSTaskStatus", Json);
@@ -118,6 +124,31 @@ namespace App.Dispatching.Process
             string message = Program.send("transWCSDevice", Json);
             RtnMessage rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
             Logger.Info("上报设备编号[" + deviceNo + "]状态,收到反馈：" + rtnMessage.returnCode + ":" + rtnMessage.message);
+        }
+        public void SendDeviceStatus2(Context context, string ServiceName, string carNo, string AlarmDesc)
+        {
+            string id = Guid.NewGuid().ToString();
+
+            string aisleNo = ServiceName.Substring(5, 2);
+            string deviceNo = aisleNo + carNo;
+            object[] Status = ObjectUtil.GetObjects(context.ProcessDispatcher.WriteToService(ServiceName, "CarStatus" + carNo));
+            string mode = Status[0].ToString();
+            string status = Status[12].ToString();
+            string taskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(context.ProcessDispatcher.WriteToService(ServiceName, "CarTask" + carNo)));
+            string fork = Status[11].ToString();
+            string load = Status[10].ToString();
+            string column = Status[2].ToString();
+            string layer = Status[3].ToString();
+            string alarmCode = ObjectUtil.GetObject(context.ProcessDispatcher.WriteToService(ServiceName, "CarAlarm" + carNo)).ToString();
+            string field2 = AlarmDesc;
+            string sender1 = "ROBO_WCS";
+
+            string Json = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + Program.WarehouseCode + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender1 + "\",\"field1\":\"\",\"field2\":\"" + field2 + "\",\"field3\":\"\"" + "}]";
+            Logger.Info("开始上报设备编号[" + deviceNo + "]的状态");
+            string message = Program.send("transWCSDevice", Json);
+            RtnMessage rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
+            Logger.Info("上报设备编号[" + deviceNo + "]状态,收到反馈：" + rtnMessage.returnCode + ":" + rtnMessage.message);
+
         }
     }
 }

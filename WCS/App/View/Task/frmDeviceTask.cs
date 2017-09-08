@@ -186,32 +186,43 @@ namespace App.View.Task
             else
             {
                 object[] obj = MCP.ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
-                cellAddr[3] = int.Parse(FromStationAdd.Substring(4, 3));
-                cellAddr[4] = int.Parse(FromStationAdd.Substring(7, 3));
-                cellAddr[5] = int.Parse(FromStationAdd.Substring(1, 3));
+                int Layer = int.Parse(obj[3].ToString());
 
-                cellAddr[6] = int.Parse(ToStationAdd.Substring(4, 3));
-                cellAddr[7] = int.Parse(ToStationAdd.Substring(7, 3));
-                cellAddr[8] = int.Parse(ToStationAdd.Substring(1, 3));
+                cellAddr[3] = int.Parse(FromStationAdd.Substring(1, 3));
+                cellAddr[4] = int.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[5] = int.Parse(FromStationAdd.Substring(7, 3));
+
+                cellAddr[6] = int.Parse(ToStationAdd.Substring(1, 3));
+                cellAddr[7] = int.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[8] = int.Parse(ToStationAdd.Substring(7, 3));
 
                 if (this.cmbTaskType.SelectedIndex == 0)
                 {
                     cellAddr[9] = 10;
+                    cellAddr[4] = 0;
                     cellAddr[5] = int.Parse(obj[3].ToString());
                 }
                 else if (this.cmbTaskType.SelectedIndex == 1)
                 {
                     cellAddr[9] = 11;
-                    cellAddr[8] = int.Parse(obj[3].ToString());
+                    cellAddr[7] = 0;
+                    cellAddr[8] = cellAddr[5];
                 }
                 else if (this.cmbTaskType.SelectedIndex == 2)
+                {
                     cellAddr[9] = 9;
+                }
                 else if (this.cmbTaskType.SelectedIndex == 3)
+                {
+                    cellAddr[3] = 0;
+                    cellAddr[4] = 0;
+                    cellAddr[5] = 0;
                     cellAddr[9] = 1;
+                }
 
-                cellAddr[10] = 1;
-                sbyte[] taskNo = new sbyte[20];
-                Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 20).CopyTo(taskNo, 0);
+                cellAddr[10] = int.Parse(carNo);
+                sbyte[] taskNo = new sbyte[30];
+                Util.ConvertStringChar.stringToBytes(this.txtTaskNo1.Text, 30).CopyTo(taskNo, 0);
                 Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
                 Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
                 Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
@@ -233,22 +244,34 @@ namespace App.View.Task
         {
             this.Close();
         }
-        
+
         private void btnCancel_Click(object sender, EventArgs e)
         {
             string serviceName = this.cmbDeviceNo.SelectedValue.ToString();
-
+            string carNo = this.cmbDeviceNo.Text.Substring(2, 2);
             object obj = MCP.ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(serviceName, "AlarmCode")).ToString();
+            int[] cellAddr = new int[12];
+
             if (obj.ToString() != "0")
             {
-                int[] cellAddr = new int[12];
+                if (Program.WarehouseCode != "S")
+                {
 
-                cellAddr[6] = 5;
-                //sbyte[] taskNo = new sbyte[20];
-                //Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
-                //Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-                Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-                Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+                    cellAddr[6] = 5;
+                    //sbyte[] taskNo = new sbyte[20];
+                    //Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
+                    //Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                    Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                    Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+                }
+                else
+                {
+                    cellAddr[1] = 1;
+                    cellAddr[10] = int.Parse(carNo);
+
+                    Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                    Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
+                }
 
                 MCP.Logger.Info("取消任务已下发给" + this.cmbDeviceNo.Text + "取消任务指令");
             }

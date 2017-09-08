@@ -96,7 +96,10 @@ namespace App.Dispatching.Process
                             return;
                         string ack = obj.ToString();
                         if (ack.Equals("True") || ack.Equals("1"))
+                        {
                             WriteToService(stateItem.Name, "STB", 0);
+                            Logger.Info(stateItem.Name + "Receive ACK 1");
+                        }
                         break;
                     case "Run":
                         blRun = (int)stateItem.State == 1;
@@ -153,10 +156,19 @@ namespace App.Dispatching.Process
                         continue;
                     if (!Check_Device_Status_IsOk(ServiceName,dtAisle.Rows[i]["AisleNo"].ToString()))
                         continue;
+                    //判断巷道有正在执行的任务
+                    DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.WarehouseCode = '{0}' and WCS_TASK.State in('3','4') and WCS_TASK.AisleNo='{1}'", Program.WarehouseCode, dtAisle.Rows[i]["AisleNo"].ToString())) };
+                    DataTable dtTask = bll.FillDataTable("WCS.SelectTask", param);
+                    if (dtTask.Rows.Count > 0)
+                        continue;
+                    //string filter = string.Format("AisleNo='{0}' and State in('3','4')", dtAisle.Rows[i]["AisleNo"].ToString());
+                    //DataRow[] drs = dt.Select(filter, "TaskNo");
+                    //if (drs.Length > 0)
+                    //    continue;
 
                     //查找入库任务>2的先执行
                     string filter = string.Format("AisleNo='{0}' and TaskType='11' and State in('0','1','2')", dtAisle.Rows[i]["AisleNo"].ToString());
-                    DataRow[] drs = dt.Select(filter, "State desc");
+                    DataRow[] drs = dt.Select(filter, "State desc,TaskNo");
                     if (drs.Length > InTaskCount)
                     {
                         //if (drs[0]["State"].ToString() == "2")
@@ -205,7 +217,7 @@ namespace App.Dispatching.Process
                         }
                     }
                     filter = string.Format("AisleNo='{0}' and TaskType='11' and State in('0','1','2')", dtAisle.Rows[i]["AisleNo"].ToString());
-                    drs = dt.Select(filter, "State desc");
+                    drs = dt.Select(filter, "State desc,TaskNo");
                     if (drs.Length > 0)
                     {
                         DataRow dr = drs[0];
@@ -280,7 +292,7 @@ namespace App.Dispatching.Process
             string state = dr["State"].ToString();
 
             string NextState = "4";
-            if (TaskType == "11" && state == "0")
+            if (TaskType == "11")
                 NextState = "3";
 
             string FromStationAdd = dr["FromAddress"].ToString();

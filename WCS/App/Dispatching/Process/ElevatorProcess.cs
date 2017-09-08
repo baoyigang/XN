@@ -42,56 +42,42 @@ namespace App.Dispatching.Process
                 case "TaskFinished01":
                 case "TaskFinished02":
                     object[] obj = ObjectUtil.GetObjects(stateItem.State);
-                    
+
                     if (obj == null)
                         return;
                     string TaskNo = ConvertStringChar.BytesToString(obj);
-                    {                
-                        //存储过程处理
-                        if (TaskNo.Length > 0)
+
+                    //存储过程处理
+                    if (TaskNo.Length > 0)
+                    {
+                        byte[] b = new byte[30];
+                        ConvertStringChar.stringToByte("", 30).CopyTo(b, 0);
+                        WriteToService(stateItem.Name, stateItem.ItemName, b);
+
+                        Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
+                        DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
+                        bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
+
+                        DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
+                        DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
+
+                        if (dt.Rows.Count > 0)
                         {
-                            byte[] b = new byte[30];
-                            ConvertStringChar.stringToByte("", 30).CopyTo(b, 0);
-                            WriteToService(stateItem.Name, stateItem.ItemName, b);
-
-                            Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
-                            DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                            bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
+                            string TaskType = dt.Rows[0]["TaskType"].ToString();
+                            if (TaskType == "12")
+                            {
+                                string Barcode = dt.Rows[0]["PalletBarcode"].ToString();
+                                byte[] barcode = new byte[20];
+                                ConvertStringChar.stringToByte(Barcode, 20).CopyTo(barcode, 0);
+                                WriteToService(stateItem.Name, "OutLocation01", barcode);
+                            }
                         }
-                        //上报总控WCS，下架完成
 
+                        report.Send2MJWcs(base.Context, 3, TaskNo);
                     }
-                    break;
-                case "CarAlarm01":
-                case "CarAlarm02":
-                    object obj1 = ObjectUtil.GetObject(stateItem.State);
-                    if (obj1 == null)
-                        return;
-                    if (obj1.ToString() != "0")
-                    {
-                        string strError = "";
-                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("Flag=2 and AlarmCode={0}", obj1.ToString()));
-                        if (drs.Length > 0)
-                            strError = drs[0]["AlarmCode"].ToString();
-                        else
-                            strError = "穿梭车未知错误！";
-                        Logger.Error(strError);
-                    }
-                    break;
-                case "ElevatorAlarm":
-                    object obj2 = ObjectUtil.GetObject(stateItem.State);
-                    if (obj2 == null)
-                        return;
-                    if (obj2.ToString() != "0")
-                    {
-                        string strError = "";
-                        DataRow[] drs = dtDeviceAlarm.Select(string.Format("Flag=3 and AlarmCode={0}", obj2.ToString()));
-                        if (drs.Length > 0)
-                            strError = drs[0]["AlarmCode"].ToString();
-                        else
-                            strError = "提升机未知错误！";
-                        Logger.Error(strError);
-                    }
+                    //上报总控WCS，下架完成
+
+
                     break;
                 case "Run":
                     blRun = (int)stateItem.State == 1;
@@ -109,9 +95,6 @@ namespace App.Dispatching.Process
                 default:
                     break;
             }
-
-
-            return;
         }
         #endregion
 
@@ -131,27 +114,30 @@ namespace App.Dispatching.Process
                 }
                 tmWorkTimer.Stop();
 
-                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("WarehoseCode='{0}'", Program.WarehouseCode)) });
-
+                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("S1.WarehouseCode='{0}'", Program.WarehouseCode)) });
+                //dtAisle.Rows.Count
                 for (int i = 0; i < dtAisle.Rows.Count; i++)
                 {
                     string serviceName = dtAisle.Rows[i]["ServiceName2"].ToString();
                     //读取标识位，如果为0才可继续
-                    object[] objFlag = ObjectUtil.GetObjects(WriteToService(serviceName, "WriteFinished"));
+                    object objFlag = ObjectUtil.GetObject(WriteToService(serviceName, "WriteFinished"));
                     if (int.Parse(objFlag.ToString()) == 1)
                         continue;
                     string AisleNo = dtAisle.Rows[i]["AisleNo"].ToString();
-                    string filter = string.Format("WarehoseCode='{0}' and AisleNo='{1}'", Program.WarehouseCode, AisleNo);
+                    string filter = string.Format("CMD_AisleDevice.WarehouseCode='{0}' and AisleNo='{1}'", Program.WarehouseCode, AisleNo);
                     DataTable dtTask = GetTask(AisleNo);
                     DataTable dtCar = bll.FillDataTable("CMD.SelectAisleCar", new DataParameter[] { new DataParameter("{0}", filter) });
 
                     bool IsSent = false;
-                    object task = dtTask.Compute("count(*)", "TaskType='11' and State in('1','2')");
-                    int taskCount = int.Parse(task.ToString());
-                    if (taskCount >= 2)
+                    DataRow[] drTasks = dtTask.Select("TaskType='11' and State in('1','2')");
+                    //object task = dtTask.Compute("sum(1)", "TaskType='11' and State in('1','2')");
+                    //int taskCount = int.Parse(task.ToString());
+                    if (drTasks.Length >= 2)
                     {
                         //先找入库任务
                         IsSent = FindInTask(dtCar, dtTask);
+                        if(IsSent)
+                            continue;
                     }
 
                     //对于入库任务来说，因为一个巷道同时只有一个任务，所以应该优先以任务目标层找对应层空闲的小车
@@ -169,7 +155,14 @@ namespace App.Dispatching.Process
                         if (Check_Car_Status_IsOk(carNo, serviceName))
                         {
                             IsSent = false;
-                            
+
+                            if (Column == 0)
+                            {
+                                //再找入库任务
+                                IsSent = FindInTask(dtCar, dtTask,carNo,obj);
+                                if (IsSent)
+                                    continue;
+                            }
                             //先找出库任务
                             IsSent = FindOutTask(dtCar, dtTask, carNo, obj);
                             if (IsSent)
@@ -182,10 +175,6 @@ namespace App.Dispatching.Process
                             if (!IsSent && Column <= 0)
                             {
                                 //小车空闲，需要避开
-                                //找出其他车所在层以及目标层
-                                //如果其他车都空闲，则不需要避开
-                                //if(GetOtherCarNoTask(dt,carNo))
-                                //    return;
 
                                 int ToLayer = GetNoTaskLayer(serviceName,dtCar, carNo, Layer);
                                 if (ToLayer > 0)
@@ -194,7 +183,7 @@ namespace App.Dispatching.Process
                                     dr["TaskNo"] = "001";
                                     dr["TaskType"] = "10";
                                     dr["FromAddress"] = "S000000000";
-                                    dr["ToStation"] = "S001002" + (1000 + ToLayer).ToString().Substring(1, 3);
+                                    dr["ToAddress"] = "S001002" + (1000 + ToLayer).ToString().Substring(1, 3);
                                     Send2PLC(serviceName, dr,carNo);
                                 }
                             }
@@ -279,8 +268,8 @@ namespace App.Dispatching.Process
                     if (Check_Car_Status_IsOk(carNo, serviceName))
                     {
                         IsSendTask = SendTask(dtCar, carNo, drTasks, obj);
-                    }
-                    break;
+                        break;
+                    }                    
                 }
             }
             if (!IsSendTask)
@@ -299,8 +288,9 @@ namespace App.Dispatching.Process
                     if (Check_Car_Status_IsOk(carNo, serviceName))
                     {
                         IsSendTask = SendTask(dtCar, carNo, drTasks, obj);
+                        break;
                     }
-                    break;
+                    
                 }
             }
             return IsSendTask;
@@ -353,11 +343,24 @@ namespace App.Dispatching.Process
             for (int i = 0; i < drTasks.Length; i++)
             {
                 DataRow drTask = drTasks[i];
+                string TaskType = drTask["TaskType"].ToString();
+                
+                //if (TaskType == "12")
+                //{
+                //    //判断出库站台是否有货                    
+                //    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + DeviceNo));
+                //}
                 //轮询其他小车
                 if (CheckOtherCarStatus(dtCar, carNo, drTask, obj))
                 {
                     //给小车下达任务
                     Send2PLC(serviceName, drTask, carNo);
+                    drTask["DeviceNo"] = serviceName.Substring(5, 2) + carNo;
+                    if (TaskType == "11")
+                        drTask["State"] = "3";
+                    else
+                        drTask["State"] = "4";
+                    drTask.AcceptChanges();
                     IsSend = true;
                     break;
                 }
@@ -383,12 +386,12 @@ namespace App.Dispatching.Process
             bool carOK = true;
             for (int i = 0; i < dtCar.Rows.Count; i++)
             {
-                string DeviceNo = dtCar.Rows[i]["DeviceNo"].ToString();
+                string DeviceNo = dtCar.Rows[i]["DeviceNo2"].ToString().Substring(2,2);
                 string serviceName = dtCar.Rows[i]["ServiceName"].ToString();
                 if (DeviceNo != carNo)
                 {
                     //读取小车状态
-                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + DeviceNo.Substring(2,2)));
+                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + DeviceNo));
                     object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
                     object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress"));
                     int TaskFlag = int.Parse(obj1[0].ToString());
@@ -407,42 +410,19 @@ namespace App.Dispatching.Process
                         ToLayer = int.Parse(obj2[8].ToString());
                     //Logger.Debug("小车" + dicCars[i].CarNo + "目标层" + ToLayer + "当前层:" + Layer + ",任务类型:" + TaskType);
 
-                    //入库类型
+                    //1入库站台不能有车
+                    if (Column == 0)
+                    {
+                        carOK = false;
+                        break;
+                    }
+                    //入库类型 入库起始层即小车当前所在层
                     if (carTaskType == "11")
                     {
-                        //1入库站台不能有车
-                        if (Layer == 1 && Column == 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
+                        carFromLayer = carLayer;
+                        
                         //2其他车任务起始层也在这层，但车不在这层
-                        if (carFromLayer == FromLayer && Layer > 1 && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //3其他车任务目标层在起始层 出库
-                        if (carFromLayer == ToLayer && carColumn > 0 && TaskType == 11)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //4其他车任务目标层在起始层
-                        if (carFromLayer == ToLayer && carColumn > 0 && Layer > 1 && TaskType == 9)
-                        {
-                            carOK = false;
-                            break;
-                        }
-
-                        //4目标层有车
-                        if (carToLayer == Layer)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //6目标层有任务起始层
-                        if (carToLayer == FromLayer)
+                        if (carToLayer == FromLayer || carToLayer == ToLayer || carToLayer==Layer)
                         {
                             carOK = false;
                             break;
@@ -450,92 +430,35 @@ namespace App.Dispatching.Process
                     }
                     if (carTaskType == "12")
                     {
-                        //1站台不能有车
-                        if (Layer == 1 && Column == 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
+                        carToLayer = carFromLayer;
+
                         //起始层有车
-                        if (carFromLayer == Layer)
+                        if (carFromLayer == FromLayer || carFromLayer == ToLayer || carFromLayer == Layer)
                         {
                             carOK = false;
                             break;
-                        }
-                        //其他车任务起始层也在这层 
-                        if (carFromLayer == FromLayer && carFromLayer != carLayer && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //其他车任务目标层在起始层 
-                        if (carFromLayer == ToLayer && ToColumn > 0 && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-
-                        //目标层有车
-                        if (carToLayer == Layer && Column == 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-
-                        //目标层有任务起始层
-                        //if (FromLayer == 1 && FromColumn == 0)
-                        //{
-                        //    carOK = false;
-                        //    break;
-                        //}
+                        }                        
                     }
                     if (carTaskType == "13")
                     {
-                        //1站台不能有车
-                        if (Layer == 1 && Column == 0)
+                        //如果同层移库,且车也在同层
+                        if (carFromLayer != carToLayer && carFromLayer==carLayer)
                         {
-                            carOK = false;
-                            break;
-                        }
-                        //起始层有车
-                        if (carFromLayer == Layer)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //其他车任务起始层也在这层 
-                        if (carFromLayer == FromLayer && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //其他车任务目标层在起始层 
-                        if (carFromLayer == ToLayer && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-
-                        //目标层有车
-                        if (carToLayer == Layer)
-                        {
-                            carOK = false;
-                            break;
-                        }
-
-                        //目标层有任务起始层
-                        if (carToLayer == FromLayer && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
-                        }
-                        //目标层有任务目标层
-                        if (carToLayer == ToLayer && TaskType > 0)
-                        {
-                            carOK = false;
-                            break;
+                            //目标层
+                            if (carToLayer == FromLayer || carToLayer == ToLayer || carToLayer == Layer)
+                            {
+                                carOK = false;
+                                break;
+                            }
+                            //起始层
+                            if (carFromLayer == FromLayer || carFromLayer == ToLayer || carFromLayer == Layer)
+                            {
+                                carOK = false;
+                                break;
+                            }
                         }
                     }
+                    
                 }
             }
             return carOK;
@@ -543,7 +466,7 @@ namespace App.Dispatching.Process
        
         private DataTable GetTask(string AisleNo)
         {
-            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State in('0','1','2') and WCS_Task.WarehouseCode = '{0}' and WCS_Task.AisleNo='{1}'", Program.WarehouseCode, AisleNo)) };
+            DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State in('0','1','2') and WCS_Task.WarehouseCode = '{0}' and WCS_Task.AisleNo='{1}') ", Program.WarehouseCode, AisleNo)) };
             DataTable dt = bll.FillDataTable("WCS.SelectTask", param);            
             return dt;
         }
@@ -578,43 +501,65 @@ namespace App.Dispatching.Process
         private void Send2PLC(string serviceName, DataRow dr, string carNo)
         {
             string TaskNo = dr["TaskNo"].ToString();
-            string BillID = dr["BillID"].ToString();
-            string TaskType = dr["TaskType"].ToString();
-            string state = dr["State"].ToString();
-            int taskType = 10;
+            string TaskType = dr["TaskType"].ToString();            
             string NextState = "3";
-            if (state == "0")
-            {
-                if (TaskType == "13")
-                {
-                    taskType = 9;
-                    NextState = "4";
-                }
-                else if (TaskType == "10")
-                {
-                    taskType = 12;
-                    NextState = "4";
-                }
-                else
-                {
-                    taskType = 11;
-                    NextState = "4";
-                }
-            }
 
             string FromStationAdd = dr["FromAddress"].ToString();
             string ToStationAdd = dr["ToAddress"].ToString();
 
+            object[] obj = MCP.ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
+
             int[] cellAddr = new int[12];
+            if (TaskType == "11")
+            {
+                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                cellAddr[4] = 0;
+                cellAddr[5] = int.Parse(obj[3].ToString()); ;
 
-            cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
-            cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
-            cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
-            cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
-            cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
-            cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[9] = 10;
+                NextState = "3";
+            }
+            else if (TaskType == "12")
+            {
+                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
 
-            cellAddr[9] = taskType;
+                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                cellAddr[7] = 0;
+                cellAddr[8] = cellAddr[5];
+                cellAddr[9] = 11;
+                NextState = "4";
+            }
+            else if (TaskType == "13")
+            {
+                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
+
+                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[9] = 9;
+                NextState = "4";
+            }
+            else if (TaskType == "10")
+            {
+                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
+
+                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[9] = 1;
+                NextState = "4";
+            }   
+
+            
             cellAddr[10] = int.Parse(carNo);
 
             sbyte[] taskNo = new sbyte[30];
@@ -622,11 +567,11 @@ namespace App.Dispatching.Process
             Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
             Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
 
+            string DeviceNo = serviceName.Substring(5, 2) + carNo;
             if (WriteToService(serviceName, "WriteFinished", 1))
             {
                 report.Send2MJWcs(base.Context, 1, TaskNo);
-                bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@CarNo", carNo), new DataParameter("@TaskNo", TaskNo) });
-                bll.ExecNonQuery("WCS.UpdateBillStateByBillID", new DataParameter[] { new DataParameter("@State", 3), new DataParameter("@BillID", BillID) });
+                bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
             }
             Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
         }        
