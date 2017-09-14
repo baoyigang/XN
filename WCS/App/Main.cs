@@ -575,7 +575,8 @@ namespace App
         }
         private DataTable GetMonitorData()
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", "(WCS_TASK.State not in('7','9'))") });
+            string filter = string.Format("WCS_TASK.WarehouseCode='{0}' and WCS_TASK.State not in('7','9')", Program.WarehouseCode);
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", filter) });
             return dt;
         }
 
@@ -676,9 +677,12 @@ namespace App
             {
                 DataRowView drv =dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
                 DataRow dr = drv.Row;
+                string TaskType = dr["TaskType"].ToString();
                 string State = dr["State"].ToString();
                 string DeviceNo = dr["DeviceNo"].ToString();
                 string serviceName = "PLC" + DeviceNo;
+                if (Program.WarehouseCode == "S")
+                    serviceName = "PLC03" + DeviceNo.Substring(0, 2);
                 string TaskNo = dr["TaskNo"].ToString();
                 string NewCellCode = dr["NewCellCode"].ToString();
                 string NewAddress = dr["NewAddress"].ToString();
@@ -695,41 +699,96 @@ namespace App
                     return;
                 }
                 int[] cellAddr = new int[12];
-                cellAddr[6] = 1;
-                //判断是否要用MJ-WCS重新下发的货位下发任务
-                if (AlarmCode > 500 && AlarmCode < 503)
-                {
-                    fromStation = NewCellCode;
-                    FromStationAdd = NewAddress;
-                    cellAddr[6] = 1;
-                }
-                if (AlarmCode > 502 && AlarmCode < 505)
-                {
-                    toStation = NewCellCode;
-                    ToStationAdd = NewAddress;
-                    cellAddr[6] = 2;
-                }
-                if (State == "3" || State == "4")
-                {
-                    
-                    cellAddr[0] = byte.Parse(FromStationAdd.Substring(4, 3));
-                    cellAddr[1] = byte.Parse(FromStationAdd.Substring(7, 3));
-                    cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
-                    cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
-                    cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
-                    cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
-                    sbyte[] taskNo = new sbyte[20];
-                    Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
-                    context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-                    context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-                    context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-                    Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                if (Program.WarehouseCode != "S")
+                {
+                    cellAddr[6] = 1;
+                    //判断是否要用MJ-WCS重新下发的货位下发任务
+                    if (AlarmCode > 500 && AlarmCode < 503)
+                    {
+                        fromStation = NewCellCode;
+                        FromStationAdd = NewAddress;
+                        cellAddr[6] = 1;
+                    }
+                    if (AlarmCode > 502 && AlarmCode < 505)
+                    {
+                        toStation = NewCellCode;
+                        ToStationAdd = NewAddress;
+                        cellAddr[6] = 2;
+                    }
+                    if (State == "3" || State == "4")
+                    {
+
+                        cellAddr[0] = byte.Parse(FromStationAdd.Substring(4, 3));
+                        cellAddr[1] = byte.Parse(FromStationAdd.Substring(7, 3));
+                        cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
+                        cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
+                        cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
+                        cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
+                        sbyte[] taskNo = new sbyte[20];
+                        Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
+                        context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                        context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                        context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+
+                        Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                    }
+                    else
+                    {
+                        Logger.Info("非正在上下架的任务无法重新下发");
+                        return;
+                    }
                 }
                 else
                 {
-                    Logger.Info("非正在上下架的任务无法重新下发");
-                    return;
+                    //判断是否要用MJ-WCS重新下发的货位下发任务
+                    if (AlarmCode ==14)
+                    {
+                        toStation = NewCellCode;
+                        ToStationAdd = NewAddress;
+                        
+                        cellAddr[1] = 2;
+                    }
+                    if (AlarmCode == 11 || AlarmCode ==13)
+                    {
+                        fromStation = NewCellCode;
+                        FromStationAdd = NewAddress;
+                        cellAddr[1] = 3;
+                    }
+                    if (State == "3" || State == "4")
+                    {
+                        cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                        cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                        cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
+                        cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                        cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                        cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+
+                        if (TaskType == "11")
+                            cellAddr[9] = 10;
+                        else if (TaskType == "12")
+                        {
+                            cellAddr[7] = 0;
+                            cellAddr[8] = cellAddr[5];
+                            cellAddr[9] = 11;
+                        }
+                        else if (TaskType == "13")
+                            cellAddr[9] = 9;
+
+                        cellAddr[10] = int.Parse(DeviceNo.Substring(2,2));
+                        sbyte[] taskNo = new sbyte[30];
+                        Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
+                        context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                        context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                        context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
+
+                        Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                    }
+                    else
+                    {
+                        Logger.Info("非正在上下架的任务无法重新下发");
+                        return;
+                    }
                 }
                 this.BindData();
             }
@@ -777,8 +836,8 @@ namespace App
             if (obj.ToString() != "0")
             {
                 cellAddr[6] = 5;
-                sbyte[] taskNo = new sbyte[20];
-                for (int i = 0; i < 20; i++)
+                sbyte[] taskNo = new sbyte[30];
+                for (int i = 0; i < 30; i++)
                     taskNo[i] = 32;
                 //Util.ConvertStringChar.stringToBytes("", 20).CopyTo(taskNo, 0);
                 context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);

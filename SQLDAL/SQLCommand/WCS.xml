@@ -4,7 +4,8 @@
   <Command ID="SelectTask">
     <CommandString>
       SELECT WCS_TASK.*, CMD_BillType.BillTypeName,Sys_TableState.StateDesc,
-      WCS_TASK.Cellcode FromStation,WCS_TASK.ToCellCode ToStation,A1.AreaName,isnull(A2.DeviceNo,'') AisleDeviceNo,CD.ServiceName
+      WCS_TASK.Cellcode FromStation,WCS_TASK.ToCellCode ToStation,cast(substring(WCS_TASK.FromAddress,8,3) as int) FromLayer,cast(substring(WCS_TASK.ToAddress,8,3) as int) ToLayer,
+      A1.AreaName,isnull(A2.DeviceNo,'') AisleDeviceNo,CD.ServiceName
       FROM WCS_TASK
       left join CMD_Area A1 on WCS_TASK.AreaCode=A1.AreaCode
       left join Vew_AisleDevice A2 on A2.AreaCode=WCS_TASK.AreaCode and A2.WarehouseCode=WCS_TASK.WarehouseCode and A2.AisleNo=WCS_TASK.AisleNo
@@ -345,10 +346,32 @@
       when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='13' then  '04'
       when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='12' then  '05'
       when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='12' then  '06'
+      when D.DeviceType='02' and T.alarmCode='14' and T.TaskType='11' then  '08'
+      when D.DeviceType='02' and T.alarmCode in('11','13') and T.TaskType='12' then  '09'
       else T.AlarmCode end) errorCode,
       getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
       from Wcs_Task T
-      left join CMD_Device D on T.DeviceNo=D.DeviceNo
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo and T.WarehouseCode=D.WarehouseCode
+      where TaskNo='{0}'
+    </CommandString>
+  </Command>
+  <Command ID="SelectTaskWcsAlarm2">
+    <CommandString>
+      select NEWID() id,taskNo,palletBarcode,'ERROR' status,
+      (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
+      when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='11' then  '02'
+      when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='13' then  '03'
+      when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='13' then  '03'
+      when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='13' then  '04'
+      when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='13' then  '04'
+      when D.DeviceType='01' and T.alarmCode='501' and T.TaskType='12' then  '05'
+      when D.DeviceType='01' and T.alarmCode='502' and T.TaskType='12' then  '06'
+      when D.DeviceType='02' and T.alarmCode='14' and T.TaskType='11' then  '08'
+      when D.DeviceType='02' and T.alarmCode in('11','13') and T.TaskType='12' then  '09'
+      else T.AlarmCode end) errorCode,
+      getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task T
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo2 and T.WarehouseCode=D.WarehouseCode
       where TaskNo='{0}'
     </CommandString>
   </Command>

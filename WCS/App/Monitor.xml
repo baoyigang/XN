@@ -2,14 +2,67 @@
 <Configuration>
   <Servers>
     <Server Name="PLC0301" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0301]" UpdateRate="350">
-      <OPCItem ItemName="Status01" ClientHandler="3" OPCItemName="DB541,INT2,13"/>
-      <OPCItem ItemName="CarTaskNo01" ClientHandler="4" OPCItemName="DB541,DINT108,1"/>
-      <OPCItem ItemName="AlarmCode01" ClientHandler="5" OPCItemName="DB541,DINT104,1"/>
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
     </Server>
     <Server Name="PLC0302" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0302]" UpdateRate="350">
-      <OPCItem ItemName="Status02" ClientHandler="7" OPCItemName="DB541,INT2,13"/>
-      <OPCItem ItemName="CarTaskNo02" ClientHandler="8" OPCItemName="DB541,DINT108,1"/>
-      <OPCItem ItemName="AlarmCode02" ClientHandler="9" OPCItemName="DB541,DINT104,1"/>
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
+    </Server>
+    <Server Name="PLC0303" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0303]" UpdateRate="350">
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
+    </Server>
+    <Server Name="PLC0304" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0304]" UpdateRate="350">
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
+    </Server>
+    <Server Name="PLC0305" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0305]" UpdateRate="350">
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
+    </Server>
+    <Server Name="PLC0306" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0306]" UpdateRate="350">
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
+    </Server>
+    <Server Name="PLC0307" ConnectionString="OPC.SimaticNET" GroupName="PLCGroup" GroupString="S7:[PLC0307]" UpdateRate="350">
+      <OPCItem ItemName="abc" ClientHandler="1" OPCItemName="DB541,INT0,1"/>
+      <OPCItem ItemName="CarStatus01" ClientHandler="2" OPCItemName="DB541,INT2,13"/>
+      <OPCItem ItemName="CarAlarm01" ClientHandler="3" OPCItemName="DB541,INT28,1" />
+      <OPCItem ItemName="CarTask01" ClientHandler="5" OPCItemName="DB541,CHAR60,30"/>
+      <OPCItem ItemName="CarStatus02" ClientHandler="7" OPCItemName="DB541,INT102,13"/>
+      <OPCItem ItemName="CarAlarm02" ClientHandler="8" OPCItemName="DB541,INT128,1"/>
+      <OPCItem ItemName="CarTask02" ClientHandler="10" OPCItemName="DB541,CHAR160,30"/>
     </Server>
   </Servers>
 </Configuration>

@@ -2,79 +2,111 @@
 <Configuration>
   <LogLevel>DEBUG</LogLevel>
   <Attributes>
-    <Attribute Name="WarehouseCode" Value="A" />
+    <Attribute Name="WarehouseCode" Value="S" />
     <Attribute Name="InTaskCount" Value="2" />
     <Attribute Name="UserName" Value="Admin" />
-    <Attribute Name="WcsUrl" Value="http://192.100.104.24:8080/api/RB2MJ/" />
+    <Attribute Name="WcsUrl" Value="http://10.153.1.21:3000/AW/ROBO2XN/" />
     <Attribute Name="SendInterval" Value="60000" />
     <Attribute Name="RequireAPReady" Value="1" />
   </Attributes>
-  <!--<Services>
-    <Service Name="PLC0105" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0105.xml" />
-    <Service Name="PLC0106" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0106.xml" />
-    <Service Name="PLC0107" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0107.xml" />
+  <Services>
+    <Service Name="PLC0301" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0301.xml" />
+    <Service Name="PLC0302" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0302.xml" />
+    <Service Name="PLC0303" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0303.xml" />
+    <Service Name="PLC0304" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0304.xml" />
+    <Service Name="PLC0305" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0305.xml" />
+    <Service Name="PLC0306" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0306.xml" />
+    <Service Name="PLC0307" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0307.xml" />
   </Services>
   <Processes>
-    --><!--CraneProcess--><!--
-    <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
+    <!--CraneProcess-->
+    <!--<Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
       <Item ServiceName="PLC0105" ItemName="TaskFinish" />
       <Item ServiceName="PLC0105" ItemName="ACK" />
       <Item ServiceName="PLC0106" ItemName="TaskFinish" />
       <Item ServiceName="PLC0106" ItemName="ACK" />
       <Item ServiceName="PLC0107" ItemName="TaskFinish" />
       <Item ServiceName="PLC0107" ItemName="ACK" />
-    </Process>
-    --><!--CraneProcess--><!--
-    <Process Name="CraneAlarmProcess" Type="App.exe, App.Dispatching.Process.CraneAlarmProcess">
+    </Process>-->
+    <!--CraneProcess-->
+    <!--<Process Name="CraneAlarmProcess" Type="App.exe, App.Dispatching.Process.CraneAlarmProcess">
       <Item ServiceName="PLC0105" ItemName="AlarmCode" />
       <Item ServiceName="PLC0106" ItemName="AlarmCode" />
       <Item ServiceName="PLC0107" ItemName="AlarmCode" />
-    </Process>
-    --><!--输送线Process,到达入库口--><!--
-    <Process Name="InStockToStationProcess" Type="App.exe, App.Dispatching.Process.InStockToStationProcess">
+    </Process>-->
+    <!--输送线Process,到达入库口-->
+    <!--<Process Name="InStockToStationProcess" Type="App.exe, App.Dispatching.Process.InStockToStationProcess">
       <Item ServiceName="PLC0105" ItemName="ToInStation1" />
       <Item ServiceName="PLC0105" ItemName="ToInStation2" />
       <Item ServiceName="PLC0106" ItemName="ToInStation1" />
       <Item ServiceName="PLC0106" ItemName="ToInStation2" />
       <Item ServiceName="PLC0107" ItemName="ToInStation1" />
       <Item ServiceName="PLC0107" ItemName="ToInStation2" />
-    </Process>    
-  </Processes>-->
-  <Services>
-    <Service Name="PLC0101" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0101.xml" />
-    <Service Name="PLC0102" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0102.xml" />
-    <Service Name="PLC0103" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0103.xml" />
-    <Service Name="PLC0104" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0104.xml" />
-  </Services>
-  <Processes>
-    <!--CraneProcess-->
-    <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
-      <Item ServiceName="PLC0101" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0101" ItemName="ACK" />
-      <Item ServiceName="PLC0102" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0102" ItemName="ACK" />
-      <Item ServiceName="PLC0103" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0103" ItemName="ACK" />
-      <Item ServiceName="PLC0104" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0104" ItemName="ACK" />
+    </Process>-->
+    <!--ElevatorProcess-->
+    <Process Name="ElevatorProcess" Type="App.exe, App.Dispatching.Process.ElevatorProcess">
+      <Item ServiceName="PLC0301" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0301" ItemName="TaskFinished02" />
+      <Item ServiceName="PLC0302" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0302" ItemName="TaskFinished02" />
+      <Item ServiceName="PLC0303" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0303" ItemName="TaskFinished02" />
+      <Item ServiceName="PLC0304" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0304" ItemName="TaskFinished02" />
+      <Item ServiceName="PLC0305" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0305" ItemName="TaskFinished02" />
+      <Item ServiceName="PLC0306" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0306" ItemName="TaskFinished02" />
+      <Item ServiceName="PLC0307" ItemName="TaskFinished01" />
+      <Item ServiceName="PLC0307" ItemName="TaskFinished02" />
     </Process>
-    <!--CraneProcess-->
-    <Process Name="CraneAlarmProcess" Type="App.exe, App.Dispatching.Process.CraneAlarmProcess">
-      <Item ServiceName="PLC0101" ItemName="AlarmCode" />
-      <Item ServiceName="PLC0102" ItemName="AlarmCode" />
-      <Item ServiceName="PLC0103" ItemName="AlarmCode" />
-      <Item ServiceName="PLC0104" ItemName="AlarmCode" />
-    </Process>
+
+    <Process Name="ElevatorAlarmProcess" Type="App.exe, App.Dispatching.Process.ElevatorAlarmProcess">
+      <Item ServiceName="PLC0301" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0301" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0301" ItemName="ElevatorAlarm" />
+      <Item ServiceName="PLC0302" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0302" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0302" ItemName="ElevatorAlarm" />
+      <Item ServiceName="PLC0303" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0303" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0303" ItemName="ElevatorAlarm" />
+      <Item ServiceName="PLC0304" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0304" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0304" ItemName="ElevatorAlarm" />
+      <Item ServiceName="PLC0305" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0305" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0305" ItemName="ElevatorAlarm" />
+      <Item ServiceName="PLC0306" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0306" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0306" ItemName="ElevatorAlarm" />
+      <Item ServiceName="PLC0307" ItemName="CarAlarm01" />
+      <Item ServiceName="PLC0307" ItemName="CarAlarm02" />
+      <Item ServiceName="PLC0307" ItemName="ElevatorAlarm" />
+    </Process>-->
     <!--输送线Process,到达入库口-->
-    <Process Name="InStockToStationProcess" Type="App.exe, App.Dispatching.Process.InStockToStationProcess">
-      <Item ServiceName="PLC0101" ItemName="ToInStation1" />
-      <Item ServiceName="PLC0101" ItemName="ToInStation2" />
-      <Item ServiceName="PLC0102" ItemName="ToInStation1" />
-      <Item ServiceName="PLC0102" ItemName="ToInStation2" />
-      <Item ServiceName="PLC0103" ItemName="ToInStation1" />
-      <Item ServiceName="PLC0103" ItemName="ToInStation2" />
-      <Item ServiceName="PLC0104" ItemName="ToInStation1" />
-      <Item ServiceName="PLC0104" ItemName="ToInStation2" />
+    <Process Name="InOutLocationProcess" Type="App.exe, App.Dispatching.Process.InOutLocationProcess">
+      <Item ServiceName="PLC0301" ItemName="InLocation01" />
+      <Item ServiceName="PLC0301" ItemName="InLocation02" />
+      <Item ServiceName="PLC0301" ItemName="OutLocation02" />
+      <Item ServiceName="PLC0302" ItemName="InLocation01" />
+      <Item ServiceName="PLC0302" ItemName="InLocation02" />
+      <Item ServiceName="PLC0302" ItemName="OutLocation02" />
+      <Item ServiceName="PLC0303" ItemName="InLocation01" />
+      <Item ServiceName="PLC0303" ItemName="InLocation02" />
+      <Item ServiceName="PLC0303" ItemName="OutLocation02" />
+      <Item ServiceName="PLC0304" ItemName="InLocation01" />
+      <Item ServiceName="PLC0304" ItemName="InLocation02" />
+      <Item ServiceName="PLC0304" ItemName="OutLocation02" />
+      <Item ServiceName="PLC0305" ItemName="InLocation01" />
+      <Item ServiceName="PLC0305" ItemName="InLocation02" />
+      <Item ServiceName="PLC0305" ItemName="OutLocation02" />
+      <Item ServiceName="PLC0306" ItemName="InLocation01" />
+      <Item ServiceName="PLC0306" ItemName="InLocation02" />
+      <Item ServiceName="PLC0306" ItemName="OutLocation02" />
+      <Item ServiceName="PLC0307" ItemName="InLocation01" />
+      <Item ServiceName="PLC0307" ItemName="InLocation02" />
+      <Item ServiceName="PLC0307" ItemName="OutLocation02" />
     </Process>
   </Processes>
 </Configuration>

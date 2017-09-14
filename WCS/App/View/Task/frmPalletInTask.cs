@@ -153,6 +153,12 @@ namespace App.View.Task
             this.cbHeight.DataSource = dv;
             this.cbHeight.ValueMember = "CellRow";
             this.cbHeight.DisplayMember = "CellRow";
+            
+            //大型集成项目可以学到很多东西
+            //增强团队管理、团队协作的能力
+            //项目进度管控进一步加强
+            //学习到行业内先进的技术、先进的设备
+            //要以用户体验至上的标准去要求自己
         }
     }
 }
