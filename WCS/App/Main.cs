@@ -811,7 +811,7 @@ namespace App
                 bll.ExecNonQueryTran("WCS.Sp_UpdateTaskState", param);
 
                 BindData();
-
+                Logger.Info("手动切换状态为:" + State);
                 try
                 {
                     App.Dispatching.Process.Report report = new Dispatching.Process.Report();
