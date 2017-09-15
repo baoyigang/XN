@@ -399,45 +399,53 @@ namespace App.View
                 return null;
         }
 
-        private void Send2Cmd(string DeviceNo)
+        private void Send2Cmd(string DeviceNo,string taskno)
         {
             string serviceName = "PLC" + DeviceNo;
-            int[] cellAddr = new int[12];
-
+            int[] cellAddr = new int[12];;
             object obj = MCP.ObjectUtil.GetObject(base.Context.ProcessDispatcher.WriteToService(serviceName, "AlarmCode")).ToString();
             if (obj.ToString() != "0")
             {
-                cellAddr[6] = 5;
-                sbyte[] taskNo = new sbyte[20];
-                for (int i = 0; i < 20; i++)
-                    taskNo[i] = 32;
+                frmCancel frmCan = new frmCancel();
+                if (frmCan.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    cellAddr[6] = 5;
+                    sbyte[] taskNo = new sbyte[20];
+                    for (int i = 0; i < 20; i++)
+                        taskNo[i] = 32;
 
-                base.Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-                base.Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-                base.Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
+                    base.Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                    base.Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+                    base.Context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-                MCP.Logger.Info("已给设备" + DeviceNo + "下发取消任务指令");
+                    MCP.Logger.Info("已给设备" + DeviceNo + "下发取消任务指令:" + taskno);
+                }
+            }
+            else
+            {
+                CancelFalse frmCfs = new CancelFalse();
+                frmCfs.ShowDialog();
             }
         }
 
         private void btnCancel4_Click(object sender, EventArgs e)
         {
-            Send2Cmd("0104");
+            Send2Cmd("0104", txtTaskNo4.Text);
         }
 
         private void btnCancel3_Click(object sender, EventArgs e)
         {
-            Send2Cmd("0103");
+            Send2Cmd("0103", txtTaskNo3.Text);
         }
 
         private void btnCancel2_Click(object sender, EventArgs e)
         {
-            Send2Cmd("0102");
+            Send2Cmd("0102", txtTaskNo2.Text);
         }
 
         private void btnCancel1_Click(object sender, EventArgs e)
         {
-            Send2Cmd("0101");
+            Send2Cmd("0101", txtTaskNo1.Text);
         }     
     }
 }

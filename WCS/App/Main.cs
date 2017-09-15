@@ -684,6 +684,7 @@ namespace App
                 if (Program.WarehouseCode == "S")
                     serviceName = "PLC03" + DeviceNo.Substring(0, 2);
                 string TaskNo = dr["TaskNo"].ToString();
+                string PalletBarcode = dr["PalletBarcode"].ToString();
                 string NewCellCode = dr["NewCellCode"].ToString();
                 string NewAddress = dr["NewAddress"].ToString();
                 int AlarmCode = int.Parse(dr["AlarmCode"].ToString());
@@ -726,12 +727,13 @@ namespace App
                         cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
                         cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
                         sbyte[] taskNo = new sbyte[20];
-                        Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
+                        //Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
+                        Util.ConvertStringChar.stringToBytes(PalletBarcode, 20).CopyTo(taskNo, 0);
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
                         context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-                        Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                        Logger.Info("任务:" + TaskNo +"条码为:"+ PalletBarcode + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
                     }
                     else
                     {
@@ -777,12 +779,13 @@ namespace App
 
                         cellAddr[10] = int.Parse(DeviceNo.Substring(2,2));
                         sbyte[] taskNo = new sbyte[30];
-                        Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
+                        //Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
+                        Util.ConvertStringChar.stringToBytes(PalletBarcode, 30).CopyTo(taskNo, 0);
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
                         context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
 
-                        Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                        Logger.Info("任务:" + TaskNo +"条码为:"+ PalletBarcode + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
                     }
                     else
                     {

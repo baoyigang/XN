@@ -44,6 +44,7 @@ namespace App.Dispatching.Process
             try
             {                
                 string TaskNo = "";
+                string PalletBarcode = "";
                 switch (stateItem.ItemName)
                 {
                     case "TaskFinish":
@@ -53,10 +54,12 @@ namespace App.Dispatching.Process
                         string TaskFinish = obj.ToString();
                         if (TaskFinish.Equals("True") || TaskFinish.Equals("1"))
                         {
-                            TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ReadTaskNo")));
-                            DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
+                            //TaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ReadTaskNo")));
+                            //DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
+                            PalletBarcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ReadTaskNo")));
+                            DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.PalletBarcode='{0}' and WCS_TASK.State!=0 and WCS_TASK.State<7", PalletBarcode)) };
                             DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
-
+                            TaskNo = dt.Rows[0]["TaskNo"].ToString();
                             string TaskType = "";
                             if (dt.Rows.Count > 0)
                                 TaskType = dt.Rows[0]["TaskType"].ToString();
@@ -95,6 +98,8 @@ namespace App.Dispatching.Process
                         if (obj == null)
                             return;
                         string ack = obj.ToString();
+
+                        Logger.Info("ACK值为:" + ack);
                         if (ack.Equals("True") || ack.Equals("1"))
                         {
                             WriteToService(stateItem.Name, "STB", 0);
@@ -241,12 +246,12 @@ namespace App.Dispatching.Process
             try
             {
                 string plcTaskNo = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(ServiceName, "ReadTaskNo")));
-
+                object[] CraneStation = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(ServiceName, "Status"));
                 string workMode = ObjectUtil.GetObject(Context.ProcessDispatcher.WriteToService(ServiceName, "WorkMode")).ToString();
                 object[] obj = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(ServiceName, "OtherStatus"));
                 int State = int.Parse(obj[1].ToString());
                 int AlarmCode = int.Parse(obj[0].ToString());
-
+                int liftFull = int.Parse(CraneStation[0].ToString());
                 if (workMode == "1" && AlarmCode == 0 && State == 1 && liftFull != 1)
                     return true;
                 else
@@ -286,9 +291,14 @@ namespace App.Dispatching.Process
 
         private void Send2PLC(DataRow dr)
         {
-            string DeviceNo = dr["AisleDeviceNo"].ToString();
             string serviceName = dr["ServiceName"].ToString();
+            WriteToService(serviceName, "STB", 0);
+
+
+
+            string DeviceNo = dr["AisleDeviceNo"].ToString();
             string TaskNo = dr["TaskNo"].ToString();
+            string PalletBarcode = dr["PalletBarcode"].ToString();
             string TaskType = dr["TaskType"].ToString();
             string state = dr["State"].ToString();
 
@@ -311,7 +321,7 @@ namespace App.Dispatching.Process
             cellAddr[6] = 1;
 
             sbyte[] taskNo = new sbyte[20];
-            Util.ConvertStringChar.stringToBytes(TaskNo, 20).CopyTo(taskNo, 0);
+            Util.ConvertStringChar.stringToBytes(PalletBarcode, 20).CopyTo(taskNo, 0);
             Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
             Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
             
@@ -321,7 +331,7 @@ namespace App.Dispatching.Process
 
                 report.Send2MJWcs(base.Context, 1, TaskNo);
             }
-            Logger.Info("任务:" + TaskNo + "已下发给" + DeviceNo + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
+            Logger.Info("任务:" + TaskNo + "条码为:" + PalletBarcode + "已下发给" + DeviceNo + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
         }        
     }
 }
