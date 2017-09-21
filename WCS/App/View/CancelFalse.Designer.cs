@@ -45,12 +45,14 @@
             // 
             // button1
             // 
+            this.button1.BackColor = System.Drawing.Color.Lime;
+            this.button1.Font = new System.Drawing.Font("宋体", 18F);
             this.button1.Location = new System.Drawing.Point(68, 100);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 37);
             this.button1.TabIndex = 1;
-            this.button1.Text = "关闭";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Text = "确定";
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // CancelFalse

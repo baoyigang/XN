@@ -806,6 +806,13 @@ namespace App
             {
                 BLL.BLLBase bll = new BLL.BLLBase();
                 string TaskNo = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                string TaskState = this.dgvMain.Rows[this.dgvMain.CurrentCell.RowIndex].Cells[2].Value.ToString();
+                if (TaskState=="等待" && State == "7")
+                {
+                    frmChangefalse frm = new frmChangefalse();
+                    frm.ShowDialog();
+                    return;
+                }
 
                 DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@State", State) };
                 bll.ExecNonQueryTran("WCS.Sp_UpdateTaskState", param);

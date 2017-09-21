@@ -228,6 +228,12 @@
     <Compile Include="View\CancelFalse.Designer.cs">
       <DependentUpon>CancelFalse.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\frmChangefalse.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\frmChangefalse.Designer.cs">
+      <DependentUpon>frmChangefalse.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\frmMonitorB.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -449,6 +455,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\CancelFalse.resx">
       <DependentUpon>CancelFalse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\frmChangefalse.resx">
+      <DependentUpon>frmChangefalse.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\frmMonitorB.resx">
       <DependentUpon>frmMonitorB.cs</DependentUpon>

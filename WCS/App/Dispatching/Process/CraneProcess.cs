@@ -291,47 +291,50 @@ namespace App.Dispatching.Process
 
         private void Send2PLC(DataRow dr)
         {
-            string serviceName = dr["ServiceName"].ToString();
-            WriteToService(serviceName, "STB", 0);
-
-
-
-            string DeviceNo = dr["AisleDeviceNo"].ToString();
-            string TaskNo = dr["TaskNo"].ToString();
-            string PalletBarcode = dr["PalletBarcode"].ToString();
-            string TaskType = dr["TaskType"].ToString();
-            string state = dr["State"].ToString();
-
-            string NextState = "4";
-            if (TaskType == "11")
-                NextState = "3";
-
-            string FromStationAdd = dr["FromAddress"].ToString();
-            string ToStationAdd = dr["ToAddress"].ToString();
-
-            int[] cellAddr = new int[12];
-
-            cellAddr[0] = byte.Parse(FromStationAdd.Substring(4, 3));
-            cellAddr[1] = byte.Parse(FromStationAdd.Substring(7, 3));
-            cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
-            cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
-            cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
-            cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
-
-            cellAddr[6] = 1;
-
-            sbyte[] taskNo = new sbyte[20];
-            Util.ConvertStringChar.stringToBytes(PalletBarcode, 20).CopyTo(taskNo, 0);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-            
-            if (WriteToService(serviceName, "STB", 1))
+            lock(this)
             {
-                bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
+                string serviceName = dr["ServiceName"].ToString();
+                WriteToService(serviceName, "STB", 0);
 
-                report.Send2MJWcs(base.Context, 1, TaskNo);
+
+
+                string DeviceNo = dr["AisleDeviceNo"].ToString();
+                string TaskNo = dr["TaskNo"].ToString();
+                string PalletBarcode = dr["PalletBarcode"].ToString();
+                string TaskType = dr["TaskType"].ToString();
+                string state = dr["State"].ToString();
+
+                string NextState = "4";
+                if (TaskType == "11")
+                    NextState = "3";
+
+                string FromStationAdd = dr["FromAddress"].ToString();
+                string ToStationAdd = dr["ToAddress"].ToString();
+
+                int[] cellAddr = new int[12];
+
+                cellAddr[0] = byte.Parse(FromStationAdd.Substring(4, 3));
+                cellAddr[1] = byte.Parse(FromStationAdd.Substring(7, 3));
+                cellAddr[2] = byte.Parse(FromStationAdd.Substring(1, 3));
+                cellAddr[3] = byte.Parse(ToStationAdd.Substring(4, 3));
+                cellAddr[4] = byte.Parse(ToStationAdd.Substring(7, 3));
+                cellAddr[5] = byte.Parse(ToStationAdd.Substring(1, 3));
+
+                cellAddr[6] = 1;
+
+                sbyte[] taskNo = new sbyte[20];
+                Util.ConvertStringChar.stringToBytes(PalletBarcode, 20).CopyTo(taskNo, 0);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+
+                if (WriteToService(serviceName, "STB", 1))
+                {
+                    bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
+
+                    report.Send2MJWcs(base.Context, 1, TaskNo);
+                }
+                Logger.Info("任务:" + TaskNo + "条码为:" + PalletBarcode + "已下发给" + DeviceNo + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
             }
-            Logger.Info("任务:" + TaskNo + "条码为:" + PalletBarcode + "已下发给" + DeviceNo + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
-        }        
+        }      
     }
 }

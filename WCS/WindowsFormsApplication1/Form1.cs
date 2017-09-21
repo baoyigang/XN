@@ -157,7 +157,7 @@ namespace WindowsFormsApplication1
             //Json = "{\"key\":\"1\"}";
             Encoding myEncode = Encoding.GetEncoding("UTF-8");
             byte[] postBytes = Encoding.UTF8.GetBytes(Json);
-            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://127.0.0.1/ServiceHost/transSRMTask.ashx");
+            HttpWebRequest req = (HttpWebRequest)HttpWebRequest.Create("http://localhost/ServiceHost/SRMDataService.svc/transSRMTask");
             req.Method = "POST";
             req.ContentType = "application/json;charset=UTF-8";
             req.ContentLength = postBytes.Length;
