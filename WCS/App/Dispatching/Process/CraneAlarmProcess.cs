@@ -51,7 +51,7 @@ namespace App.Dispatching.Process
                                 AlarmDesc = "堆垛机未知错误！";
                             //更新任务报警
                             string PalletBarcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ReadTaskNo")));
-                            DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.PalletBarcode='{0}' and WCS_TASK.State<7", PalletBarcode)) };
+                            DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.PalletBarcode='{0}'", PalletBarcode)) };
                             DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
                             string TaskNo = dt.Rows[0]["TaskNo"].ToString();
                             if (TaskNo.Length > 0)
