@@ -246,8 +246,8 @@ namespace App
                 lock (lbLog)
                 {
                     string msg1 = string.Format("[{0}]", args.LogLevel);
-                    string msg2 = string.Format("{0}", DateTime.Now);
-                    string msg3 = string.Format("{0} ", args.Message);
+                    string msg2 = string.Format(" {0}", DateTime.Now);
+                    string msg3 = string.Format(" {0}", args.Message);
                     this.lbLog.BeginUpdate();
                     ListViewItem item = new ListViewItem(new string[] { msg1, msg2, msg3 });
                     
@@ -258,7 +258,7 @@ namespace App
                     }
                     lbLog.Items.Insert(0, item);
                     this.lbLog.EndUpdate();
-                    WriteLoggerFile(msg1 + msg2 + msg3);
+                    WriteLoggerFile(msg1 + msg2  + msg3);
                 }
             }
         }
@@ -312,7 +312,7 @@ namespace App
                 path = path.TrimEnd(new char[] { '-' });
                 CreateDirectory(path);
                 path = path + @"/" + DateTime.Now.ToString("yyyy-MM-dd") + ".txt";
-                System.IO.File.AppendAllText(path, string.Format("{0} {1}", DateTime.Now, text + "\r\n"));
+                System.IO.File.AppendAllText(path, string.Format("{0}",  text + "\r\n"));
             }
             catch (Exception ex)
             {

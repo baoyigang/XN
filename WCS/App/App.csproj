@@ -168,6 +168,7 @@
       <DependentUpon>frmSelect.cs</DependentUpon>
     </Compile>
     <Compile Include="Crane.cs" />
+    <Compile Include="Dispatching\Process\CraneACKProcess.cs" />
     <Compile Include="Dispatching\Process\ElevatorAlarmProcess.cs" />
     <Compile Include="Dispatching\Process\InOutLocationProcess.cs" />
     <Compile Include="Dispatching\Process\CraneAlarmProcess.cs" />

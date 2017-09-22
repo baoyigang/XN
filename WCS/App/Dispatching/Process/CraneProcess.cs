@@ -99,11 +99,11 @@ namespace App.Dispatching.Process
                             return;
                         string ack = obj.ToString();
 
-                        Logger.Info("ACK值为:" + ack);
+                        Logger.Info(stateItem.Name + " Receive ACK:" + ack);
                         if (ack.Equals("True") || ack.Equals("1"))
                         {
                             WriteToService(stateItem.Name, "STB", 0);
-                            Logger.Info(stateItem.Name + "Receive ACK 1");
+                            Logger.Info(stateItem.Name + " Receive ACK 1");
                         }
                         break;
                     case "Run":

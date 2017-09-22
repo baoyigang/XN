@@ -22,12 +22,14 @@
     <!--CraneProcess-->
     <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
       <Item ServiceName="PLC0101" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0101" ItemName="ACK" />
       <Item ServiceName="PLC0102" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0102" ItemName="ACK" />
       <Item ServiceName="PLC0103" ItemName="TaskFinish" />
-      <Item ServiceName="PLC0103" ItemName="ACK" />
       <Item ServiceName="PLC0104" ItemName="TaskFinish" />
+    </Process>
+    <Process Name="CraneACKProcess" Type="App.exe, App.Dispatching.Process.CraneACKProcess">
+      <Item ServiceName="PLC0101" ItemName="ACK" />
+      <Item ServiceName="PLC0102" ItemName="ACK" />
+      <Item ServiceName="PLC0103" ItemName="ACK" />
       <Item ServiceName="PLC0104" ItemName="ACK" />
     </Process>
     <!--CraneProcess-->
