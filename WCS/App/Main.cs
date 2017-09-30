@@ -907,8 +907,7 @@ namespace App
             context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
             Logger.Info("任务:" + TaskNo + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
-        }
-        
+        }        
 
         private void ToolStripMenuItem_User_Click(object sender, EventArgs e)
         {
