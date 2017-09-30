@@ -576,7 +576,7 @@ namespace App
         private DataTable GetMonitorData()
         {
             string filter = string.Format("WCS_TASK.WarehouseCode='{0}' and WCS_TASK.State not in('7','9')", Program.WarehouseCode);
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", new DataParameter[] { new DataParameter("{0}", filter) });
+            DataTable dt = bll.FillDataTable("WCS.SelectTask1", new DataParameter[] { new DataParameter("{0}", filter) });
             return dt;
         }
 

@@ -1,1 +1,1 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="ServiceHost.WCSDataService" CodeBehind="WCSDataService.svc.cs" %>
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="ServiceHost.WCSDataService" CodeBehind="WCSDataService.svc.cs" Factory="System.ServiceModel.Activation.WebServiceHostFactory" %>

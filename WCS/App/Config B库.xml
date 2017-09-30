@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Configuration>
+  <LogLevel>DEBUG</LogLevel>
+  <Attributes>
+    <Attribute Name="WarehouseCode" Value="B" />
+    <Attribute Name="InTaskCount" Value="2" />
+    <Attribute Name="UserName" Value="Admin" />
+    <Attribute Name="WcsUrl" Value="http://10.153.1.21:3000/AW/ROBO2XN/" />
+    <Attribute Name="SendInterval" Value="60000" />
+    <Attribute Name="RequireAPReady" Value="1" />
+  </Attributes>
+    <Services>
+    <Service Name="PLC0105" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0105.xml" />
+    <Service Name="PLC0106" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0106.xml" />
+    <Service Name="PLC0107" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0107.xml" />
+  </Services>
+  <Processes>
+    <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
+      <Item ServiceName="PLC0105" ItemName="TaskFinish" />
+      <Item ServiceName="PLC0106" ItemName="TaskFinish" />
+      <Item ServiceName="PLC0107" ItemName="TaskFinish" />
+    </Process>
+    <Process Name="CraneACKProcess" Type="App.exe, App.Dispatching.Process.CraneACKProcess">
+      <Item ServiceName="PLC0105" ItemName="ACK" />
+      <Item ServiceName="PLC0106" ItemName="ACK" />
+      <Item ServiceName="PLC0107" ItemName="ACK" />
+    </Process>
+    <!--CraneProcess-->
+    <Process Name="CraneAlarmProcess" Type="App.exe, App.Dispatching.Process.CraneAlarmProcess">
+      <Item ServiceName="PLC0105" ItemName="AlarmCode" />
+      <Item ServiceName="PLC0106" ItemName="AlarmCode" />
+      <Item ServiceName="PLC0107" ItemName="AlarmCode" />
+    </Process>
+    <!--输送线Process,到达入库口-->
+    <Process Name="InStockToStationProcess" Type="App.exe, App.Dispatching.Process.InStockToStationProcess">
+      <Item ServiceName="PLC0105" ItemName="ToInStation1" />
+      <Item ServiceName="PLC0105" ItemName="ToInStation2" />
+      <Item ServiceName="PLC0106" ItemName="ToInStation1" />
+      <Item ServiceName="PLC0106" ItemName="ToInStation2" />
+      <Item ServiceName="PLC0107" ItemName="ToInStation1" />
+      <Item ServiceName="PLC0107" ItemName="ToInStation2" />
+    </Process>
+  </Processes>
+</Configuration>

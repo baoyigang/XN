@@ -16,6 +16,21 @@
       ORDER BY WCS_TASK.TaskLevel,WCS_TASK.RequestDate,WCS_TASK.StartDate
     </CommandString>
   </Command>
+  <Command ID="SelectTask1">
+    <CommandString>
+      SELECT WCS_TASK.*, CMD_BillType.BillTypeName,Sys_TableState.StateDesc,
+      WCS_TASK.Cellcode FromStation,WCS_TASK.ToCellCode ToStation,cast(substring(WCS_TASK.FromAddress,8,3) as int) FromLayer,cast(substring(WCS_TASK.ToAddress,8,3) as int) ToLayer,
+      A1.AreaName,isnull(A2.DeviceNo,'') AisleDeviceNo,CD.ServiceName
+      FROM WCS_TASK
+      left join CMD_Area A1 on WCS_TASK.AreaCode=A1.AreaCode
+      left join Vew_AisleDevice A2 on A2.AreaCode=WCS_TASK.AreaCode and A2.WarehouseCode=WCS_TASK.WarehouseCode and A2.AisleNo=WCS_TASK.AisleNo
+      left join CMD_Device CD on CD.DeviceNo=A2.DeviceNo
+      left join CMD_BillType On CMD_BillType.BillTypeCode=WCS_TASK.BillTypeCode
+      left join Sys_TableState on Sys_TableState.TableName='WCS_TASK' and Sys_TableState.FieldName='State' and WCS_TASK.State=Sys_TableState.State
+      Where {0}
+      ORDER BY WCS_TASK.AlarmCode desc,WCS_TASK.State desc,WCS_TASK.TaskLevel,WCS_TASK.RequestDate,WCS_TASK.StartDate
+    </CommandString>
+  </Command>
   <Command ID="GetTaskByPallet">
     <CommandString>
       SELECT * FROM WCS_TASK Where PalletCode=@PalletCode and ((TaskType='11' and State=0) or (TaskType='14' and State=8))
@@ -337,6 +352,24 @@
   </Command>
   <Command ID="SelectTaskWcsAlarm">
     <CommandString>
+      select NEWID() id,taskNo,palletBarcode,'ERROR' status,T.AlarmCode  errorCode,
+      getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task T
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo and T.WarehouseCode=D.WarehouseCode
+      where TaskNo='{0}'
+    </CommandString>
+  </Command>
+  <Command ID="SelectTaskWcsAlarm2">
+    <CommandString>
+      select NEWID() id,taskNo,palletBarcode,'ERROR' status, T.AlarmCode  errorCode,
+      getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
+      from Wcs_Task T
+      left join CMD_Device D on T.DeviceNo=D.DeviceNo2 and T.WarehouseCode=D.WarehouseCode
+      where TaskNo='{0}'
+    </CommandString>
+  </Command>
+  <Command ID="SelectTaskWcsAlarm3">
+    <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status,
       (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
       when D.DeviceType='01' and T.alarmCode='504' and T.TaskType='11' then  '02'
@@ -355,7 +388,7 @@
       where TaskNo='{0}'
     </CommandString>
   </Command>
-  <Command ID="SelectTaskWcsAlarm2">
+  <Command ID="SelectTaskWcsAlarm4">
     <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status,
       (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
