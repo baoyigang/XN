@@ -327,6 +327,7 @@ namespace App.View
                 //bll.ExecNonQuery("WCS.UpdateTaskError", new DataParameter[] { new DataParameter("@CraneErrCode", crane.ErrCode.ToString()), new DataParameter("@CraneErrDesc", dicCraneError[crane.ErrCode]), new DataParameter("@TaskNo", crane.TaskNo) });
                 if (crane.AlarmCode > 0)
                 {
+                    btn.BackColor = Color.Red;
                     //DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", crane.TaskNo), new DataParameter("@CraneErrCode", crane.AlarmCode.ToString()), new DataParameter("@CraneErrDesc", strAlarmDesc) };
                     //bll.ExecNonQueryTran("WCS.Sp_UpdateTaskError", param);
                     //Logger.Error(crane.CraneNo.ToString() + "堆垛机执行时出现错误,代码:" + crane.AlarmCode.ToString() + ",描述:" + strAlarmDesc);

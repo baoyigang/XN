@@ -9,6 +9,11 @@
     <Attribute Name="SendInterval" Value="60000" />
     <Attribute Name="RequireAPReady" Value="1" />
   </Attributes>
+    <Services>
+    <Service Name="PLC0105" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0105.xml" />
+    <Service Name="PLC0106" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0106.xml" />
+    <Service Name="PLC0107" Type="MCP.Service.Siemens.dll, MCP.Service.Siemens.OPCService" ConfigFile="PLC0107.xml" />
+  </Services>
   <Processes>
     <Process Name="CraneProcess" Type="App.exe, App.Dispatching.Process.CraneProcess">
       <Item ServiceName="PLC0105" ItemName="TaskFinish" />
