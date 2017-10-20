@@ -136,7 +136,7 @@ namespace App.Dispatching.Process
                     {
                         //先找入库任务
                         IsSent = FindInTask(dtCar, dtTask);
-                        if(IsSent)
+                        if (IsSent)
                             continue;
                     }
 
@@ -145,7 +145,7 @@ namespace App.Dispatching.Process
                     for (int j = 0; j < dtCar.Rows.Count; j++)
                     {
                         //读取小车状态
-                        string carNo = dtCar.Rows[j]["DeviceNo2"].ToString().Substring(2,2);
+                        string carNo = dtCar.Rows[j]["DeviceNo2"].ToString().Substring(2, 2);
                         object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
                         int Layer = int.Parse(obj[3].ToString());
                         int Column = int.Parse(obj[2].ToString());
@@ -159,14 +159,16 @@ namespace App.Dispatching.Process
                             if (Column == 0)
                             {
                                 //再找入库任务
-                                IsSent = FindInTask(dtCar, dtTask,carNo,obj);
+                                IsSent = FindInTask(dtCar, dtTask, carNo, obj);
                                 if (IsSent)
                                     continue;
                             }
                             //先找出库任务
+
                             IsSent = FindOutTask(dtCar, dtTask, carNo, obj);
                             if (IsSent)
                                 continue;
+
                             //再找入库任务
                             IsSent = FindInTask(dtCar, dtTask);
                             if (IsSent)
@@ -175,16 +177,18 @@ namespace App.Dispatching.Process
                             if (!IsSent && Column <= 0)
                             {
                                 //小车空闲，需要避开
-
-                                int ToLayer = GetNoTaskLayer(serviceName,dtCar, carNo, Layer);
+                                int CurLayer = Layer;
+                                if (Layer == 2001 || Layer == 1001)
+                                    CurLayer = 1;
+                                int ToLayer = GetNoTaskLayer(serviceName, dtCar, carNo, CurLayer);
                                 if (ToLayer > 0)
                                 {
                                     DataRow dr = dtTask.NewRow();
                                     dr["TaskNo"] = "001";
                                     dr["TaskType"] = "10";
                                     dr["FromAddress"] = "S000000000";
-                                    dr["ToAddress"] = "S001002" + (1000 + ToLayer).ToString().Substring(1, 3);
-                                    Send2PLC(serviceName, dr,carNo);
+                                    dr["ToAddress"] = "S001073" + (1000 + ToLayer).ToString().Substring(1, 3);
+                                    Send2PLC(serviceName, dr, carNo);
                                 }
                             }
                         }
@@ -220,26 +224,26 @@ namespace App.Dispatching.Process
             for (int i = 0; i < dtCar.Rows.Count; i++)
             {
                 string CarNo = dtCar.Rows[i]["DeviceNo2"].ToString().Substring(2, 2);
+
+                if (CarNo != carNo)
                 {
-                    if (CarNo != carNo)
-                    {
-                        //读取小车状态
-                        object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + CarNo));
+                    //读取小车状态
+                    object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + CarNo));
 
-                        int Layer = int.Parse(obj[3].ToString());
-                        int FromLayer = int.Parse(obj[6].ToString());
-                        int FromColumn = int.Parse(obj[5].ToString());
-                        int ToLayer = int.Parse(obj[9].ToString());
-                        int Column = int.Parse(obj[2].ToString());
-                        int ToColumn = int.Parse(obj[8].ToString());
+                    int Layer = int.Parse(obj[3].ToString());
+                    int FromLayer = int.Parse(obj[6].ToString());
+                    //int FromColumn = int.Parse(obj[5].ToString());
+                    int ToLayer = int.Parse(obj[9].ToString());
+                   // int Column = int.Parse(obj[2].ToString());
+                    //int ToColumn = int.Parse(obj[8].ToString());
 
-                        if (FromLayer == carLayer || ToLayer == carLayer || Layer == carLayer)
-                            isExist = true;
+                    if (FromLayer == carLayer || ToLayer == carLayer || Layer == carLayer)
+                        isExist = true;
 
-                        if (isExist)
-                            break;
-                    }
+                    if (isExist)
+                        break;
                 }
+
             }
             return isExist;
         }

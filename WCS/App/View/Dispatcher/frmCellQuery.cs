@@ -259,8 +259,7 @@ namespace App.View.Dispatcher
                 int quantity = ReturnColorFlag(cellRow["PalletBarCode"].ToString(), cellRow["IsActive"].ToString(), cellRow["IsLock"].ToString(), cellRow["ErrorFlag"].ToString());
 
                 int x = left + (column-1) * cellWidth;
-                if(Program.WarehouseCode=="S")
-                    x = left + (column - 2) * cellWidth;
+                
 
                 int y = top + row * cellHeight;
 
@@ -276,10 +275,7 @@ namespace App.View.Dispatcher
             {
                 if (j == 1 && cellRows.Length < Columns * Rows)
                     continue;
-                if(Program.WarehouseCode=="S")
-                    g.DrawString(Convert.ToString(j+1), new Font("微软雅黑", fontSize), Brushes.DarkCyan, left + (j - 1) * cellWidth + adjustWidth, top + cellHeight * (Rows + 1) + 3);
-                else
-                    g.DrawString(Convert.ToString(j), new Font("微软雅黑", fontSize), Brushes.DarkCyan, left + (j - 1) * cellWidth + adjustWidth, top + cellHeight * (Rows + 1) + 3);
+                g.DrawString(Convert.ToString(j), new Font("微软雅黑", fontSize), Brushes.DarkCyan, left + (j - 1) * cellWidth + adjustWidth, top + cellHeight * (Rows + 1) + 3);
             }
         }
         

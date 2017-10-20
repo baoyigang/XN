@@ -249,15 +249,18 @@ namespace App
                     string msg2 = string.Format(" {0}", DateTime.Now);
                     string msg3 = string.Format(" {0}", args.Message);
                     this.lbLog.BeginUpdate();
-                    ListViewItem item = new ListViewItem(new string[] { msg1, msg2, msg3 });
-                    
-                    if (msg1.Contains("[ERROR]"))
+                    if (args.LogLevel != LogLevel.DEBUG)
                     {
-                        //item.ForeColor = Color.Red;
-                        item.BackColor = Color.Red;
+                        ListViewItem item = new ListViewItem(new string[] { msg1, msg2, msg3 });
+
+                        if (msg1.Contains("[ERROR]"))
+                        {
+                            //item.ForeColor = Color.Red;
+                            item.BackColor = Color.Red;
+                        }
+                        lbLog.Items.Insert(0, item);
+                        this.lbLog.EndUpdate();
                     }
-                    lbLog.Items.Insert(0, item);
-                    this.lbLog.EndUpdate();
                     WriteLoggerFile(msg1 + msg2  + msg3);
                 }
             }
@@ -675,7 +678,7 @@ namespace App
         {
             if (this.dgvMain.CurrentCell != null)
             {
-                DataRowView drv =dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
+                DataRowView drv = dgvMain.SelectedRows[0].DataBoundItem as DataRowView;
                 DataRow dr = drv.Row;
                 string TaskType = dr["TaskType"].ToString();
                 string State = dr["State"].ToString();
@@ -693,7 +696,7 @@ namespace App
                 string toStation = dr["ToStation"].ToString();
                 string FromStationAdd = dr["FromAddress"].ToString();
                 string ToStationAdd = dr["ToAddress"].ToString();
-                
+
                 if (fromStation.Trim() == "" || toStation.Trim() == "")
                 {
                     Logger.Info(TaskNo + "目标位置或者起始位置错误,无法重新下达任务！");
@@ -733,7 +736,7 @@ namespace App
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
                         context.ProcessDispatcher.WriteToService(serviceName, "STB", 1);
 
-                        Logger.Info("任务:" + TaskNo +"条码为:"+ PalletBarcode + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                        Logger.Info("任务:" + TaskNo + "条码为:" + PalletBarcode + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
                     }
                     else
                     {
@@ -744,14 +747,14 @@ namespace App
                 else
                 {
                     //判断是否要用MJ-WCS重新下发的货位下发任务
-                    if (AlarmCode ==14)
+                    if (AlarmCode == 14)
                     {
                         toStation = NewCellCode;
                         ToStationAdd = NewAddress;
-                        
+
                         cellAddr[1] = 2;
                     }
-                    if (AlarmCode == 11 || AlarmCode ==13)
+                    if (AlarmCode == 11 || AlarmCode == 13)
                     {
                         fromStation = NewCellCode;
                         FromStationAdd = NewAddress;
@@ -765,9 +768,10 @@ namespace App
                         cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
                         cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
                         cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
-
                         if (TaskType == "11")
+                        {
                             cellAddr[9] = 10;
+                        }
                         else if (TaskType == "12")
                         {
                             cellAddr[7] = 0;
@@ -777,15 +781,32 @@ namespace App
                         else if (TaskType == "13")
                             cellAddr[9] = 9;
 
-                        cellAddr[10] = int.Parse(DeviceNo.Substring(2,2));
+                        string CellCode = dr["CellCode"].ToString();
+                        //判断是否需要避车
+                        //if (CellCode.Substring(6, 2) != NewCellCode.Substring(6, 2))
+                        //{
+                        //    int CurLayer = 0;
+                        //    int ToLayer = 0;
+                        //    if (TaskType == "11")
+                        //    {
+                        //        CurLayer = 0;
+                        //        ToLayer = 0;
+                        //    }
+                        //    else if (TaskType == "12")
+                        //    {
+                        //        CurLayer = 0;
+                        //        ToLayer = 0;
+                        //    }
+
+                        //}
+                        cellAddr[10] = int.Parse(DeviceNo.Substring(2, 2));
                         sbyte[] taskNo = new sbyte[30];
-                        //Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
-                        Util.ConvertStringChar.stringToBytes(PalletBarcode, 30).CopyTo(taskNo, 0);
+                        Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
+                        //Util.ConvertStringChar.stringToBytes(PalletBarcode, 30).CopyTo(taskNo, 0);
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
                         context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
                         context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished", 1);
-
-                        Logger.Info("任务:" + TaskNo +"条码为:"+ PalletBarcode + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
+                        Logger.Info("任务:" + TaskNo + "条码为:" + PalletBarcode + "已下发给设备" + DeviceNo + "起始地址:" + fromStation + ",目标地址:" + toStation);
                     }
                     else
                     {
@@ -796,6 +817,7 @@ namespace App
                 this.BindData();
             }
         }
+       
         
         private void ToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -32,6 +32,8 @@
       <!--任务标识-->
       <OPCItem ItemName="WriteFinished" ClientHandler="20" OPCItemName="DB540,INT100,1"  ItemType="WRITE"/>
       <OPCItem ItemName="OutLocation01" ClientHandler="21" OPCItemName="DB550,CHAR140,20" ItemType="WRITE"/>
+      <OPCItem ItemName="RequestBarCode" ClientHandler="22" OPCItemName="DB550,CHAR180,20"  ItemType="READ" IsActive="true"/>
+      <OPCItem ItemName="RequestFinished" ClientHandler="23" OPCItemName="DB550,INT200,1"  ItemType="WRITE"/>
     </OPCGroup>
   </OPCServer>
 </Config>

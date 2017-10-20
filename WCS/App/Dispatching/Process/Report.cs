@@ -21,15 +21,18 @@ namespace App.Dispatching.Process
             {
                 //上报任务开始
                 dt = bll.FillDataTable("Wcs.SelectTaskWcsStart", new DataParameter("{0}", TaskNo));
-                string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
-                Logger.Info("任务" + TaskNo + "开始上报");
-                string message = Program.send("transWCSExecuteTask", Json);
-                rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
+                if (dt.Rows.Count > 0)
+                {
+                    string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                    Logger.Info("任务" + TaskNo + "开始上报");
+                    string message = Program.send("transWCSExecuteTask", Json);
+                    rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
 
-                param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
+                    param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
 
-                Logger.Info("任务" + TaskNo + "开始上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Info("任务" + TaskNo + "开始上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                }
             }
             else if (Flag == 2)
             {
@@ -38,32 +41,38 @@ namespace App.Dispatching.Process
                     dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm2", new DataParameter("{0}", TaskNo));
                 else
                     dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm", new DataParameter("{0}", TaskNo));
-                string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
-                Logger.Info("任务" + TaskNo + "报警上报");
-                string message = Program.send("transWCSTaskStatus", Json);
-                rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
-                //更新任务,备用字段field1是重新分配的货位
-                param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@field1", rtnMessage.field1) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskNewCellCode", param);
-                //更新返回代码
-                param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
+                if (dt.Rows.Count > 0)
+                {
+                    string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                    Logger.Info("任务" + TaskNo + "报警上报");
+                    string message = Program.send("transWCSTaskStatus", Json);
+                    rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
+                    //更新任务,备用字段field1是重新分配的货位
+                    param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@field1", rtnMessage.field1) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskNewCellCode", param);
+                    //更新返回代码
+                    param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
 
-                Logger.Info("任务" + TaskNo + "报警上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Info("任务" + TaskNo + "报警上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                }
             }
             else if (Flag == 3)
             {
                 //上报任务完成
                 dt = bll.FillDataTable("Wcs.SelectTaskWcsFinish", new DataParameter("{0}", TaskNo));
-                string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
-                Logger.Info("任务:" + TaskNo + "完成上报");
-                string message = Program.send("transWCSTaskStatus", Json);
-                rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
+                if (dt.Rows.Count > 0)
+                {
+                    string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                    Logger.Info("任务:" + TaskNo + "完成上报");
+                    string message = Program.send("transWCSTaskStatus", Json);
+                    rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
 
-                param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
+                    param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
 
-                Logger.Info("任务:" + TaskNo + "完成上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Info("任务:" + TaskNo + "完成上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                }
             }
             else if (Flag == 4)
             {
@@ -72,32 +81,38 @@ namespace App.Dispatching.Process
                     dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm2", new DataParameter("{0}", TaskNo));
                 else
                     dt = bll.FillDataTable("Wcs.SelectTaskWcsAlarm", new DataParameter("{0}", TaskNo));
-                string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
-                Logger.Info("任务" + TaskNo + "报警上报");
-                string message = Program.send("transWCSTaskStatus", Json);
-                rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
-                //更新任务,备用字段field1是重新分配的货位
-                param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@field1", rtnMessage.field1) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskNewCellCode2", param);
-                //更新返回代码
-                param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
+                if (dt.Rows.Count > 0)
+                {
+                    string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                    Logger.Info("任务" + TaskNo + "报警上报");
+                    string message = Program.send("transWCSTaskStatus", Json);
+                    rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
+                    //更新任务,备用字段field1是重新分配的货位
+                    param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@field1", rtnMessage.field1) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskNewCellCode2", param);
+                    //更新返回代码
+                    param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
 
-                Logger.Info("任务" + TaskNo + "报警上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Info("任务" + TaskNo + "报警上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                }
             }
             else if (Flag == 5)
             {
                 //任务终止
                 dt = bll.FillDataTable("Wcs.SelectTaskWcsTerminated", new DataParameter("{0}", TaskNo));
-                string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
-                Logger.Info("任务" + TaskNo + "终止上报");
-                string message = Program.send("transWCSTaskStatus", Json);
-                rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
-                //更新返回代码
-                param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
-                bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
+                if (dt.Rows.Count > 0)
+                {
+                    string Json = Util.JsonHelper.Dtb2Json(dt, "yyyy-MM-dd HH:mm:ss.fff");
+                    Logger.Info("任务" + TaskNo + "终止上报");
+                    string message = Program.send("transWCSTaskStatus", Json);
+                    rtnMessage = JsonHelper.JSONToObject<RtnMessage>(message);
+                    //更新返回代码
+                    param = new DataParameter[] { new DataParameter("@Flag", Flag), new DataParameter("@TaskNo", TaskNo), new DataParameter("@ReturnCode", rtnMessage.returnCode) };
+                    bll.ExecNonQueryTran("WCS.UpdateTaskReturnCode", param);
 
-                Logger.Info("任务" + TaskNo + "终止上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Info("任务" + TaskNo + "终止上报，收到反馈:" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                }
             }
         }
         public void SendDeviceStatus(Context context, string ServiceName, string AlarmDesc)
