@@ -41,11 +41,7 @@ namespace App.View.Task
                 {
                     if (DialogResult.Yes == MessageBox.Show("您确定要取消此任务吗？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                     {
-                        string TaskNo = this.dgvMain.SelectedRows[0].Cells["colTaskNo"].Value.ToString();
-                        //bll.ExecNonQuery("WCS.UpdateTaskStateByTaskNo", new DataParameter[] { new DataParameter("@State", 9), new DataParameter("@TaskNo", TaskNo) });
-
-                        DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                        bll.ExecNonQueryTran("WCS.Sp_TaskCancelProcess", param);
+                        UpdatedgvMainState("9");
                         this.BindData();
                     }
                 }

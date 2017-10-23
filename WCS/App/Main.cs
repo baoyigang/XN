@@ -18,6 +18,7 @@ namespace App
         public bool IsActiveTab = false;
         private Context context = null;
         private System.Timers.Timer tmWorkTimer = new System.Timers.Timer();
+        private System.Timers.Timer tmUpErpWorkTimer = new System.Timers.Timer();
         BLL.BLLBase bll = new BLL.BLLBase();
 
         public Main()
@@ -59,6 +60,10 @@ namespace App
                 tmWorkTimer.Interval = 3000;
                 tmWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmWorker);
                 tmWorkTimer.Start();
+
+                tmUpErpWorkTimer.Interval = 600000;
+                tmUpErpWorkTimer.Elapsed += new System.Timers.ElapsedEventHandler(tmUpErpWorker);
+                tmUpErpWorkTimer.Start();
 
                 PermissionControl();
             }
@@ -218,6 +223,37 @@ namespace App
             else
                 this.ToolStripMenuItem_ChangPwd.Visible = true;
         }
+        private void tmUpErpWorker(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            lock (this)
+            {
+                try
+                {
+                    tmUpErpWorkTimer.Stop();
+                    App.Dispatching.Process.Report report = new Dispatching.Process.Report();
+                    DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.State in (7,9) and WCS_TASK.FinishReturnCode!='000' and WCS_TASK.WarehouseCode='{0}'", Program.WarehouseCode)) };
+                    DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        string TaskNo = dt.Rows[0]["TaskNo"].ToString();
+                        int Flag = 3;
+                        if (dt.Rows[0]["State"].ToString() == "9")
+                            Flag = 5;
+                        report.Send2MJWcs(context, Flag, TaskNo);
+                        Logger.Info("WCS重新上传任务完成标志，任务号:" + TaskNo);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.Error(ex.Message);
+                }
+                finally
+                {
+                    tmUpErpWorkTimer.Start();
+                }
+            }
+        }      
+
         private void tmWorker(object sender, System.Timers.ElapsedEventArgs e)
         {
             try
@@ -234,7 +270,10 @@ namespace App
             {
                 tmWorkTimer.Start();
             }
-        }      
+        }
+
+   
+
         void Logger_OnLog(MCP.LogEventArgs args)
         {
             if (InvokeRequired)
@@ -248,9 +287,9 @@ namespace App
                     string msg1 = string.Format("[{0}]", args.LogLevel);
                     string msg2 = string.Format(" {0}", DateTime.Now);
                     string msg3 = string.Format(" {0}", args.Message);
-                    this.lbLog.BeginUpdate();
                     if (args.LogLevel != LogLevel.DEBUG)
                     {
+                        this.lbLog.BeginUpdate();
                         ListViewItem item = new ListViewItem(new string[] { msg1, msg2, msg3 });
 
                         if (msg1.Contains("[ERROR]"))

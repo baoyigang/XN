@@ -30,6 +30,10 @@ namespace App.Dispatching.Process
                 if (count > 0)
                     WriteFinished = 1;
                 WriteToService(stateItem.Name, "RequestFinished", WriteFinished);
+                if (WriteFinished == 2)
+                {
+                    Logger.Error("条码：" + PalletBarcode + " 分配错误巷道" + AisleNo);
+                }
                 return;
             }
             else

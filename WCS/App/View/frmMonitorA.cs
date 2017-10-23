@@ -122,10 +122,10 @@ namespace App.View
                     string sender1 = "admin";
 
                     string Json = "[{\"id\":\"" + id + "\",\"deviceNo\":\"" + deviceNo + "\",\"mode\":\"" + mode + "\",\"status\":\"" + status + "\",\"taskNo\":\"" + taskNo + "\",\"fork\":\"" + fork + "\",\"load\":\"" + load + "\",\"aisleNo\":\"" + aisleNo + "\",\"column\":\"" + column + "\",\"layer\":\"" + layer + "\",\"alarmCode\":\"" + alarmCode + "\",\"sendDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"sender\":\"" + sender1 + "\",\"field1\":\"\",\"field2\":\"" + alarmDesc + "\",\"field3\":\"\"" + "}]";
-                    Logger.Info("上报设备编号[" + deviceNo + "]的状态");
+                    Logger.Debug("上报设备编号[" + deviceNo + "]的状态");
                     string message = Program.send("transWCSDevice", Json);
                     App.Dispatching.Process.RtnMessage rtnMessage = JsonHelper.JSONToObject<App.Dispatching.Process.RtnMessage>(message);
-                    Logger.Info("上报设备编号[" + deviceNo + "]的状态,收到反馈：" + rtnMessage.returnCode + ":" + rtnMessage.message);
+                    Logger.Debug("上报设备编号[" + deviceNo + "]的状态,收到反馈：" + rtnMessage.returnCode + ":" + rtnMessage.message);
                 }
             }
             catch (Exception ex)
