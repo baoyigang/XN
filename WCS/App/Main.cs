@@ -235,9 +235,9 @@ namespace App
                     DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
                     for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        string TaskNo = dt.Rows[0]["TaskNo"].ToString();
+                        string TaskNo = dt.Rows[i]["TaskNo"].ToString();
                         int Flag = 3;
-                        if (dt.Rows[0]["State"].ToString() == "9")
+                        if (dt.Rows[i]["State"].ToString() == "9")
                             Flag = 5;
                         report.Send2MJWcs(context, Flag, TaskNo);
                         Logger.Info("WCS重新上传任务完成标志，任务号:" + TaskNo);
