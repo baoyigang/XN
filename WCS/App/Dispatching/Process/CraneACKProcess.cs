@@ -22,11 +22,11 @@ namespace App.Dispatching.Process
                             return;
                         string ack = obj.ToString();
 
-                        Logger.Info(stateItem.Name + " Receive ACK:" + ack);
+                        Logger.Debug(stateItem.Name + " Receive ACK:" + ack);
                         if (ack.Equals("True") || ack.Equals("1"))
                         {
                             WriteToService(stateItem.Name, "STB", 0);
-                            Logger.Info(stateItem.Name + " Receive ACK 1");
+                            Logger.Debug(stateItem.Name + " Receive ACK 1");
                         }
                         break;
                     default:
