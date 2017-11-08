@@ -64,7 +64,7 @@ namespace App.Dispatching.Process
                        
                         if (bll.GetRowCount("WCS_Task", string.Format("PalletBarcode='{0}' and AisleNo='{1}' and State in('0','1','2')", PalletBarcode, AisleNo)) > 0)
                         {
-                            DataParameter[] param = new DataParameter[] { new DataParameter("@PalletBarcode", PalletBarcode), new DataParameter("@State", state) };
+                            DataParameter[] param = new DataParameter[] { new DataParameter("@PalletBarcode", PalletBarcode), new DataParameter("@AisleNo", AisleNo), new DataParameter("@State", state) };
                             bll.ExecNonQueryTran("WCS.UpdateTaskStateByBarcode", param);
                         }
                         else

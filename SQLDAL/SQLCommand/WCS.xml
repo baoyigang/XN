@@ -437,8 +437,8 @@
   </Command>
   <Command ID="UpdateTaskStateByBarcode">
     <CommandString>
-      update WCS_Task set State=@State,RequestDate=(case when @State=2 and RequestDate is null then getdate() else null end) 
-      where PalletBarcode=@PalletBarcode and State in('0','1','2') and TaskType='11'
+      update WCS_Task set State=@State,RequestDate=(case when @State=2 and RequestDate is null then getdate() else null end)
+      where PalletBarcode=@PalletBarcode and AisleNo=@AisleNo and State in('0','1','2') and TaskType='11'
     </CommandString>
   </Command>
   <Command ID="UpdateTaskNewCellCode">
