@@ -577,7 +577,7 @@ namespace App.Dispatching.Process
                 report.Send2MJWcs(base.Context, 1, TaskNo);
                 bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
             }
-            Logger.Info("任务:" + dr["TaskNo"].ToString() + "已下发给" + carNo + "穿梭车;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
+            Logger.Info("任务:" + dr["TaskNo"].ToString() + "条码:" + dr["PalletBarcode"].ToString() + " 已下发给" + DeviceNo + "穿梭车;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
         }        
     }
 }
