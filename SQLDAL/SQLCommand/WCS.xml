@@ -350,7 +350,7 @@
       where TaskNo='{0}'
     </CommandString>
   </Command>
-  <Command ID="SelectTaskWcsAlarm">
+  <Command ID="SelectTaskWcsAlarm3">
     <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status,T.AlarmCode  errorCode,
       getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
@@ -359,7 +359,7 @@
       where TaskNo='{0}'
     </CommandString>
   </Command>
-  <Command ID="SelectTaskWcsAlarm2">
+  <Command ID="SelectTaskWcsAlarm4">
     <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status, T.AlarmCode  errorCode,
       getdate() sendDate,'ROBO_WCS' sender,T.deviceNo,tasker,finishDate,'' field1 ,'' field2 ,'' field3
@@ -368,7 +368,7 @@
       where TaskNo='{0}'
     </CommandString>
   </Command>
-  <Command ID="SelectTaskWcsAlarm3">
+  <Command ID="SelectTaskWcsAlarm">
     <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status,
       (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
@@ -388,7 +388,7 @@
       where TaskNo='{0}'
     </CommandString>
   </Command>
-  <Command ID="SelectTaskWcsAlarm4">
+  <Command ID="SelectTaskWcsAlarm2">
     <CommandString>
       select NEWID() id,taskNo,palletBarcode,'ERROR' status,
       (case when D.DeviceType='01' and T.alarmCode='503' and T.TaskType='11' then '02'
