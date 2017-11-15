@@ -330,7 +330,6 @@ namespace App.Dispatching.Process
                 if (WriteToService(serviceName, "STB", 1))
                 {
                     bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
-
                     report.Send2MJWcs(base.Context, 1, TaskNo);
                 }
                 Logger.Info("任务:" + TaskNo + "条码为:" + PalletBarcode + "已下发给" + DeviceNo + "设备;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);

@@ -8,7 +8,7 @@ using System.Timers;
 namespace App.Dispatching.Process
 {
     public class ElevatorProcess : AbstractProcess
-    {        
+    {
         // 记录堆垛机当前状态及任务相关信息
         BLL.BLLBase bll = new BLL.BLLBase();
 
@@ -22,7 +22,7 @@ namespace App.Dispatching.Process
         {
             try
             {
-                dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "Flag in(2,3)") });                
+                dtDeviceAlarm = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "Flag in(2,3)") });
 
                 tmWorkTimer.Interval = 1000;
                 tmWorkTimer.Elapsed += new ElapsedEventHandler(tmWorker);
@@ -201,7 +201,7 @@ namespace App.Dispatching.Process
             }
         }
         //获取小车让车可去的空闲的层
-        private int GetNoTaskLayer(string serviceName,DataTable dtCar, string carNo, int carLayer)
+        private int GetNoTaskLayer(string serviceName, DataTable dtCar, string carNo, int carLayer)
         {
             int NoTaskLayer = carLayer;
             if (!IsCurrentLayerOK(serviceName, dtCar, carNo, carLayer))
@@ -213,7 +213,7 @@ namespace App.Dispatching.Process
                 if (IsCurrentLayerOK(serviceName, dtCar, carNo, k))
                     continue;
                 else
-                    break;                
+                    break;
             }
             return NoTaskLayer;
         }
@@ -234,7 +234,7 @@ namespace App.Dispatching.Process
                     int FromLayer = int.Parse(obj[6].ToString());
                     //int FromColumn = int.Parse(obj[5].ToString());
                     int ToLayer = int.Parse(obj[9].ToString());
-                   // int Column = int.Parse(obj[2].ToString());
+                    // int Column = int.Parse(obj[2].ToString());
                     //int ToColumn = int.Parse(obj[8].ToString());
 
                     if (FromLayer == carLayer || ToLayer == carLayer || Layer == carLayer)
@@ -254,8 +254,8 @@ namespace App.Dispatching.Process
             string filter = string.Format("TaskType in ('11','16','14') and State='2'");
             DataRow[] drTasks = dtTask.Select(filter, "TaskLevel DESC,RequestDate,StartDate");
             if (drTasks.Length > 0)
-                ToLayer = int.Parse(drTasks[0]["ToLayer"].ToString());                
-            
+                ToLayer = int.Parse(drTasks[0]["ToLayer"].ToString());
+
             //根据入库任务的目标层，优先给目标层的小车下任务
             for (int i = 0; i < dtCar.Rows.Count; i++)
             {
@@ -273,7 +273,7 @@ namespace App.Dispatching.Process
                     {
                         IsSendTask = SendTask(dtCar, carNo, drTasks, obj);
                         break;
-                    }                    
+                    }
                 }
             }
             if (!IsSendTask)
@@ -294,7 +294,7 @@ namespace App.Dispatching.Process
                         IsSendTask = SendTask(dtCar, carNo, drTasks, obj);
                         break;
                     }
-                    
+
                 }
             }
             return IsSendTask;
@@ -336,7 +336,7 @@ namespace App.Dispatching.Process
                 filter = string.Format("TaskType in ('12','13','14',15) and State='0'");
                 drTasks = dtTask.Select(filter, "TaskLevel DESC,RequestDate,StartDate");
 
-                IsSendTask = SendTask(dtCar, carNo, drTasks, obj);                
+                IsSendTask = SendTask(dtCar, carNo, drTasks, obj);
             }
             return IsSendTask;
         }
@@ -348,7 +348,7 @@ namespace App.Dispatching.Process
             {
                 DataRow drTask = drTasks[i];
                 string TaskType = drTask["TaskType"].ToString();
-                
+
                 //if (TaskType == "12")
                 //{
                 //    //判断出库站台是否有货                    
@@ -390,7 +390,7 @@ namespace App.Dispatching.Process
             bool carOK = true;
             for (int i = 0; i < dtCar.Rows.Count; i++)
             {
-                string DeviceNo = dtCar.Rows[i]["DeviceNo2"].ToString().Substring(2,2);
+                string DeviceNo = dtCar.Rows[i]["DeviceNo2"].ToString().Substring(2, 2);
                 string serviceName = dtCar.Rows[i]["ServiceName"].ToString();
                 if (DeviceNo != carNo)
                 {
@@ -424,9 +424,9 @@ namespace App.Dispatching.Process
                     if (carTaskType == "11")
                     {
                         carFromLayer = carLayer;
-                        
+
                         //2其他车任务起始层也在这层，但车不在这层
-                        if (carToLayer == FromLayer || carToLayer == ToLayer || carToLayer==Layer)
+                        if (carToLayer == FromLayer || carToLayer == ToLayer || carToLayer == Layer)
                         {
                             carOK = false;
                             break;
@@ -441,12 +441,12 @@ namespace App.Dispatching.Process
                         {
                             carOK = false;
                             break;
-                        }                        
+                        }
                     }
                     if (carTaskType == "13")
                     {
                         //如果同层移库,且车也在同层
-                        if (carFromLayer != carToLayer && carFromLayer==carLayer)
+                        if (carFromLayer != carToLayer && carFromLayer == carLayer)
                         {
                             //目标层
                             if (carToLayer == FromLayer || carToLayer == ToLayer || carToLayer == Layer)
@@ -462,16 +462,16 @@ namespace App.Dispatching.Process
                             }
                         }
                     }
-                    
+
                 }
             }
             return carOK;
         }
-       
+
         private DataTable GetTask(string AisleNo)
         {
             DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("(WCS_Task.State in('0','1','2') and WCS_Task.WarehouseCode = '{0}' and WCS_Task.AisleNo='{1}') ", Program.WarehouseCode, AisleNo)) };
-            DataTable dt = bll.FillDataTable("WCS.SelectTask", param);            
+            DataTable dt = bll.FillDataTable("WCS.SelectTask", param);
             return dt;
         }
 
@@ -480,7 +480,7 @@ namespace App.Dispatching.Process
         /// </summary>
         /// <param name="piCrnNo"></param>
         /// <returns></returns>
-        private bool Check_Car_Status_IsOk(string carNo,string serviceName)
+        private bool Check_Car_Status_IsOk(string carNo, string serviceName)
         {
             try
             {
@@ -504,80 +504,83 @@ namespace App.Dispatching.Process
         }
         private void Send2PLC(string serviceName, DataRow dr, string carNo)
         {
-            string TaskNo = dr["TaskNo"].ToString();
-            string TaskType = dr["TaskType"].ToString();            
-            string NextState = "3";
-
-            string FromStationAdd = dr["FromAddress"].ToString();
-            string ToStationAdd = dr["ToAddress"].ToString();
-
-            object[] obj = MCP.ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
-
-            int[] cellAddr = new int[12];
-            if (TaskType == "11")
+            lock (this)
             {
-                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
-                cellAddr[4] = 0;
-                cellAddr[5] = int.Parse(obj[3].ToString()); ;
+                string TaskNo = dr["TaskNo"].ToString();
+                string TaskType = dr["TaskType"].ToString();
+                string NextState = "3";
 
-                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
-                cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
-                cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
-                cellAddr[9] = 10;
-                NextState = "3";
+                string FromStationAdd = dr["FromAddress"].ToString();
+                string ToStationAdd = dr["ToAddress"].ToString();
+
+                object[] obj = MCP.ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
+
+                int[] cellAddr = new int[12];
+                if (TaskType == "11")
+                {
+                    cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                    cellAddr[4] = 0;
+                    cellAddr[5] = int.Parse(obj[3].ToString()); ;
+
+                    cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                    cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                    cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                    cellAddr[9] = 10;
+                    NextState = "3";
+                }
+                else if (TaskType == "12")
+                {
+                    cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                    cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                    cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
+
+                    cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                    cellAddr[7] = 0;
+                    cellAddr[8] = cellAddr[5];
+                    cellAddr[9] = 11;
+                    NextState = "4";
+                }
+                else if (TaskType == "13")
+                {
+                    cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                    cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                    cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
+
+                    cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                    cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                    cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                    cellAddr[9] = 9;
+                    NextState = "4";
+                }
+                else if (TaskType == "10")
+                {
+                    cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
+                    cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
+                    cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
+
+                    cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
+                    cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
+                    cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
+                    cellAddr[9] = 1;
+                    NextState = "4";
+                }
+
+
+                cellAddr[10] = int.Parse(carNo);
+
+                sbyte[] taskNo = new sbyte[30];
+                Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
+                Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
+
+                string DeviceNo = serviceName.Substring(5, 2) + carNo;
+                if (WriteToService(serviceName, "WriteFinished", 1))
+                {
+                    bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
+                    report.Send2MJWcs(base.Context, 1, TaskNo);
+                }
+                Logger.Info("任务:" + dr["TaskNo"].ToString() + "条码:" + dr["PalletBarcode"].ToString() + " 已下发给" + DeviceNo + "穿梭车;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
             }
-            else if (TaskType == "12")
-            {
-                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
-                cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
-                cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
-
-                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
-                cellAddr[7] = 0;
-                cellAddr[8] = cellAddr[5];
-                cellAddr[9] = 11;
-                NextState = "4";
-            }
-            else if (TaskType == "13")
-            {
-                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
-                cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
-                cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
-
-                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
-                cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
-                cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
-                cellAddr[9] = 9;
-                NextState = "4";
-            }
-            else if (TaskType == "10")
-            {
-                cellAddr[3] = byte.Parse(FromStationAdd.Substring(1, 3));
-                cellAddr[4] = byte.Parse(FromStationAdd.Substring(4, 3));
-                cellAddr[5] = byte.Parse(FromStationAdd.Substring(7, 3));
-
-                cellAddr[6] = byte.Parse(ToStationAdd.Substring(1, 3));
-                cellAddr[7] = byte.Parse(ToStationAdd.Substring(4, 3));
-                cellAddr[8] = byte.Parse(ToStationAdd.Substring(7, 3));
-                cellAddr[9] = 1;
-                NextState = "4";
-            }   
-
-            
-            cellAddr[10] = int.Parse(carNo);
-
-            sbyte[] taskNo = new sbyte[30];
-            Util.ConvertStringChar.stringToBytes(TaskNo, 30).CopyTo(taskNo, 0);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskNo", taskNo);
-            Context.ProcessDispatcher.WriteToService(serviceName, "TaskAddress", cellAddr);
-
-            string DeviceNo = serviceName.Substring(5, 2) + carNo;
-            if (WriteToService(serviceName, "WriteFinished", 1))
-            {
-                report.Send2MJWcs(base.Context, 1, TaskNo);
-                bll.ExecNonQuery("WCS.UpdateTaskTimeByTaskNo", new DataParameter[] { new DataParameter("@State", NextState), new DataParameter("@DeviceNo", DeviceNo), new DataParameter("@TaskNo", TaskNo) });
-            }
-            Logger.Info("任务:" + dr["TaskNo"].ToString() + "条码:" + dr["PalletBarcode"].ToString() + " 已下发给" + DeviceNo + "穿梭车;起始地址:" + FromStationAdd + ",目标地址:" + ToStationAdd);
-        }        
+        }
     }
 }
