@@ -21,59 +21,61 @@ namespace ServiceHost
     {        
         public TaskRtn transWCSTask(List<Task> list)
         {
-            string Json = List2Json(list);
-            Log.WriteToLog("1", "transSRMTask--Rec", Json);
-            string rtnMessage = "";
-            string id = "";
-            TaskRtn taskRtn = new TaskRtn();
-            try
+            lock (this)
             {
-                DataTable dt = Util.JsonHelper.Json2Dtb(Json);
-                if (dt.Rows.Count > 0)
-                    id = dt.Rows[0]["id"].ToString();
-                else
-                    id = "";
-
-                BLL.BLLBase bll = new BLL.BLLBase();
-
-                bll.ExecNonQuery("WCS.DeleteWcsTemp");
-                bll.BatchInsertTable(dt, "WCS_TaskTemp");
-                DataTable dtTask = bll.FillDataTable("WCS.Sp_ImportWmsTask");
-
-                if (dtTask.Rows.Count > 0)
+                string Json = List2Json(list);
+                Log.WriteToLog("1", "transSRMTask--Rec", Json);
+                string rtnMessage = "";
+                string id = "";
+                TaskRtn taskRtn = new TaskRtn();
+                try
                 {
-                    taskRtn.id = id;
-                    taskRtn.returnCode = "000"; 
-                    taskRtn.message = "成功";
-                    taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                    taskRtn.field1 = "null";
+                    DataTable dt = Util.JsonHelper.Json2Dtb(Json);
+                    if (dt.Rows.Count > 0)
+                        id = dt.Rows[0]["id"].ToString();
+                    else
+                        id = "";
 
-                    rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
+                    BLL.BLLBase bll = new BLL.BLLBase();
+
+                    bll.ExecNonQuery("WCS.DeleteWcsTemp");
+                    bll.BatchInsertTable(dt, "WCS_TaskTemp");
+                    DataTable dtTask = bll.FillDataTable("WCS.Sp_ImportWmsTask");
+
+                    if (dtTask.Rows.Count > 0)
+                    {
+                        taskRtn.id = id;
+                        taskRtn.returnCode = "000";
+                        taskRtn.message = "成功";
+                        taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                        taskRtn.field1 = "null";
+
+                        rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"000\"" + ",\"message\":\"成功\",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
+                    }
+                    else
+                    {
+                        taskRtn.id = id;
+                        taskRtn.returnCode = "001";
+                        taskRtn.message = "失败";
+                        taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                        taskRtn.field1 = "null";
+                        rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + taskRtn.message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
+
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
                     taskRtn.id = id;
                     taskRtn.returnCode = "001";
-                    taskRtn.message = "失败";
-                    taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+                    taskRtn.message = ex.Message;
+                    taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");  
                     taskRtn.field1 = "null";
-                    rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + taskRtn.message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"null\"}";
-
+                    rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}";
                 }
+                Log.WriteToLog("1", "transSRMTask-Rtn", rtnMessage);
+                return taskRtn;
+                //return rtnMessage;
             }
-            catch (Exception ex)
-            {
-                taskRtn.id = id;
-                taskRtn.returnCode = "001";
-                taskRtn.message = ex.Message;
-                taskRtn.finishDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
-                taskRtn.field1 = "null";
-                rtnMessage = "{\"id\":\"" + id + "\",\"returnCode\":\"001\"" + ",\"message\":\"" + ex.Message + "\"" + ",\"finishDate\":\"" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "\",\"field1\":\"" + ex.Message + "\"}";
-            }
-            Log.WriteToLog("1", "transSRMTask-Rtn", rtnMessage);
-            return taskRtn;
-            //return rtnMessage;
-            
         }
 
         //总控WCS入库巷道请求

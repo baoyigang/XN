@@ -195,6 +195,10 @@ namespace App.Dispatching.Process
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Logger.Error("小车下发任务过程中出错:" + ex);   
+            }
             finally
             {
                 tmWorkTimer.Start();
