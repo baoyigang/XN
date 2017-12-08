@@ -36,5 +36,11 @@ namespace App.Dispatching
             }
             return result;
         }
+
+        public Message Parse(byte[] msg)
+        {
+            Message result = null;
+            return result;
+        }
     }
 }

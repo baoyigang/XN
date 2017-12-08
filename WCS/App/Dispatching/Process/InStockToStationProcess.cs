@@ -36,7 +36,7 @@ namespace App.Dispatching.Process
 
                 BLL.BLLBase bll = new BLL.BLLBase();
 
-                DataParameter[] param = new DataParameter[] { new DataParameter("@PalletBarcode", PalletBarcode), new DataParameter("@State", state) };
+                DataParameter[] param = new DataParameter[] { new DataParameter("@PalletBarcode", PalletBarcode), new DataParameter("@AisleNo", stateItem.Name.Substring(5, 2)), new DataParameter("@State", state) };
                 bll.ExecNonQueryTran("WCS.UpdateTaskStateByBarcode", param);
 
                 Logger.Info("托盘/箱号：" + PalletBarcode + "到达入库站台：" + StationNo);

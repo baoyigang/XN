@@ -30,7 +30,7 @@ namespace App.Dispatching.Process
         protected override void StateChanged(StateItem stateItem, IProcessDispatcher dispatcher)
         {
             try
-            {                
+            {
                 switch (stateItem.ItemName)
                 {
                     case "AlarmCode":
@@ -53,23 +53,25 @@ namespace App.Dispatching.Process
                             string PalletBarcode = Util.ConvertStringChar.BytesToString(ObjectUtil.GetObjects(WriteToService(stateItem.Name, "ReadTaskNo")));
                             DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.PalletBarcode='{0}'  and WCS_TASK.State!=0 and WCS_TASK.State<7", PalletBarcode)) };
                             DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
-                            string TaskNo = dt.Rows[0]["TaskNo"].ToString();
-                            if (TaskNo.Length > 0)
+                            if (dt.Rows.Count > 0)
                             {
-                                DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@AlarmCode", obj), new DataParameter("@AlarmDesc", AlarmDesc) };
-                                bll.ExecNonQueryTran("WCS.UpdateTaskDeviceAlarm", param);
-                                
-                                report.Send2MJWcs(base.Context, 2, TaskNo);                                
-                            }
+                                string TaskNo = dt.Rows[0]["TaskNo"].ToString();
+                                if (TaskNo.Length > 0)
+                                {
+                                    DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo), new DataParameter("@AlarmCode", obj), new DataParameter("@AlarmDesc", AlarmDesc) };
+                                    bll.ExecNonQueryTran("WCS.UpdateTaskDeviceAlarm", param);
 
+                                    report.Send2MJWcs(base.Context, 2, TaskNo);
+                                }
+                            }
                             Logger.Error("设备编号" + DeviceNo + "发生报警，代号：" + obj.ToString() + ";描述：" + AlarmDesc);
                         }
-
                         DataParameter[] paramb = new DataParameter[] { new DataParameter("@AlarmCode", obj), new DataParameter("@DeviceNo", DeviceNo) };
                         bll.ExecNonQueryTran("WCS.UpdateDeviceAlarm", paramb);
                         //上报设备状态
-                        report.SendDeviceStatus(base.Context,stateItem.Name, AlarmDesc);                        
-                        break;                    
+                        report.SendDeviceStatus(base.Context, stateItem.Name, AlarmDesc);
+
+                        break;
                     default:
                         break;
                 }
