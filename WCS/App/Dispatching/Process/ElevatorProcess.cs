@@ -12,11 +12,11 @@ namespace App.Dispatching.Process
         // 记录堆垛机当前状态及任务相关信息
         BLL.BLLBase bll = new BLL.BLLBase();
 
-        private Timer tmWorkTimer = new Timer();
+        private Timer tmWorkTimer;
         //private string WarehouseCode = "";
         private bool blRun = false;
         private DataTable dtDeviceAlarm;
-        Report report = new Report();
+        Report report;
 
         public override void Initialize(Context context)
         {
@@ -105,103 +105,106 @@ namespace App.Dispatching.Process
         /// <param name="e"></param>
         private void tmWorker(object sender, ElapsedEventArgs e)
         {
-            try
+            lock (this)
             {
-                if (!blRun)
+                try
                 {
-                    tmWorkTimer.Stop();
-                    return;
-                }
-                tmWorkTimer.Stop();
-
-                DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("S1.WarehouseCode='{0}'", Program.WarehouseCode)) });
-                //dtAisle.Rows.Count
-                for (int i = 0; i < dtAisle.Rows.Count; i++)
-                {
-                    string serviceName = dtAisle.Rows[i]["ServiceName2"].ToString();
-                    //读取标识位，如果为0才可继续
-                    object objFlag = ObjectUtil.GetObject(WriteToService(serviceName, "WriteFinished"));
-                    if (int.Parse(objFlag.ToString()) == 1)
-                        continue;
-                    string AisleNo = dtAisle.Rows[i]["AisleNo"].ToString();
-                    string filter = string.Format("CMD_AisleDevice.WarehouseCode='{0}' and AisleNo='{1}'", Program.WarehouseCode, AisleNo);
-                    DataTable dtTask = GetTask(AisleNo);
-                    DataTable dtCar = bll.FillDataTable("CMD.SelectAisleCar", new DataParameter[] { new DataParameter("{0}", filter) });
-
-                    bool IsSent = false;
-                    DataRow[] drTasks = dtTask.Select("TaskType='11' and State in('1','2')");
-                    //object task = dtTask.Compute("sum(1)", "TaskType='11' and State in('1','2')");
-                    //int taskCount = int.Parse(task.ToString());
-                    if (drTasks.Length >= 2)
+                    if (!blRun)
                     {
-                        //先找入库任务
-                        IsSent = FindInTask(dtCar, dtTask);
-                        if (IsSent)
-                            continue;
+                        tmWorkTimer.Stop();
+                        return;
                     }
+                    tmWorkTimer.Stop();
 
-                    //对于入库任务来说，因为一个巷道同时只有一个任务，所以应该优先以任务目标层找对应层空闲的小车
-
-                    for (int j = 0; j < dtCar.Rows.Count; j++)
+                    DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("S1.WarehouseCode='{0}'", Program.WarehouseCode)) });
+                    //dtAisle.Rows.Count
+                    for (int i = 0; i < dtAisle.Rows.Count; i++)
                     {
-                        //读取小车状态
-                        string carNo = dtCar.Rows[j]["DeviceNo2"].ToString().Substring(2, 2);
-                        object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
-                        int Layer = int.Parse(obj[3].ToString());
-                        int Column = int.Parse(obj[2].ToString());
+                        string serviceName = dtAisle.Rows[i]["ServiceName2"].ToString();
+                        //读取标识位，如果为0才可继续
+                        object objFlag = ObjectUtil.GetObject(WriteToService(serviceName, "WriteFinished"));
+                        if (int.Parse(objFlag.ToString()) == 1)
+                            continue;
+                        string AisleNo = dtAisle.Rows[i]["AisleNo"].ToString();
+                        string filter = string.Format("CMD_AisleDevice.WarehouseCode='{0}' and AisleNo='{1}'", Program.WarehouseCode, AisleNo);
+                        DataTable dtTask = GetTask(AisleNo);
+                        DataTable dtCar = bll.FillDataTable("CMD.SelectAisleCar", new DataParameter[] { new DataParameter("{0}", filter) });
 
-                        //如果小车空闲
-                        //先找小车当前层出库任务，判断入库任务是否已经超过2个，如果超过先入，再找其他出库任务，再找入库任务
-                        if (Check_Car_Status_IsOk(carNo, serviceName))
+                        bool IsSent = false;
+                        DataRow[] drTasks = dtTask.Select("TaskType='11' and State in('1','2')");
+                        //object task = dtTask.Compute("sum(1)", "TaskType='11' and State in('1','2')");
+                        //int taskCount = int.Parse(task.ToString());
+                        if (drTasks.Length >= 2)
                         {
-                            IsSent = false;
-
-                            if (Column == 0)
-                            {
-                                //再找入库任务
-                                IsSent = FindInTask(dtCar, dtTask, carNo, obj);
-                                if (IsSent)
-                                    continue;
-                            }
-                            //先找出库任务
-
-                            IsSent = FindOutTask(dtCar, dtTask, carNo, obj);
-                            if (IsSent)
-                                continue;
-
-                            //再找入库任务
+                            //先找入库任务
                             IsSent = FindInTask(dtCar, dtTask);
                             if (IsSent)
                                 continue;
-                            //如果车空闲，直接退到当前层的1列
-                            if (!IsSent && Column <= 0)
+                        }
+
+                        //对于入库任务来说，因为一个巷道同时只有一个任务，所以应该优先以任务目标层找对应层空闲的小车
+
+                        for (int j = 0; j < dtCar.Rows.Count; j++)
+                        {
+                            //读取小车状态
+                            string carNo = dtCar.Rows[j]["DeviceNo2"].ToString().Substring(2, 2);
+                            object[] obj = ObjectUtil.GetObjects(WriteToService(serviceName, "CarStatus" + carNo));
+                            int Layer = int.Parse(obj[3].ToString());
+                            int Column = int.Parse(obj[2].ToString());
+
+                            //如果小车空闲
+                            //先找小车当前层出库任务，判断入库任务是否已经超过2个，如果超过先入，再找其他出库任务，再找入库任务
+                            if (Check_Car_Status_IsOk(carNo, serviceName))
                             {
-                                //小车空闲，需要避开
-                                int CurLayer = Layer;
-                                if (Layer == 2001 || Layer == 1001)
-                                    CurLayer = 1;
-                                int ToLayer = GetNoTaskLayer(serviceName, dtCar, carNo, CurLayer);
-                                if (ToLayer > 0)
+                                IsSent = false;
+
+                                if (Column == 0)
                                 {
-                                    DataRow dr = dtTask.NewRow();
-                                    dr["TaskNo"] = "001";
-                                    dr["TaskType"] = "10";
-                                    dr["FromAddress"] = "S000000000";
-                                    dr["ToAddress"] = "S001073" + (1000 + ToLayer).ToString().Substring(1, 3);
-                                    Send2PLC(serviceName, dr, carNo);
+                                    //再找入库任务
+                                    IsSent = FindInTask(dtCar, dtTask, carNo, obj);
+                                    if (IsSent)
+                                        continue;
+                                }
+                                //先找出库任务
+
+                                IsSent = FindOutTask(dtCar, dtTask, carNo, obj);
+                                if (IsSent)
+                                    continue;
+
+                                //再找入库任务
+                                IsSent = FindInTask(dtCar, dtTask);
+                                if (IsSent)
+                                    continue;
+                                //如果车空闲，直接退到当前层的1列
+                                if (!IsSent && Column <= 0)
+                                {
+                                    //小车空闲，需要避开
+                                    int CurLayer = Layer;
+                                    if (Layer == 2001 || Layer == 1001)
+                                        CurLayer = 1;
+                                    int ToLayer = GetNoTaskLayer(serviceName, dtCar, carNo, CurLayer);
+                                    if (ToLayer > 0)
+                                    {
+                                        DataRow dr = dtTask.NewRow();
+                                        dr["TaskNo"] = "001";
+                                        dr["TaskType"] = "10";
+                                        dr["FromAddress"] = "S000000000";
+                                        dr["ToAddress"] = "S001073" + (1000 + ToLayer).ToString().Substring(1, 3);
+                                        Send2PLC(serviceName, dr, carNo);
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Logger.Error("小车下发任务过程中出错:" + ex);   
-            }
-            finally
-            {
-                tmWorkTimer.Start();
+                catch (Exception ex)
+                {
+                    Logger.Error("小车下发任务过程中出错:" + ex);
+                }
+                finally
+                {
+                    tmWorkTimer.Start();
+                }
             }
         }
         //获取小车让车可去的空闲的层

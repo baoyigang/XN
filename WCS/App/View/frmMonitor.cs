@@ -26,8 +26,8 @@ namespace App.View
         float colDis = 12.68f;
         float rowDis = 56f;
 
-        private System.Timers.Timer tmWorkTimer = new System.Timers.Timer();
-        private System.Timers.Timer tmCar1 = new System.Timers.Timer();
+        private System.Timers.Timer tmWorkTimer;
+        private System.Timers.Timer tmCar1;
         BLL.BLLBase bll = new BLL.BLLBase();
         Dictionary<int, string> dicFork = new Dictionary<int, string>();
         Dictionary<int, string> dicStatus = new Dictionary<int, string>();
