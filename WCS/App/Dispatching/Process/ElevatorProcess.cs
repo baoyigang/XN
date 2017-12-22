@@ -12,11 +12,11 @@ namespace App.Dispatching.Process
         // 记录堆垛机当前状态及任务相关信息
         BLL.BLLBase bll = new BLL.BLLBase();
 
-        private Timer tmWorkTimer;
+        private Timer tmWorkTimer = new Timer();
         //private string WarehouseCode = "";
         private bool blRun = false;
-        private DataTable dtDeviceAlarm;
-        Report report;
+        private DataTable dtDeviceAlarm = new DataTable();
+        Report report = new Report();
 
         public override void Initialize(Context context)
         {
@@ -194,6 +194,8 @@ namespace App.Dispatching.Process
                                     }
                                 }
                             }
+                            //obj = null;
+                            //GC.Collect();
                         }
                     }
                 }
@@ -282,6 +284,7 @@ namespace App.Dispatching.Process
                         break;
                     }
                 }
+                obj = null;
             }
             if (!IsSendTask)
             {
