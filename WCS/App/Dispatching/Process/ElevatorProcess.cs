@@ -38,45 +38,55 @@ namespace App.Dispatching.Process
         protected override void StateChanged(StateItem stateItem, IProcessDispatcher dispatcher)
         {
             switch (stateItem.ItemName)
-            {
+            {          
                 case "TaskFinished01":
                 case "TaskFinished02":
-                    object[] obj = ObjectUtil.GetObjects(stateItem.State);
 
-                    if (obj == null)
-                        return;
-                    string TaskNo = ConvertStringChar.BytesToString(obj);
 
-                    //存储过程处理
-                    if (TaskNo.Length > 0)
+                    try
                     {
-                        byte[] b = new byte[30];
-                        ConvertStringChar.stringToByte("", 30).CopyTo(b, 0);
-                        WriteToService(stateItem.Name, stateItem.ItemName, b);
 
-                        Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
-                        DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
-                        bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
+                        object[] obj = ObjectUtil.GetObjects(stateItem.State);
 
-                        DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
-                        DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
+                        Logger.Info(stateItem.ItemName + ConvertStringChar.BytesToString(obj));
+                        if (obj == null)
+                            return;
+                        string TaskNo = ConvertStringChar.BytesToString(obj);
 
-                        if (dt.Rows.Count > 0)
+                        //存储过程处理
+                        if (TaskNo.Length > 0)
                         {
-                            string TaskType = dt.Rows[0]["TaskType"].ToString();
-                            if (TaskType == "12")
+                            byte[] b = new byte[30];
+                            ConvertStringChar.stringToByte("", 30).CopyTo(b, 0);
+                            WriteToService(stateItem.Name, stateItem.ItemName, b);
+
+                            Logger.Info(stateItem.ItemName + "完成标志,任务号:" + TaskNo);
+                            DataParameter[] param = new DataParameter[] { new DataParameter("@TaskNo", TaskNo) };
+                            bll.ExecNonQueryTran("WCS.Sp_TaskProcess", param);
+
+                            DataParameter[] para = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_Task.TaskNo='{0}'", TaskNo)) };
+                            DataTable dt = bll.FillDataTable("WCS.SelectTask", para);
+
+                            if (dt.Rows.Count > 0)
                             {
-                                string Barcode = dt.Rows[0]["PalletBarcode"].ToString();
-                                byte[] barcode = new byte[20];
-                                ConvertStringChar.stringToByte(Barcode, 20).CopyTo(barcode, 0);
-                                WriteToService(stateItem.Name, "OutLocation01", barcode);
+                                string TaskType = dt.Rows[0]["TaskType"].ToString();
+                                if (TaskType == "12")
+                                {
+                                    string Barcode = dt.Rows[0]["PalletBarcode"].ToString();
+                                    byte[] barcode = new byte[20];
+                                    ConvertStringChar.stringToByte(Barcode, 20).CopyTo(barcode, 0);
+                                    WriteToService(stateItem.Name, "OutLocation01", barcode);
+                                }
                             }
+
+                            report.Send2MJWcs(base.Context, 3, TaskNo);
                         }
-
-                        report.Send2MJWcs(base.Context, 3, TaskNo);
                     }
+                    catch (Exception ex)
+                    {
+                        Logger.Error("小车完成过程中出错" + ex.ToString());
+                    }     
                     //上报总控WCS，下架完成
-
 
                     break;
                 case "Run":
@@ -115,7 +125,6 @@ namespace App.Dispatching.Process
                         return;
                     }
                     tmWorkTimer.Stop();
-
                     DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("S1.WarehouseCode='{0}'", Program.WarehouseCode)) });
                     //dtAisle.Rows.Count
                     for (int i = 0; i < dtAisle.Rows.Count; i++)
@@ -194,10 +203,12 @@ namespace App.Dispatching.Process
                                     }
                                 }
                             }
-                            //obj = null;
-                            //GC.Collect();
+                            obj = null;
                         }
+                        dtTask = null;
+                        dtCar = null;
                     }
+                    dtAisle = null;
                 }
                 catch (Exception ex)
                 {
@@ -209,6 +220,7 @@ namespace App.Dispatching.Process
                 }
             }
         }
+
         //获取小车让车可去的空闲的层
         private int GetNoTaskLayer(string serviceName, DataTable dtCar, string carNo, int carLayer)
         {
