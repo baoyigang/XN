@@ -11,10 +11,14 @@ using DataGridViewAutoFilter;
 using MCP;
 using OPC;
 using MCP.Service.Siemens.Config;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
 namespace App.View
 {
     public partial class frmMonitor : BaseForm
     {
+        [DllImport("psapi.dll")]
+        static extern int EmptyWorkingSet(IntPtr process);
         private Point InitialP1;
         private Point InitialP2;
         private Point InitialP3;
@@ -35,7 +39,25 @@ namespace App.View
         Dictionary<int, int> dicLocationX = new Dictionary<int, int>();
 
         DataTable dtDeviceAlarm;
+        public static void ClearMemory()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Process[] processes = Process.GetProcesses();
+            foreach (Process process in processes)
+            {
+                if ((process.ProcessName == "System") && (process.ProcessName == "Administrator"))
+                    continue;
+                try
+                {
+                    EmptyWorkingSet(process.Handle);
+                }
+                catch
+                {
 
+                }
+            }
+        }
         public frmMonitor()
         {
             InitializeComponent();
@@ -164,6 +186,7 @@ namespace App.View
             finally
             {
                 tmWorkTimer.Start();
+                ClearMemory();
             }
         }
         //反馈给总控WCS设备状态

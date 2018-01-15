@@ -59,6 +59,9 @@
     <Reference Include="DataGridViewAutoFilter">
       <HintPath>..\..\..\Lib\DataGridViewAutoFilter.dll</HintPath>
     </Reference>
+    <Reference Include="DSAPI">
+      <HintPath>..\..\..\LIB\DSAPI.DLL</HintPath>
+    </Reference>
     <Reference Include="IServices">
       <HintPath>..\..\..\Lib\IServices.dll</HintPath>
     </Reference>

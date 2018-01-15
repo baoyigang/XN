@@ -99,6 +99,8 @@ namespace App.Dispatching.Process
                     else
                     {
                         tmWorkTimer.Stop();
+                        GC.Collect();
+                        GC.WaitForPendingFinalizers();
                         Logger.Info("提升机脱机");
                     }
                     break;
@@ -152,7 +154,6 @@ namespace App.Dispatching.Process
                         }
 
                         //对于入库任务来说，因为一个巷道同时只有一个任务，所以应该优先以任务目标层找对应层空闲的小车
-
                         for (int j = 0; j < dtCar.Rows.Count; j++)
                         {
                             //读取小车状态
@@ -204,6 +205,10 @@ namespace App.Dispatching.Process
                                 }
                             }
                             obj = null;
+                            if (dtCar.Rows.Count - j > 1)
+                            {
+                                System.Threading.Thread.Sleep(500);
+                            }
                         }
                         dtTask = null;
                         dtCar = null;
