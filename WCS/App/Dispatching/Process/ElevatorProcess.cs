@@ -205,6 +205,8 @@ namespace App.Dispatching.Process
                                 }
                             }
                             obj = null;
+
+                            //避免任务下达过程中，PLC未及时反应，小车跑到同一层
                             if (dtCar.Rows.Count - j > 1)
                             {
                                 System.Threading.Thread.Sleep(500);
