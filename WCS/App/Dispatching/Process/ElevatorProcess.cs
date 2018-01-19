@@ -48,7 +48,7 @@ namespace App.Dispatching.Process
 
                         object[] obj = ObjectUtil.GetObjects(stateItem.State);
 
-                        Logger.Info(stateItem.ItemName + ConvertStringChar.BytesToString(obj));
+                        Logger.Debug("收到完成信号,PLC编号:" + stateItem.Name + "小车号:" + stateItem.ItemName + "任务号:" + ConvertStringChar.BytesToString(obj));
                         if (obj == null)
                             return;
                         string TaskNo = ConvertStringChar.BytesToString(obj);
@@ -515,12 +515,13 @@ namespace App.Dispatching.Process
             {
                 object[] obj = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "CarStatus" + carNo));
                 object[] obj1 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "WriteFinished"));
+                object[] obj2 = ObjectUtil.GetObjects(Context.ProcessDispatcher.WriteToService(serviceName, "TaskFinished" + carNo));
                 int TaskFlag = int.Parse(obj1[0].ToString());
                 int CarMode = int.Parse(obj[0].ToString());
                 int TaskType = int.Parse(obj[12].ToString());
                 //int CraneAlarmCode = int.Parse(obj[0].ToString());
-
-                if (CarMode == 1 && TaskType == 0 && TaskFlag == 0)
+                string TaskNo = ConvertStringChar.BytesToString(obj2);
+                if (CarMode == 1 && TaskType == 0 && TaskFlag == 0 && TaskNo == "")
                     return true;
                 else
                     return false;
