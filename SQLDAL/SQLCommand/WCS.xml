@@ -458,4 +458,9 @@
       where TaskNo=@TaskNo
     </CommandString>
   </Command>
+  <Command ID="SelectTaskFinish">
+    <CommandString>
+       select finishdate from WCS_Task where {0}
+    </CommandString>
+  </Command>
 </SqlCommand>
