@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Util;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace WindowsFormsApplication1
+namespace App.View.Param
 {
     public partial class Rfrm : Form
     {

@@ -999,5 +999,11 @@ namespace App
             App.View.Base.frmDevices f = new App.View.Base.frmDevices();
             ShowForm(f);
         }
+
+        private void toolStripButton1_Click_1(object sender, EventArgs e)
+        {
+            App.View.Param.Rfrm f = new View.Param.Rfrm();
+            f.ShowDialog();
+        }
     }
 }

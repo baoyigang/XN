@@ -460,7 +460,7 @@
   </Command>
   <Command ID="SelectTaskFinish">
     <CommandString>
-       select AisleNo,finishdate from WCS_Task where {0}
+       select AisleNo,finishdate,DeviceNo from WCS_Task where {0}
     </CommandString>
   </Command>
 </SqlCommand>
