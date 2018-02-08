@@ -28,9 +28,38 @@ namespace WindowsFormsApplication1
 
         private void Rfrm_Load(object sender, EventArgs e)
         {
+
+            DataTable dt = bll.FillDataTable("CMD.SelectAisle",new DataParameter("{0}",string.Format("WareHouseCode='{0}'","S")));
+            int AisleNoCount = dt.Rows.Count;
+            DataTable dtDevice;
+
+            for (int i = 1; i < AisleNoCount + 1; i++)
+            {
+                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}'", "S", "0" + i.ToString())));
+                for (int j = 1; j < dtDevice.Rows.Count + 1; j++)
+                {
+                    chart1.Series.Add(new Series(dtDevice.Rows[j-1]["DeviceNo2"].ToString()));
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Label = "#VAL";
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].IsVisibleInLegend = false;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].ChartType = SeriesChartType.Column;
+                }
+                chart1.Series.Add(new Series(i.ToString() + "号巷道"));
+                chart1.Series[i.ToString() + "号巷道"].Label = "#VAL";
+                chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = false;
+                chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
+                chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
+            }
+            chart1.Series.Add(new Series("任务数"));
+            chart1.Series["任务数"].Label = "#VAL";
+            chart1.Series["任务数"].ChartType = SeriesChartType.Column;
+            chart1.Series["任务数"].CustomProperties = "DrawingStyle=Cylinder";
+
+            dateTimePicker1.Value=dateTimePicker2.Value.Add(new TimeSpan(-31,0,0,0));
             stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
             GetChart(0,stardate,enddate);
+            this.MouseWheel +=new MouseEventHandler(Rfrm_MouseWheel);
+            chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
         }
         //获取日期每个巷道任务数
         private void GetAisleChart(int Aisle,int TaskType)
@@ -199,83 +228,64 @@ namespace WindowsFormsApplication1
 
 
 
-        private void btnIn_Click(object sender, EventArgs e)
-        {
-            lbldate.Visible = false;
-            stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
-            enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
-            TimeSpan t1 = dateTimePicker2.Value - dateTimePicker1.Value;
-            int days = t1.Days;
-            if (days > 31)
-            {
-                MessageBox.Show("请选择一个月以内的日期范围");
-                return;
-            }
-            GetChart(1,stardate,enddate);
-            tasktype = 1;
-            for (int i = 1; i < 8; i++)
-            {
-                chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = false;
-                chart1.Series[(i - 1) * 3].IsVisibleInLegend = false;
-                chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = false;
-            }
-            if (checkBox1.Checked)
-            {
-                for (int i = 1; i < 8; i++)
-                {
-                    chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
-                    GetAisleChart(i, 1);
-                }
-            }
-            if (checkBox2.Checked)
-            {
-                for (int i = 1; i < 8; i++)
-                {
-                    chart1.Series[(i - 1) * 3].IsVisibleInLegend = true;
-                    chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
-                    GetCarChart(i, 1);
-                }
-            }
-        }
+        //private void btnIn_Click(object sender, EventArgs e)
+        //{
+            
+        //    GetChart(1,stardate,enddate);
+        //    tasktype = 1;
+        //    for (int i = 1; i < 8; i++)
+        //    {
+        //        chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = false;
+        //        chart1.Series[(i - 1) * 3].IsVisibleInLegend = false;
+        //        chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = false;
+        //    }
+        //    if (checkBox1.Checked)
+        //    {
+        //        for (int i = 1; i < 8; i++)
+        //        {
+        //            chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
+        //            GetAisleChart(i, 1);
+        //        }
+        //    }
+        //    if (checkBox2.Checked)
+        //    {
+        //        for (int i = 1; i < 8; i++)
+        //        {
+        //            chart1.Series[(i - 1) * 3].IsVisibleInLegend = true;
+        //            chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
+        //            GetCarChart(i, 1);
+        //        }
+        //    }
+        //}
 
-        private void btnOut_Click(object sender, EventArgs e)
-        {
-            lbldate.Visible = false;
-            stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
-            enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
-            TimeSpan t1 = dateTimePicker2.Value - dateTimePicker1.Value;
-            int days = t1.Days;
-            if (days > 31)
-            {
-                MessageBox.Show("请选择一个月以内的日期范围");
-                return;
-            }
-            GetChart(2,stardate,enddate);
-            tasktype = 2;
-            for (int i = 1; i < 8; i++)
-            {
-                chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = false;
-                chart1.Series[(i - 1) * 3].IsVisibleInLegend = false;
-                chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = false;
-            }
-            if (checkBox1.Checked)
-            {
-                for (int i = 1; i < 8; i++)
-                {
-                    chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
-                    GetAisleChart(i, 2);
-                }
-            }
-            if (checkBox2.Checked)
-            {
-                for (int i = 1; i < 8; i++)
-                {
-                    chart1.Series[(i - 1) * 3].IsVisibleInLegend = true;
-                    chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
-                    GetCarChart(i, 2);
-                }
-            }
-        }
+        //private void btnOut_Click(object sender, EventArgs e)
+        //{
+        //    GetChart(2,stardate,enddate);
+        //    tasktype = 2;
+        //    for (int i = 1; i < 8; i++)
+        //    {
+        //        chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = false;
+        //        chart1.Series[(i - 1) * 3].IsVisibleInLegend = false;
+        //        chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = false;
+        //    }
+        //    if (checkBox1.Checked)
+        //    {
+        //        for (int i = 1; i < 8; i++)
+        //        {
+        //            chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
+        //            GetAisleChart(i, 2);
+        //        }
+        //    }
+        //    if (checkBox2.Checked)
+        //    {
+        //        for (int i = 1; i < 8; i++)
+        //        {
+        //            chart1.Series[(i - 1) * 3].IsVisibleInLegend = true;
+        //            chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
+        //            GetCarChart(i, 2);
+        //        }
+        //    }
+        //}
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -289,8 +299,25 @@ namespace WindowsFormsApplication1
                 MessageBox.Show("请选择一个月以内的日期范围");
                 return;
             }
-            GetChart(0,stardate,enddate);
-            tasktype = 0;
+            if (checkInstock.Checked && checkOutStock.Checked)
+            {
+                GetChart(0, stardate, enddate);
+                tasktype = 0;
+            }
+            else if (checkInstock.Checked)
+            {
+                GetChart(1, stardate, enddate);
+                tasktype = 1;
+            }
+            else if (checkOutStock.Checked)
+            {
+                GetChart(2, stardate, enddate);
+                tasktype = 2;
+            }
+            else
+            {
+                MessageBox.Show("请至少在出入库中勾选一项");
+            }
             for (int i = 1; i < 8; i++)
             {
                 chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = false;
@@ -358,7 +385,6 @@ namespace WindowsFormsApplication1
                 txData2.Clear();
                 tyData2.Clear();
                 txHour2.Clear();
-                chart1.ChartAreas[0].AxisX.ScaleView.Size = 6;
                 foreach (var series in chart1.Series)
                 {
                     series.Points.Clear();
@@ -405,7 +431,7 @@ namespace WindowsFormsApplication1
                 }
 
                 chart1.Series[21].Points.InsertXY(0, 0, 0);
-     
+                chart1.Series[21].Points.InsertXY(24, 24.99, 0);
                 result = false;
             }
             catch (Exception ex)
@@ -426,6 +452,30 @@ namespace WindowsFormsApplication1
                 chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
         }
 
+        private void Rfrm_MouseWheel(object sender, MouseEventArgs e) 
+        {
+            if (e.Delta>0)
+            {
+                if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 3 || chart1.ChartAreas[0].AxisX.ScaleView.Size == 1)
+                {
+                    chart1.ChartAreas[0].AxisX.ScaleView.Size = 1;
+                }
+                else
+                {
+                    chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
+                }  
+                
+            }
+            else
+            {
+                if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 1)
+                {
+                    chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
+                }
+                else
+                    chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.Maximum;
+            }
+        }
 
     }
 }

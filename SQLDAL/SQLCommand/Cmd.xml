@@ -553,4 +553,9 @@
       order by TaskCount,AisleNo desc
     </CommandString>
   </Command>
+  <Command ID="SelectAisleDeviceChart">
+    <CommandString>
+      select * from CMD_AisleDevice where {0}
+    </CommandString>
+  </Command>
 </SqlCommand>
