@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace App.View.Param
 {
     partial class Rfrm
     {
@@ -273,7 +273,7 @@
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(128, 21);
             this.dateTimePicker1.TabIndex = 4;
-            this.dateTimePicker1.Value = new System.DateTime(2018, 1, 9, 0, 0, 0, 0);
+            this.dateTimePicker1.Value = new System.DateTime(2018, 2, 6, 11, 51, 26, 0);
             // 
             // dateTimePicker2
             // 
@@ -282,7 +282,7 @@
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.Size = new System.Drawing.Size(128, 21);
             this.dateTimePicker2.TabIndex = 5;
-            this.dateTimePicker2.Value = new System.DateTime(2018, 1, 10, 0, 0, 0, 0);
+            this.dateTimePicker2.Value = new System.DateTime(2018, 2, 6, 11, 51, 35, 0);
             // 
             // label1
             // 
@@ -312,7 +312,7 @@
             // 
             this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Image = global::WindowsFormsApplication1.Properties.Resources.zoom;
+            this.pictureBox1.Image = global::App.Properties.Resources.zoom;
             this.pictureBox1.Location = new System.Drawing.Point(1183, 599);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(31, 30);
