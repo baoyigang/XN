@@ -37,10 +37,10 @@ namespace App.View.Param
                 dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}'", "S", "0" + i.ToString())));
                 for (int j = 1; j < dtDevice.Rows.Count + 1; j++)
                 {
-                    chart1.Series.Add(new Series(dtDevice.Rows[j - 1]["DeviceNo2"].ToString()));
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Label = "#VAL";
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].IsVisibleInLegend = false;
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].ChartType = SeriesChartType.Column;
+                    chart1.Series.Add(new Series(dtDevice.Rows[j - 1]["DeviceNo"].ToString()));
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].Label = "#VAL";
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].IsVisibleInLegend = false;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].ChartType = SeriesChartType.Column;
                 }
                 chart1.Series.Add(new Series(i.ToString() + "号巷道"));
                 chart1.Series[i.ToString() + "号巷道"].Label = "#VAL";
