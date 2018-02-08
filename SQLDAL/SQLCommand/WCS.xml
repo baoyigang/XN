@@ -463,4 +463,9 @@
        select AisleNo,finishdate,DeviceNo from WCS_Task where {0}
     </CommandString>
   </Command>
+  <Command ID="SelectTaskEff">
+    <CommandString>
+      select finishdate,TaskType,datediff(S,Startdate,finishdate) time from WCS_TASK where State=7 and datediff(S,Startdate,finishdate)&lt;500 and StartDate is not null and {0}
+    </CommandString>
+  </Command>
 </SqlCommand>
