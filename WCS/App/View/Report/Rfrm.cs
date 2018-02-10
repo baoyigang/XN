@@ -9,7 +9,7 @@ using System.Windows.Forms;
 using Util;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace App.View.Param
+namespace App.View.Report
 {
     public partial class Rfrm : Form
     {
@@ -22,37 +22,55 @@ namespace App.View.Param
         string stardate;
         string enddate;
         int tasktype;
+        int AisleNoCount;
+        int AisleStart;
         List<string> txData2 = new List<string>();
         List<int> txHour2 = new List<int>();
         List<int> tyData2 = new List<int>();
 
         private void Rfrm_Load(object sender, EventArgs e)
         {
-            DataTable dt = bll.FillDataTable("CMD.SelectAisle", new DataParameter("{0}", string.Format("WareHouseCode='{0}'", "S")));
-            int AisleNoCount = dt.Rows.Count;
+            DataTable dt = bll.FillDataTable("CMD.SelectAisle", new DataParameter("{0}", string.Format("WareHouseCode='{0}'", Program.WarehouseCode)));
+            AisleStart = int.Parse(dt.Rows[0]["AisleNo"].ToString());
+            AisleNoCount = dt.Rows.Count;
             DataTable dtDevice;
-
-            for (int i = 1; i < AisleNoCount + 1; i++)
+            for (int i = AisleStart; i < AisleNoCount + AisleStart; i++)
             {
-                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}'", "S", "0" + i.ToString())));
+                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}' and Priority=1", Program.WarehouseCode, "0" + i.ToString())));
                 for (int j = 1; j < dtDevice.Rows.Count + 1; j++)
                 {
-                    chart1.Series.Add(new Series(dtDevice.Rows[j - 1]["DeviceNo"].ToString()));
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].Label = "#VAL";
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].IsVisibleInLegend = false;
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].ChartType = SeriesChartType.Column;
+                    chart1.Series.Add(new Series(dtDevice.Rows[j - 1]["DeviceNo2"].ToString()));
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Label = "#VAL";
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].IsVisibleInLegend = false;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].LabelAngle = 30;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].ChartType = SeriesChartType.Column;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].SmartLabelStyle.MovingDirection = LabelAlignmentStyles.Top;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Color = Color.Green;
+
+                    if (j==2)
+                    {
+                        chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Color = Color.Orange;
+                    }
                 }
                 chart1.Series.Add(new Series(i.ToString() + "号巷道"));
                 chart1.Series[i.ToString() + "号巷道"].Label = "#VAL";
                 chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = false;
+                chart1.Series[i.ToString() + "号巷道"].LabelAngle = 30;
                 chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
                 chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
+                chart1.Series[i.ToString() + "号巷道"].Color = Color.Red;
+                chart1.Series[i.ToString() + "号巷道"].ToolTip = i.ToString() + "号巷道";
+
             }
             chart1.Series.Add(new Series("任务数"));
             chart1.Series["任务数"].Label = "#VAL";
-            chart1.Series["任务数"].ChartType = SeriesChartType.Column;
             chart1.Series["任务数"].CustomProperties = "DrawingStyle=Cylinder";
+            chart1.Series["任务数"].LabelAngle = 30;
+            chart1.Series["任务数"].Color = Color.Blue;
+            chart1.Series["任务数"].SmartLabelStyle.MovingDirection = LabelAlignmentStyles.Top;
+            chart1.Series["任务数"].ChartType = SeriesChartType.Column;
 
+            chart1.ChartAreas[0].AxisX.LabelStyle.Angle = 30;
             dateTimePicker1.Value=dateTimePicker2.Value.Add(new TimeSpan(-31,0,0,0));
             stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
@@ -76,15 +94,15 @@ namespace App.View.Param
                 DataParameter[] param;
                 if (TaskType==1)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + Aisle.ToString())) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{3}' and TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + Aisle.ToString(),Program.WarehouseCode)) };
                 }
                 else if (TaskType==2)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + Aisle.ToString())) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{3}' and  TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + Aisle.ToString(),Program.WarehouseCode)) };
                 }
                 else
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + Aisle.ToString())) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{3}' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + Aisle.ToString(), Program.WarehouseCode)) };
                 }
                 DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
                 TimeSpan t1 = dateTimePicker2.Value - dateTimePicker1.Value;
@@ -98,7 +116,7 @@ namespace App.View.Param
                     int a = (from DataRow Order in dt.Rows where ((DateTime)Order["FinishDate"]).ToString("yyyy-MM-dd") == ymd select 1).Count();
                     tyData2.Add(a);
                 }
-                chart1.Series[(Aisle - 1) * 3 + 2].Points.DataBindXY(txData2, tyData2);
+                chart1.Series[Aisle.ToString()+"号巷道"].Points.DataBindXY(txData2, tyData2);
                 result = true;
                 //for (int i = 0; i < 24; i++)
                 //{
@@ -125,8 +143,8 @@ namespace App.View.Param
         //获取日期每辆小车任务数
         private void GetCarChart(int CarAisleNo, int TaskType)
         {
-
-            for (int j = 1; j < 3; j++)
+           DataTable dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}' and Priority=1", Program.WarehouseCode, "0" + CarAisleNo.ToString())));
+            for (int j = 1; j < dtDevice.Rows.Count+1; j++)
             {
                 txData2.Clear();
                 tyData2.Clear();
@@ -135,15 +153,15 @@ namespace App.View.Param
                 DataParameter[] param;
                 if (TaskType == 1)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + CarAisleNo.ToString())) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{3}' and TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + CarAisleNo.ToString(),Program.WarehouseCode)) };
                 }
                 else if (TaskType == 2)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + CarAisleNo.ToString())) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{3}' and TaskType='12' and AisleNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + CarAisleNo.ToString(), Program.WarehouseCode)) };
                 }
                 else
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("DeviceNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + CarAisleNo.ToString() + "0" + j.ToString())) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{3}' and DeviceNo='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "0" + CarAisleNo.ToString() + "0" + j.ToString(), Program.WarehouseCode)) };
                 }
                 DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
                 TimeSpan t1 = dateTimePicker2.Value - dateTimePicker1.Value;
@@ -157,7 +175,7 @@ namespace App.View.Param
                     int a = (from DataRow Order in dt.Rows where ((DateTime)Order["FinishDate"]).ToString("yyyy-MM-dd") == ymd select 1).Count();
                     tyData2.Add(a);
                 }
-                chart1.Series[(CarAisleNo - 1) * 3 + j - 1].Points.DataBindXY(txData2, tyData2);
+                chart1.Series[dtDevice.Rows[j-1]["DeviceNo2"].ToString()].Points.DataBindXY(txData2, tyData2);
             }
             result = true;
         }
@@ -178,15 +196,15 @@ namespace App.View.Param
                 DataParameter[] param;
                 if (TaskType == 1)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.TASKTYPE=11 and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate)) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{2}' and WCS_TASK.TASKTYPE=11 and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode)) };
                 }
                 else if (TaskType == 2)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.TASKTYPE='12' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate)) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{2}' and WCS_TASK.TASKTYPE='12' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode)) };
                 }
                 else
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate)) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{2}' and CONVERT(varchar(12) , FinishDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode)) };
                 }
                 DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
                 TimeSpan t1= dateTimePicker2.Value -dateTimePicker1.Value;
@@ -200,8 +218,9 @@ namespace App.View.Param
                     int a = (from DataRow Order in dt.Rows where ((DateTime)Order["FinishDate"]).ToString("yyyy-MM-dd") == ymd select 1).Count();
                     tyData2.Add(a);
                 }
-                chart1.Series[21].Points.DataBindXY(txData2, tyData2);
+                chart1.Series["任务数"].Points.DataBindXY(txData2, tyData2);
                 result = true;
+                
                 //for (int i = 0; i < 24; i++)
                 //{
                 //    txData2.Add(i + 1);
@@ -317,26 +336,30 @@ namespace App.View.Param
             {
                 MessageBox.Show("请至少在出入库中勾选一项");
             }
-            for (int i = 1; i < 8; i++)
+            foreach (var item in chart1.Series)
             {
-                chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = false;
-                chart1.Series[(i - 1) * 3].IsVisibleInLegend = false;
-                chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = false;
+                item.IsVisibleInLegend = false;
             }
+            chart1.Series["任务数"].IsVisibleInLegend = true;
             if (checkBox1.Checked)
             {
-                for (int i = 1; i < 8; i++)
+                for (int i = AisleStart; i < AisleNoCount + AisleStart; i++)
                 {
-                    chart1.Series[(i - 1) * 3 + 2].IsVisibleInLegend = true;
+                    chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = true;
                     GetAisleChart(i, 0);
                 }
             }
             if (checkBox2.Checked)
             {
-                for (int i = 1; i < 8; i++)
+                foreach (var item in chart1.Series)
                 {
-                    chart1.Series[(i - 1) * 3].IsVisibleInLegend = true;
-                    chart1.Series[(i - 1) * 3 + 1].IsVisibleInLegend = true;
+                    if (item.CustomProperties == "")
+                    {
+                        item.IsVisibleInLegend = true;
+                    }
+                }
+                for (int i = AisleStart; i < AisleNoCount + AisleStart; i++)
+                {
                     GetCarChart(i, 0);
                 }
             }
@@ -361,15 +384,15 @@ namespace App.View.Param
                     DataParameter[] param;
                     if (tasktype == 1)
                     {
-                        param = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.TASKTYPE=11 and CONVERT(varchar(12) , FinishDate, 111 )='{0}'", aDay)) };
+                        param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{1}' and WCS_TASK.TASKTYPE=11 and CONVERT(varchar(12) , FinishDate, 111 )='{0}'", aDay,Program.WarehouseCode)) };
                     }
                     else if (tasktype==2)
                     {
-                        param = new DataParameter[] { new DataParameter("{0}", string.Format("WCS_TASK.TASKTYPE=12 and CONVERT(varchar(12) , FinishDate, 111 )='{0}'", aDay)) };
+                        param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{1}' and WCS_TASK.TASKTYPE=12 and CONVERT(varchar(12) , FinishDate, 111 )='{0}'", aDay, Program.WarehouseCode)) };
                     }
                     else
                     {
-                        param = new DataParameter[] { new DataParameter("{0}", string.Format("CONVERT(varchar(12) , FinishDate, 111 )='{0}'", aDay)) };
+                        param = new DataParameter[] { new DataParameter("{0}", string.Format("WarehouseCode='{1}' and CONVERT(varchar(12) , FinishDate, 111 )='{0}'", aDay, Program.WarehouseCode)) };
                     }
                     GetDetailChart(param);
                 }
@@ -400,29 +423,24 @@ namespace App.View.Param
                     chart1.Series[21].Points.InsertXY(i, i + 1, a);
                     if (checkBox1.Checked)
                     {
-                        for (int j = 1; j < 8; j++)
+                        for (int j = AisleStart; j < AisleStart+AisleNoCount; j++)
                         {
-                            chart1.Series[(j - 1) * 3 + 1].IsVisibleInLegend = true;
 
                             int e = c.Count(t => t[0].ToString() == "0" + j.ToString());
-
-                            chart1.Series[(j - 1) * 3 + 2].Points.InsertXY(i, i + 1, e);
+                            chart1.Series[j.ToString() + "号巷道"].IsVisibleInLegend = true;
+                            chart1.Series[j.ToString() + "号巷道"].Points.InsertXY(i, i + 1, e);
                         }
                     }
                     if (checkBox2.Checked)
                     {
-                        if (checkBox2.Checked)
+                        for (int j = AisleStart; j < AisleStart + AisleNoCount; j++)
                         {
-                            for (int j = 1; j < 8; j++)
+                            DataTable dtAisleCar = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}' and Priority=1", Program.WarehouseCode, "0" + j.ToString())));
+                            for (int m = 0; m < dtAisleCar.Rows.Count; m++)
                             {
-                                chart1.Series[(j - 1) * 3].IsVisibleInLegend = true;
-                                chart1.Series[(j - 1) * 3 + 1].IsVisibleInLegend = true;
-                                for (int m = 1; m < 3; m++)
-                                {
-                                    int carDevice = c.Count(t => t[2].ToString() == "0" + j.ToString() + "0" + m.ToString());
-                                    chart1.Series[(j - 1) * 3 + m - 1].Points.InsertXY(i, i + 1, carDevice);
-                                }
-                                
+                                chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].IsVisibleInLegend = true;
+                                int carDevice = c.Count(t => t[2].ToString() == dtAisleCar.Rows[m]["DeviceNo2"].ToString());
+                                chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].Points.InsertXY(i, i + 1, carDevice);
                             }
                         }
                     }
@@ -455,9 +473,9 @@ namespace App.View.Param
         {
             if (e.Delta>0)
             {
-                if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 3 || chart1.ChartAreas[0].AxisX.ScaleView.Size == 1)
+                if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 3 || chart1.ChartAreas[0].AxisX.ScaleView.Size == 2)
                 {
-                    chart1.ChartAreas[0].AxisX.ScaleView.Size = 1;
+                    chart1.ChartAreas[0].AxisX.ScaleView.Size = 2;
                 }
                 else
                 {
@@ -467,7 +485,7 @@ namespace App.View.Param
             }
             else
             {
-                if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 1)
+                if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 2)
                 {
                     chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
                 }

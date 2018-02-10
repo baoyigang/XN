@@ -1,4 +1,4 @@
-﻿namespace App.View.Param
+﻿namespace App.View.Report
 {
     partial class Rfrm
     {
