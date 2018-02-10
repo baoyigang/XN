@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemDelCraneTask = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCellCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -100,7 +100,10 @@
             this.ToolStripMenuItem_Group = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Power = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_ChangPwd = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.ToolStripMenuItemReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Efficiency = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_BreakTotal = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_Log = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.pnlTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -116,7 +119,7 @@
             // 
             // contextMenuStrip1
             // 
-            this.contextMenuStrip1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.contextMenuStrip1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItemDelCraneTask,
             this.ToolStripMenuItemCellCode,
@@ -245,7 +248,7 @@
             // tabForm
             // 
             this.tabForm.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabForm.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.tabForm.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.tabForm.Location = new System.Drawing.Point(0, 0);
             this.tabForm.Name = "tabForm";
             this.tabForm.SelectedIndex = 0;
@@ -267,7 +270,6 @@
             this.toolStripButton_StartCrane,
             this.toolStripButton_CellMonitor,
             this.toolStripButton_Barcode,
-            this.toolStripButton1,
             this.toolStripButton_Close});
             this.toolStrip1.Location = new System.Drawing.Point(0, 25);
             this.toolStrip1.Name = "toolStrip1";
@@ -401,7 +403,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.splitContainer1.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -421,18 +423,18 @@
             // 
             this.dgvMain.AllowUserToAddRows = false;
             this.dgvMain.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
             this.dgvMain.AutoGenerateColumns = false;
             this.dgvMain.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column5,
@@ -640,7 +642,7 @@
             this.columnHeader2,
             this.columnHeader3});
             this.lbLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lbLog.Font = new System.Drawing.Font("微软雅黑", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lbLog.Font = new System.Drawing.Font("Microsoft YaHei", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.lbLog.FullRowSelect = true;
             this.lbLog.LabelWrap = false;
             this.lbLog.Location = new System.Drawing.Point(0, 0);
@@ -671,7 +673,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.taskToolStripMenuItem,
             this.ToolStripMenuItem_Monitor,
-            this.ToolStripMenuItemSetup});
+            this.ToolStripMenuItemSetup,
+            this.ToolStripMenuItemReport});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(1370, 25);
@@ -729,7 +732,7 @@
             // ToolStripMenuItem_Cell
             // 
             this.ToolStripMenuItem_Cell.Name = "ToolStripMenuItem_Cell";
-            this.ToolStripMenuItem_Cell.Size = new System.Drawing.Size(124, 22);
+            this.ToolStripMenuItem_Cell.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_Cell.Text = "货位监控";
             this.ToolStripMenuItem_Cell.Click += new System.EventHandler(this.ToolStripMenuItem_Cell_Click);
             // 
@@ -749,54 +752,73 @@
             // ToolStripMenuItem_Param
             // 
             this.ToolStripMenuItem_Param.Name = "ToolStripMenuItem_Param";
-            this.ToolStripMenuItem_Param.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_Param.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_Param.Text = "参数设定";
             this.ToolStripMenuItem_Param.Click += new System.EventHandler(this.ToolStripMenuItem_Param_Click);
             // 
             // ToolStripMenuItem_Device
             // 
             this.ToolStripMenuItem_Device.Name = "ToolStripMenuItem_Device";
-            this.ToolStripMenuItem_Device.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_Device.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_Device.Text = "设备管理";
             this.ToolStripMenuItem_Device.Click += new System.EventHandler(this.ToolStripMenuItem_Device_Click);
             // 
             // ToolStripMenuItem_User
             // 
             this.ToolStripMenuItem_User.Name = "ToolStripMenuItem_User";
-            this.ToolStripMenuItem_User.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_User.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_User.Text = "用户管理";
             this.ToolStripMenuItem_User.Click += new System.EventHandler(this.ToolStripMenuItem_User_Click);
             // 
             // ToolStripMenuItem_Group
             // 
             this.ToolStripMenuItem_Group.Name = "ToolStripMenuItem_Group";
-            this.ToolStripMenuItem_Group.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_Group.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_Group.Text = "用户组管理";
             this.ToolStripMenuItem_Group.Click += new System.EventHandler(this.ToolStripMenuItem_Group_Click);
             // 
             // ToolStripMenuItem_Power
             // 
             this.ToolStripMenuItem_Power.Name = "ToolStripMenuItem_Power";
-            this.ToolStripMenuItem_Power.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_Power.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_Power.Text = "权限设定";
             this.ToolStripMenuItem_Power.Click += new System.EventHandler(this.ToolStripMenuItem_Power_Click);
             // 
             // ToolStripMenuItem_ChangPwd
             // 
             this.ToolStripMenuItem_ChangPwd.Name = "ToolStripMenuItem_ChangPwd";
-            this.ToolStripMenuItem_ChangPwd.Size = new System.Drawing.Size(136, 22);
+            this.ToolStripMenuItem_ChangPwd.Size = new System.Drawing.Size(152, 22);
             this.ToolStripMenuItem_ChangPwd.Text = "密码修改";
             this.ToolStripMenuItem_ChangPwd.Click += new System.EventHandler(this.ToolStripMenuItem_ChangPwd_Click);
             // 
-            // toolStripButton1
+            // ToolStripMenuItemReport
             // 
-            this.toolStripButton1.Image = global::App.Properties.Resources.zoom;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(60, 49);
-            this.toolStripButton1.Text = "任务分析";
-            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click_1);
+            this.ToolStripMenuItemReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem_Efficiency,
+            this.ToolStripMenuItem_BreakTotal,
+            this.ToolStripMenuItem_Log});
+            this.ToolStripMenuItemReport.Name = "ToolStripMenuItemReport";
+            this.ToolStripMenuItemReport.Size = new System.Drawing.Size(44, 21);
+            this.ToolStripMenuItemReport.Text = "报表";
+            // 
+            // ToolStripMenuItem_Efficiency
+            // 
+            this.ToolStripMenuItem_Efficiency.Name = "ToolStripMenuItem_Efficiency";
+            this.ToolStripMenuItem_Efficiency.Size = new System.Drawing.Size(160, 22);
+            this.ToolStripMenuItem_Efficiency.Text = "设备效率统计表";
+            this.ToolStripMenuItem_Efficiency.Click += new System.EventHandler(this.ToolStripMenuItem_Efficiency_Click);
+            // 
+            // ToolStripMenuItem_BreakTotal
+            // 
+            this.ToolStripMenuItem_BreakTotal.Name = "ToolStripMenuItem_BreakTotal";
+            this.ToolStripMenuItem_BreakTotal.Size = new System.Drawing.Size(172, 22);
+            this.ToolStripMenuItem_BreakTotal.Text = "设备故障统计表";
+            // 
+            // ToolStripMenuItem_Log
+            // 
+            this.ToolStripMenuItem_Log.Name = "ToolStripMenuItem_Log";
+            this.ToolStripMenuItem_Log.Size = new System.Drawing.Size(172, 22);
+            this.ToolStripMenuItem_Log.Text = "日志记录明细表";
             // 
             // Main
             // 
@@ -904,6 +926,9 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn Column2;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colNewCellCode;
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colNewAddress;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemReport;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Efficiency;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_BreakTotal;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Log;
     }
 }

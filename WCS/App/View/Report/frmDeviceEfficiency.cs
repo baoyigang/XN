@@ -11,9 +11,9 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace App.View.Report
 {
-    public partial class Rfrm : Form
+    public partial class frmDeviceEfficiency : Form
     {
-        public Rfrm()
+        public frmDeviceEfficiency()
         {
             InitializeComponent();
         }

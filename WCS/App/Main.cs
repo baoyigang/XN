@@ -1002,7 +1002,12 @@ namespace App
 
         private void toolStripButton1_Click_1(object sender, EventArgs e)
         {
-            App.View.Report.Rfrm f = new View.Report.Rfrm();
+            
+        }
+
+        private void ToolStripMenuItem_Efficiency_Click(object sender, EventArgs e)
+        {
+            App.View.Report.frmDeviceEfficiency f = new View.Report.frmDeviceEfficiency();
             f.ShowDialog();
         }
     }
