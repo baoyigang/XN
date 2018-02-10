@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.ToolStripMenuItemDelCraneTask = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemCellCode = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,8 +102,9 @@
             this.ToolStripMenuItem_ChangPwd = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemReport = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Efficiency = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolStripMenuItem_BreakTotal = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_BreakDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItem_Log = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolStripMenuItem_BreakTotal = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.pnlTab.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -423,18 +424,18 @@
             // 
             this.dgvMain.AllowUserToAddRows = false;
             this.dgvMain.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dgvMain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvMain.AutoGenerateColumns = false;
             this.dgvMain.BackgroundColor = System.Drawing.Color.WhiteSmoke;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMain.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvMain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMain.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column5,
@@ -795,6 +796,7 @@
             // 
             this.ToolStripMenuItemReport.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ToolStripMenuItem_Efficiency,
+            this.ToolStripMenuItem_BreakDetail,
             this.ToolStripMenuItem_BreakTotal,
             this.ToolStripMenuItem_Log});
             this.ToolStripMenuItemReport.Name = "ToolStripMenuItemReport";
@@ -808,17 +810,23 @@
             this.ToolStripMenuItem_Efficiency.Text = "设备效率统计表";
             this.ToolStripMenuItem_Efficiency.Click += new System.EventHandler(this.ToolStripMenuItem_Efficiency_Click);
             // 
-            // ToolStripMenuItem_BreakTotal
+            // ToolStripMenuItem_BreakDetail
             // 
-            this.ToolStripMenuItem_BreakTotal.Name = "ToolStripMenuItem_BreakTotal";
-            this.ToolStripMenuItem_BreakTotal.Size = new System.Drawing.Size(172, 22);
-            this.ToolStripMenuItem_BreakTotal.Text = "设备故障统计表";
+            this.ToolStripMenuItem_BreakDetail.Name = "ToolStripMenuItem_BreakDetail";
+            this.ToolStripMenuItem_BreakDetail.Size = new System.Drawing.Size(160, 22);
+            this.ToolStripMenuItem_BreakDetail.Text = "设备故障明细表";
             // 
             // ToolStripMenuItem_Log
             // 
             this.ToolStripMenuItem_Log.Name = "ToolStripMenuItem_Log";
-            this.ToolStripMenuItem_Log.Size = new System.Drawing.Size(172, 22);
+            this.ToolStripMenuItem_Log.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItem_Log.Text = "日志记录明细表";
+            // 
+            // ToolStripMenuItem_BreakTotal
+            // 
+            this.ToolStripMenuItem_BreakTotal.Name = "ToolStripMenuItem_BreakTotal";
+            this.ToolStripMenuItem_BreakTotal.Size = new System.Drawing.Size(160, 22);
+            this.ToolStripMenuItem_BreakTotal.Text = "设备故障统计表";
             // 
             // Main
             // 
@@ -928,7 +936,8 @@
         private DataGridViewAutoFilter.DataGridViewAutoFilterTextBoxColumn colNewAddress;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemReport;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Efficiency;
-        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_BreakTotal;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_BreakDetail;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_Log;
+        private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItem_BreakTotal;
     }
 }
