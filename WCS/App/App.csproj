@@ -269,10 +269,10 @@
     <Compile Include="View\Dispatcher\frmScan.Designer.cs">
       <DependentUpon>frmScan.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Param\Rfrm.cs">
+    <Compile Include="View\Report\Rfrm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Param\Rfrm.Designer.cs">
+    <Compile Include="View\Report\Rfrm.Designer.cs">
       <DependentUpon>Rfrm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\TaskCarNo.cs">
@@ -485,7 +485,7 @@
     <EmbeddedResource Include="View\Dispatcher\frmScan.resx">
       <DependentUpon>frmScan.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Param\Rfrm.resx">
+    <EmbeddedResource Include="View\Report\Rfrm.resx">
       <DependentUpon>Rfrm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TaskCarNo.resx">

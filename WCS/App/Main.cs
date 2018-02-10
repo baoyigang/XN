@@ -1002,7 +1002,7 @@ namespace App
 
         private void toolStripButton1_Click_1(object sender, EventArgs e)
         {
-            App.View.Param.Rfrm f = new View.Param.Rfrm();
+            App.View.Report.Rfrm f = new View.Report.Rfrm();
             f.ShowDialog();
         }
     }
