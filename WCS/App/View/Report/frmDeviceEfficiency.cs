@@ -466,7 +466,7 @@ namespace App.View.Report
 
         }
 
-
+        //放大缩小
         private void Rfrm_MouseWheel(object sender, MouseEventArgs e) 
         {
             if (e.Delta>0)
