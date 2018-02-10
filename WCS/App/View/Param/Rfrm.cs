@@ -28,6 +28,31 @@ namespace App.View.Param
 
         private void Rfrm_Load(object sender, EventArgs e)
         {
+            DataTable dt = bll.FillDataTable("CMD.SelectAisle", new DataParameter("{0}", string.Format("WareHouseCode='{0}'", "S")));
+            int AisleNoCount = dt.Rows.Count;
+            DataTable dtDevice;
+
+            for (int i = 1; i < AisleNoCount + 1; i++)
+            {
+                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}'", "S", "0" + i.ToString())));
+                for (int j = 1; j < dtDevice.Rows.Count + 1; j++)
+                {
+                    chart1.Series.Add(new Series(dtDevice.Rows[j - 1]["DeviceNo"].ToString()));
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].Label = "#VAL";
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].IsVisibleInLegend = false;
+                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo"].ToString()].ChartType = SeriesChartType.Column;
+                }
+                chart1.Series.Add(new Series(i.ToString() + "号巷道"));
+                chart1.Series[i.ToString() + "号巷道"].Label = "#VAL";
+                chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = false;
+                chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
+                chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
+            }
+            chart1.Series.Add(new Series("任务数"));
+            chart1.Series["任务数"].Label = "#VAL";
+            chart1.Series["任务数"].ChartType = SeriesChartType.Column;
+            chart1.Series["任务数"].CustomProperties = "DrawingStyle=Cylinder";
+
             dateTimePicker1.Value=dateTimePicker2.Value.Add(new TimeSpan(-31,0,0,0));
             stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
