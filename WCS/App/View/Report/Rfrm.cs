@@ -58,7 +58,7 @@ namespace App.View.Report
                 chart1.Series[i.ToString() + "号巷道"].LabelAngle = 30;
                 chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
                 chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
-                chart1.Series[i.ToString() + "号巷道"].Color = Color.Red;
+                chart1.Series[i.ToString() + "号巷道"].Color = Color.Red;  
                 chart1.Series[i.ToString() + "号巷道"].ToolTip = i.ToString() + "号巷道";
 
             }
@@ -67,7 +67,6 @@ namespace App.View.Report
             chart1.Series["任务数"].CustomProperties = "DrawingStyle=Cylinder";
             chart1.Series["任务数"].LabelAngle = 30;
             chart1.Series["任务数"].Color = Color.Blue;
-            chart1.Series["任务数"].SmartLabelStyle.MovingDirection = LabelAlignmentStyles.Top;
             chart1.Series["任务数"].ChartType = SeriesChartType.Column;
 
             chart1.ChartAreas[0].AxisX.LabelStyle.Angle = 30;
@@ -76,7 +75,7 @@ namespace App.View.Report
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
             GetChart(0,stardate,enddate);
             this.MouseWheel +=new MouseEventHandler(Rfrm_MouseWheel);
-            chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
+            chart1.ChartAreas[0].AxisX.ScaleView.Size = 2;
         }
         //获取日期每个巷道任务数
         private void GetAisleChart(int Aisle,int TaskType)
@@ -188,7 +187,7 @@ namespace App.View.Report
                 txData2.Clear();
                 tyData2.Clear();
                 txHour2.Clear();
-                chart1.ChartAreas[0].AxisX.IsMarginVisible = true;
+                chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
                 foreach (var series in chart1.Series)
                 {
                     series.Points.Clear();
@@ -412,7 +411,6 @@ namespace App.View.Report
                     series.Points.Clear();
                 }
                 chart1.ChartAreas[0].Axes[0].LabelStyle.Format = "#时";
-                chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
                 DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
                 for (int i = 0; i < 24; i++)
                 {
@@ -447,8 +445,8 @@ namespace App.View.Report
                  
                 }
 
-                chart1.Series[21].Points.InsertXY(0, 0, 0);
-                chart1.Series[21].Points.InsertXY(24, 24.99, 0);
+                //chart1.Series[21].Points.InsertXY(0, 0, 0);
+                //chart1.Series[21].Points.InsertXY(24, 24.99, 0);
                 result = false;
             }
             catch (Exception ex)
@@ -458,16 +456,7 @@ namespace App.View.Report
             }
 
         }
-        //放大缩小
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            if (chart1.ChartAreas[0].AxisX.ScaleView.Size == 3)
-            {
-                chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.Maximum;
-            }
-            else
-                chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
-        }
+
 
         private void Rfrm_MouseWheel(object sender, MouseEventArgs e) 
         {
