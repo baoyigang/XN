@@ -46,7 +46,7 @@ namespace App.View.Report
                     chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].ChartType = SeriesChartType.Column;
                     chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].SmartLabelStyle.MovingDirection = LabelAlignmentStyles.Top;
                     chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Color = Color.Green;
-
+                    chart1.Series[j - 1].LegendText = j.ToString() + "号设备";
                     if (j==2)
                     {
                         chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Color = Color.Orange;
@@ -60,7 +60,7 @@ namespace App.View.Report
                 chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
                 chart1.Series[i.ToString() + "号巷道"].Color = Color.Red;  
                 chart1.Series[i.ToString() + "号巷道"].ToolTip = i.ToString() + "号巷道";
-
+                chart1.Series["1号巷道"].LegendText = "巷道";
             }
             chart1.Series.Add(new Series("任务数"));
             chart1.Series["任务数"].Label = "#VAL";
@@ -344,7 +344,10 @@ namespace App.View.Report
             {
                 for (int i = AisleStart; i < AisleNoCount + AisleStart; i++)
                 {
-                    chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = true;
+                    if (chart1.Series[i.ToString() + "号巷道"].LegendText != "")
+                    {
+                        chart1.Series[AisleStart.ToString() + "号巷道"].IsVisibleInLegend = true;
+                    }
                     GetAisleChart(i, 0);
                 }
             }
@@ -352,7 +355,7 @@ namespace App.View.Report
             {
                 foreach (var item in chart1.Series)
                 {
-                    if (item.CustomProperties == "")
+                    if (item.LegendText != "" && item.Color!=Color.Red)
                     {
                         item.IsVisibleInLegend = true;
                     }
@@ -425,7 +428,10 @@ namespace App.View.Report
                         {
 
                             int e = c.Count(t => t[0].ToString() == "0" + j.ToString());
-                            chart1.Series[j.ToString() + "号巷道"].IsVisibleInLegend = true;
+                            if (chart1.Series[j.ToString() + "号巷道"].LegendText != "")
+                            {
+                                chart1.Series[AisleStart.ToString() + "号巷道"].IsVisibleInLegend = true;
+                            }
                             chart1.Series[j.ToString() + "号巷道"].Points.InsertXY(i, i + 1, e);
                         }
                     }
@@ -436,7 +442,10 @@ namespace App.View.Report
                             DataTable dtAisleCar = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}' and Priority=1", Program.WarehouseCode, "0" + j.ToString())));
                             for (int m = 0; m < dtAisleCar.Rows.Count; m++)
                             {
-                                chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].IsVisibleInLegend = true;
+                                if (chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].LegendText != "")
+                                {
+                                    chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].IsVisibleInLegend = true;
+                                }
                                 int carDevice = c.Count(t => t[2].ToString() == dtAisleCar.Rows[m]["DeviceNo2"].ToString());
                                 chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].Points.InsertXY(i, i + 1, carDevice);
                             }
