@@ -57,7 +57,7 @@ namespace App.View.Report
                 chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = false;
                 chart1.Series[i.ToString() + "号巷道"].LabelAngle = 30;
                 chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
-                chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
+                chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Cylinder";
                 chart1.Series[i.ToString() + "号巷道"].Color = Color.Red;  
                 chart1.Series[i.ToString() + "号巷道"].ToolTip = i.ToString() + "号巷道";
                 chart1.Series["1号巷道"].LegendText = "巷道";
@@ -187,7 +187,7 @@ namespace App.View.Report
                 txData2.Clear();
                 tyData2.Clear();
                 txHour2.Clear();
-                chart1.ChartAreas[0].AxisX.IsMarginVisible = false;
+                
                 foreach (var series in chart1.Series)
                 {
                     series.Points.Clear();
@@ -218,6 +218,7 @@ namespace App.View.Report
                     tyData2.Add(a);
                 }
                 chart1.Series["任务数"].Points.DataBindXY(txData2, tyData2);
+                chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.ScaleView.SmallScrollSize;
                 result = true;
                 
                 //for (int i = 0; i < 24; i++)
@@ -415,13 +416,14 @@ namespace App.View.Report
                 }
                 chart1.ChartAreas[0].Axes[0].LabelStyle.Format = "#时";
                 DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
+                chart1.Series[21].Points.InsertXY(0, 0, 0);
                 for (int i = 0; i < 24; i++)
                 {
            
                     var c = (from DataRow Order in dt.Rows where (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) >= i && (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) < (i + 1) select Order );
                     int a = c.Count();
 
-                    chart1.Series[21].Points.InsertXY(i, i + 1, a);
+                    chart1.Series[21].Points.InsertXY(i , i + 1, a);
                     if (checkBox1.Checked)
                     {
                         for (int j = AisleStart; j < AisleStart+AisleNoCount; j++)
@@ -432,7 +434,7 @@ namespace App.View.Report
                             {
                                 chart1.Series[AisleStart.ToString() + "号巷道"].IsVisibleInLegend = true;
                             }
-                            chart1.Series[j.ToString() + "号巷道"].Points.InsertXY(i, i + 1, e);
+                            chart1.Series[j.ToString() + "号巷道"].Points.InsertXY(i , i + 1, e);
                         }
                     }
                     if (checkBox2.Checked)
@@ -447,15 +449,14 @@ namespace App.View.Report
                                     chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].IsVisibleInLegend = true;
                                 }
                                 int carDevice = c.Count(t => t[2].ToString() == dtAisleCar.Rows[m]["DeviceNo2"].ToString());
-                                chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].Points.InsertXY(i, i + 1, carDevice);
+                                chart1.Series[dtAisleCar.Rows[m]["DeviceNo2"].ToString()].Points.InsertXY(i , i + 1, carDevice);
                             }
                         }
                     }
                  
                 }
-
-                //chart1.Series[21].Points.InsertXY(0, 0, 0);
-                //chart1.Series[21].Points.InsertXY(24, 24.99, 0);
+                chart1.Series[21].Points.InsertXY(25, 25, 0);
+                chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.ScaleView.SmallScrollSize;
                 result = false;
             }
             catch (Exception ex)
@@ -478,6 +479,7 @@ namespace App.View.Report
                 else
                 {
                     chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
+                    chart1.ChartAreas[0].AxisX.ScaleView.Scroll(ScrollType.First);
                 }  
                 
             }
@@ -488,7 +490,7 @@ namespace App.View.Report
                     chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
                 }
                 else
-                    chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.Maximum;
+                    chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.ScaleView.SmallScrollSize;
             }
         }
 
