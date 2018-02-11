@@ -468,4 +468,15 @@
       select finishdate,TaskType,datediff(S,Startdate,finishdate) time from WCS_TASK where State=7 and datediff(S,Startdate,finishdate)&lt;500 and StartDate is not null and {0}
     </CommandString>
   </Command>
+  <Command ID="InsertDeviceAlarmRecord">
+    <CommandString>
+      Insert into sys_DeviceAlarmRecord(WarehouseCode,AreaCode,DeviceNo,AlarmCode,StartDate)
+      Values(@WarehouseCode,@AreaCode,@DeviceNo,@AlarmCode,GETDATE())
+    </CommandString>
+  </Command>
+  <Command ID="UpdateDeviceAlarmRecord">
+    <CommandString>
+      update sys_DeviceAlarmRecord set @AlarmCode=0 and FinishDate=GETDATE() where DeviceNo=@DeviceNo and AreaCode=@AreaCode and WarehouseCode=@WarehouseCode
+    </CommandString>
+  </Command>
 </SqlCommand>
