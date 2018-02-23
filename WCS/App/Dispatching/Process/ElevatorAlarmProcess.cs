@@ -47,7 +47,7 @@ namespace App.Dispatching.Process
                             string AlarmCode = obj.ToString();
                             string AlarmDesc = "";
                             //更新故障表
-                            DataTable dtDevice = bll.FillDataTable("CMD.SelectDevice", new DataParameter("{0}", string.Format("DeviceNo2={0}", DeviceNo)));
+                            DataTable dtDevice = bll.FillDataTable("CMD.SelectDevice", new DataParameter("{0}", string.Format("DeviceNo2='{0}'", DeviceNo)));
                             string WarehouseCode = dtDevice.Rows[0]["WarehouseCode"].ToString();
                             string AreaCode = dtDevice.Rows[0]["AreaCode"].ToString();
                             if (AlarmCode != "0")
@@ -75,7 +75,8 @@ namespace App.Dispatching.Process
                             }
                             else
                             {
-                                bll.ExecNonQuery("WCS.UpdateDeviceAlarmRecord");
+                                bll.ExecNonQuery("WCS.UpdateDeviceAlarmRecord", new DataParameter[]{new DataParameter("@AreaCode",AreaCode),new DataParameter("@WarehouseCode",WarehouseCode),new 
+                                DataParameter("@DeviceNo",DeviceNo)});
                             }
                             DataParameter[] paramb = new DataParameter[] { new DataParameter("@AlarmCode", obj), new DataParameter("@DeviceNo", DeviceNo) };
                             bll.ExecNonQueryTran("WCS.UpdateDeviceAlarm", paramb);
