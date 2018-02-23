@@ -494,5 +494,17 @@ namespace App.View.Report
             }
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(-31, 0, 0, 0));
+            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(-31, 0, 0, 0));
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(31, 0, 0, 0));
+            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(31, 0, 0, 0));
+        }
+
     }
 }

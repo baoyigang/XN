@@ -476,7 +476,15 @@
   </Command>
   <Command ID="UpdateDeviceAlarmRecord">
     <CommandString>
-      update sys_DeviceAlarmRecord set @AlarmCode=0 and FinishDate=GETDATE() where DeviceNo=@DeviceNo and AreaCode=@AreaCode and WarehouseCode=@WarehouseCode
+      update sys_DeviceAlarmRecord set  EndDate=GETDATE() where DeviceNo=@DeviceNo and AreaCode=@AreaCode and WarehouseCode=@WarehouseCode and EndDate is null
+    </CommandString>
+  </Command>
+  <Command ID="SelectAlarmRecord">
+    <CommandString>
+      select R.*,C.AisleNo,d.AlarmDesc,DATEDIFF(SS,R.StartDate,R.EndDate) duration from Sys_DeviceAlarmRecord R
+      left join CMD_AisleDevice C on C.DeviceNo2=R.DeviceNo
+      left join Sys_DeviceAlarm D on D.AlarmCode=R.AlarmCode
+      where {0}
     </CommandString>
   </Command>
 </SqlCommand>
