@@ -506,5 +506,17 @@ namespace App.View.Report
             dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(31, 0, 0, 0));
         }
 
+        private void pictureBox1_Click_1(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(-31, 0, 0, 0));
+            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(-31, 0, 0, 0));
+        }
+
+        private void pictureBox2_Click_1(object sender, EventArgs e)
+        {
+            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(31, 0, 0, 0));
+            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(31, 0, 0, 0));
+        }
+
     }
 }
