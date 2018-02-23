@@ -40,42 +40,47 @@
             this.cmbAisle = new System.Windows.Forms.ComboBox();
             this.cmbDevice = new System.Windows.Forms.ComboBox();
             this.btnCk = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.bsAlarm)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.label3.Location = new System.Drawing.Point(320, 49);
+            this.label3.Font = new System.Drawing.Font("微软雅黑", 10.55F);
+            this.label3.Location = new System.Drawing.Point(253, 31);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(27, 27);
+            this.label3.Size = new System.Drawing.Size(20, 20);
             this.label3.TabIndex = 57;
             this.label3.Text = "~";
             // 
             // dtpTaskDate2
             // 
             this.dtpTaskDate2.Checked = false;
-            this.dtpTaskDate2.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.dtpTaskDate2.Location = new System.Drawing.Point(353, 49);
+            this.dtpTaskDate2.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.dtpTaskDate2.Location = new System.Drawing.Point(278, 28);
+            this.dtpTaskDate2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpTaskDate2.Name = "dtpTaskDate2";
-            this.dtpTaskDate2.Size = new System.Drawing.Size(201, 34);
+            this.dtpTaskDate2.Size = new System.Drawing.Size(146, 26);
             this.dtpTaskDate2.TabIndex = 56;
             // 
             // dtpTaskDate1
             // 
             this.dtpTaskDate1.Checked = false;
-            this.dtpTaskDate1.Font = new System.Drawing.Font("微软雅黑", 15F);
-            this.dtpTaskDate1.Location = new System.Drawing.Point(131, 49);
+            this.dtpTaskDate1.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.dtpTaskDate1.Location = new System.Drawing.Point(103, 28);
+            this.dtpTaskDate1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpTaskDate1.Name = "dtpTaskDate1";
-            this.dtpTaskDate1.Size = new System.Drawing.Size(183, 34);
+            this.dtpTaskDate1.Size = new System.Drawing.Size(146, 26);
             this.dtpTaskDate1.TabIndex = 55;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.label2.Location = new System.Drawing.Point(39, 45);
+            this.label2.Location = new System.Drawing.Point(23, 24);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 31);
             this.label2.TabIndex = 54;
@@ -85,7 +90,8 @@
             // 
             this.lblAisle.AutoSize = true;
             this.lblAisle.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblAisle.Location = new System.Drawing.Point(15, 171);
+            this.lblAisle.Location = new System.Drawing.Point(21, 140);
+            this.lblAisle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAisle.Name = "lblAisle";
             this.lblAisle.Size = new System.Drawing.Size(123, 31);
             this.lblAisle.TabIndex = 61;
@@ -97,16 +103,18 @@
             this.cmbAlarm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAlarm.Font = new System.Drawing.Font("微软雅黑", 13F);
             this.cmbAlarm.FormattingEnabled = true;
-            this.cmbAlarm.Location = new System.Drawing.Point(161, 107);
+            this.cmbAlarm.Location = new System.Drawing.Point(152, 85);
+            this.cmbAlarm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbAlarm.Name = "cmbAlarm";
-            this.cmbAlarm.Size = new System.Drawing.Size(254, 31);
+            this.cmbAlarm.Size = new System.Drawing.Size(233, 31);
             this.cmbAlarm.TabIndex = 62;
             // 
             // lblAlarm
             // 
             this.lblAlarm.AutoSize = true;
             this.lblAlarm.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.lblAlarm.Location = new System.Drawing.Point(15, 107);
+            this.lblAlarm.Location = new System.Drawing.Point(21, 81);
+            this.lblAlarm.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAlarm.Name = "lblAlarm";
             this.lblAlarm.Size = new System.Drawing.Size(123, 31);
             this.lblAlarm.TabIndex = 63;
@@ -117,9 +125,10 @@
             this.cmbAisle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbAisle.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmbAisle.FormattingEnabled = true;
-            this.cmbAisle.Location = new System.Drawing.Point(161, 176);
+            this.cmbAisle.Location = new System.Drawing.Point(152, 145);
+            this.cmbAisle.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbAisle.Name = "cmbAisle";
-            this.cmbAisle.Size = new System.Drawing.Size(121, 29);
+            this.cmbAisle.Size = new System.Drawing.Size(103, 29);
             this.cmbAisle.TabIndex = 64;
             this.cmbAisle.SelectedIndexChanged += new System.EventHandler(this.cmbAisle_SelectedIndexChanged);
             // 
@@ -128,26 +137,39 @@
             this.cmbDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbDevice.Font = new System.Drawing.Font("微软雅黑", 12F);
             this.cmbDevice.FormattingEnabled = true;
-            this.cmbDevice.Location = new System.Drawing.Point(310, 176);
+            this.cmbDevice.Location = new System.Drawing.Point(278, 145);
+            this.cmbDevice.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbDevice.Name = "cmbDevice";
-            this.cmbDevice.Size = new System.Drawing.Size(124, 29);
+            this.cmbDevice.Size = new System.Drawing.Size(107, 29);
             this.cmbDevice.TabIndex = 65;
             // 
             // btnCk
             // 
-            this.btnCk.Location = new System.Drawing.Point(223, 288);
+            this.btnCk.Location = new System.Drawing.Point(181, 193);
+            this.btnCk.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCk.Name = "btnCk";
-            this.btnCk.Size = new System.Drawing.Size(164, 40);
+            this.btnCk.Size = new System.Drawing.Size(68, 31);
             this.btnCk.TabIndex = 66;
             this.btnCk.Text = "查询";
             this.btnCk.UseVisualStyleBackColor = true;
             this.btnCk.Click += new System.EventHandler(this.btnCk_Click);
             // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(278, 193);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(67, 31);
+            this.btnCancel.TabIndex = 67;
+            this.btnCancel.Text = "取消";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
             // frmDeviceError
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(637, 500);
+            this.ClientSize = new System.Drawing.Size(452, 253);
+            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCk);
             this.Controls.Add(this.cmbDevice);
             this.Controls.Add(this.cmbAisle);
@@ -158,7 +180,11 @@
             this.Controls.Add(this.dtpTaskDate2);
             this.Controls.Add(this.dtpTaskDate1);
             this.Controls.Add(this.label2);
+            this.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmDeviceError";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "frmDeviceError";
             this.Load += new System.EventHandler(this.frmDeviceError_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bsAlarm)).EndInit();
@@ -180,5 +206,6 @@
         private System.Windows.Forms.ComboBox cmbAisle;
         private System.Windows.Forms.ComboBox cmbDevice;
         private System.Windows.Forms.Button btnCk;
+        private System.Windows.Forms.Button btnCancel;
     }
 }

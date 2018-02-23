@@ -10,13 +10,14 @@ using Util;
 
 namespace App.View.Report
 {
-    public partial class frmDeviceErrorCheck : BaseForm
+    public partial class frmDeviceErrorDetail : BaseForm
     {
-        public frmDeviceErrorCheck()
+        public frmDeviceErrorDetail()
         {
             InitializeComponent();
         }
         BLL.BLLBase bll = new BLL.BLLBase();
+        string parentFilter = "C.WarehouseCode=''";
         private void toolStripButton_Query_Click(object sender, EventArgs e)
         {
             frmDeviceError f = new frmDeviceError();
@@ -33,8 +34,19 @@ namespace App.View.Report
         }
         private void BindData(string filter)
         {
+            parentFilter = filter;
             DataTable dt = bll.FillDataTable("WCS.SelectAlarmRecord", new DataParameter("{0}", filter));
             bsMain.DataSource = dt;
+        }
+
+        private void toolStripButton_Close_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            BindData(parentFilter);
         }
     }
 }

@@ -1014,7 +1014,7 @@ namespace App
 
         private void oolStripMenuItem_BreakDetail_Click(object sender, EventArgs e)
         {
-            App.View.Report.frmDeviceErrorCheck f = new View.Report.frmDeviceErrorCheck();
+            App.View.Report.frmDeviceErrorDetail f = new View.Report.frmDeviceErrorDetail();
             ShowForm(f);
         }
     }

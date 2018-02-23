@@ -1,6 +1,6 @@
 ﻿namespace App.View.Report
 {
-    partial class frmDeviceErrorCheck
+    partial class frmDeviceErrorDetail
     {
         /// <summary>
         /// Required designer variable.
@@ -33,7 +33,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDeviceErrorCheck));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmDeviceErrorDetail));
             this.bsMain = new System.Windows.Forms.BindingSource(this.components);
             this.pnlMain = new System.Windows.Forms.Panel();
             this.pnlContent = new System.Windows.Forms.Panel();
@@ -171,6 +171,7 @@
             this.toolStripButton1.Size = new System.Drawing.Size(60, 50);
             this.toolStripButton1.Text = "刷新";
             this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // toolStripButton_Query
             // 
@@ -192,6 +193,7 @@
             this.toolStripButton_Close.Size = new System.Drawing.Size(60, 50);
             this.toolStripButton_Close.Text = "关闭";
             this.toolStripButton_Close.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
+            this.toolStripButton_Close.Click += new System.EventHandler(this.toolStripButton_Close_Click);
             // 
             // pnlBottom
             // 
@@ -268,14 +270,14 @@
             this.duration.Name = "duration";
             this.duration.ReadOnly = true;
             // 
-            // frmDeviceErrorCheck
+            // frmDeviceErrorDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1052, 572);
             this.Controls.Add(this.pnlMain);
-            this.Name = "frmDeviceErrorCheck";
-            this.Text = "frmDeviceErrorCheck";
+            this.Name = "frmDeviceErrorDetail";
+            this.Text = "设备故障明细";
             ((System.ComponentModel.ISupportInitialize)(this.bsMain)).EndInit();
             this.pnlMain.ResumeLayout(false);
             this.pnlContent.ResumeLayout(false);

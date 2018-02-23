@@ -281,11 +281,11 @@
     <Compile Include="View\Report\frmDeviceError.Designer.cs">
       <DependentUpon>frmDeviceError.cs</DependentUpon>
     </Compile>
-    <Compile Include="View\Report\frmDeviceErrorCheck.cs">
+    <Compile Include="View\Report\frmDeviceErrorDetail.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\Report\frmDeviceErrorCheck.Designer.cs">
-      <DependentUpon>frmDeviceErrorCheck.cs</DependentUpon>
+    <Compile Include="View\Report\frmDeviceErrorDetail.Designer.cs">
+      <DependentUpon>frmDeviceErrorDetail.cs</DependentUpon>
     </Compile>
     <Compile Include="View\TaskCarNo.cs">
       <SubType>Form</SubType>
@@ -503,8 +503,8 @@
     <EmbeddedResource Include="View\Report\frmDeviceError.resx">
       <DependentUpon>frmDeviceError.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\Report\frmDeviceErrorCheck.resx">
-      <DependentUpon>frmDeviceErrorCheck.cs</DependentUpon>
+    <EmbeddedResource Include="View\Report\frmDeviceErrorDetail.resx">
+      <DependentUpon>frmDeviceErrorDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TaskCarNo.resx">
       <DependentUpon>TaskCarNo.cs</DependentUpon>
