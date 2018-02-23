@@ -70,7 +70,7 @@ namespace App.View.Report
             chart1.Series["任务数"].ChartType = SeriesChartType.Column;
 
             chart1.ChartAreas[0].AxisX.LabelStyle.Angle = 30;
-            dateTimePicker1.Value=dateTimePicker2.Value.Add(new TimeSpan(-31,0,0,0));
+            dateTimePicker1.Value=dateTimePicker2.Value.AddMonths(-1);
             stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
             GetChart(0,stardate,enddate);
@@ -496,26 +496,14 @@ namespace App.View.Report
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(-31, 0, 0, 0));
-            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(-31, 0, 0, 0));
+            dateTimePicker1.Value = dateTimePicker1.Value.AddMonths(-1);
+            dateTimePicker2.Value = dateTimePicker2.Value.AddMonths(-1);
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
         {
-            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(31, 0, 0, 0));
-            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(31, 0, 0, 0));
-        }
-
-        private void pictureBox1_Click_1(object sender, EventArgs e)
-        {
-            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(-31, 0, 0, 0));
-            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(-31, 0, 0, 0));
-        }
-
-        private void pictureBox2_Click_1(object sender, EventArgs e)
-        {
-            dateTimePicker1.Value = dateTimePicker1.Value.Add(new TimeSpan(31, 0, 0, 0));
-            dateTimePicker2.Value = dateTimePicker2.Value.Add(new TimeSpan(31, 0, 0, 0));
+            dateTimePicker1.Value = dateTimePicker1.Value.AddMonths(1);
+            dateTimePicker2.Value = dateTimePicker2.Value.AddMonths(1);
         }
 
     }

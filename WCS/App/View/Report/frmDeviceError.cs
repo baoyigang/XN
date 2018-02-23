@@ -22,7 +22,7 @@ namespace App.View.Report
         bool checkselcet = true;
         private void frmDeviceError_Load(object sender, EventArgs e)
         {
-            dtpTaskDate1.Value = dtpTaskDate2.Value.Add(new TimeSpan(-31, 0, 0, 0));
+            dtpTaskDate1.Value = dtpTaskDate2.Value.AddMonths(-1);
             BindData();
             cmbAlarm.Items.Insert(0,"all");
             cmbAlarm.SelectedIndex = 0;

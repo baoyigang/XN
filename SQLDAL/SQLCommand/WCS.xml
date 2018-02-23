@@ -487,4 +487,10 @@
       where {0}
     </CommandString>
   </Command>
+  <Command ID="InsertLog">
+    <CommandString>
+      insert into sys_Log(LogDate,LogType,Info)
+      Values(@LogDate,@LogType,@Info)
+    </CommandString>
+  </Command>
 </SqlCommand>
