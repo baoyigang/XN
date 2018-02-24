@@ -41,13 +41,14 @@
             this.cmbDevice = new System.Windows.Forms.ComboBox();
             this.btnCk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.bsAlarm)).BeginInit();
             this.SuspendLayout();
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("微软雅黑", 10.55F);
+            this.label3.Font = new System.Drawing.Font("Microsoft YaHei", 10.55F);
             this.label3.Location = new System.Drawing.Point(253, 31);
             this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
@@ -58,7 +59,7 @@
             // dtpTaskDate2
             // 
             this.dtpTaskDate2.Checked = false;
-            this.dtpTaskDate2.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.dtpTaskDate2.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.dtpTaskDate2.Location = new System.Drawing.Point(278, 28);
             this.dtpTaskDate2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpTaskDate2.Name = "dtpTaskDate2";
@@ -68,7 +69,7 @@
             // dtpTaskDate1
             // 
             this.dtpTaskDate1.Checked = false;
-            this.dtpTaskDate1.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.dtpTaskDate1.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F);
             this.dtpTaskDate1.Location = new System.Drawing.Point(103, 28);
             this.dtpTaskDate1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dtpTaskDate1.Name = "dtpTaskDate1";
@@ -78,74 +79,74 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.label2.Location = new System.Drawing.Point(23, 24);
+            this.label2.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(16, 31);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 31);
+            this.label2.Size = new System.Drawing.Size(79, 20);
             this.label2.TabIndex = 54;
-            this.label2.Text = "时间：";
+            this.label2.Text = "日期区间：";
             // 
             // lblAisle
             // 
             this.lblAisle.AutoSize = true;
-            this.lblAisle.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblAisle.Location = new System.Drawing.Point(21, 140);
+            this.lblAisle.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblAisle.Location = new System.Drawing.Point(16, 67);
             this.lblAisle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAisle.Name = "lblAisle";
-            this.lblAisle.Size = new System.Drawing.Size(123, 31);
+            this.lblAisle.Size = new System.Drawing.Size(72, 20);
             this.lblAisle.TabIndex = 61;
-            this.lblAisle.Text = "巷道设备 :";
+            this.lblAisle.Text = "巷道编号 :";
             // 
             // cmbAlarm
             // 
             this.cmbAlarm.DataSource = this.bsAlarm;
             this.cmbAlarm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAlarm.Font = new System.Drawing.Font("微软雅黑", 13F);
+            this.cmbAlarm.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmbAlarm.FormattingEnabled = true;
-            this.cmbAlarm.Location = new System.Drawing.Point(152, 85);
+            this.cmbAlarm.Location = new System.Drawing.Point(103, 103);
             this.cmbAlarm.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbAlarm.Name = "cmbAlarm";
-            this.cmbAlarm.Size = new System.Drawing.Size(233, 31);
+            this.cmbAlarm.Size = new System.Drawing.Size(321, 28);
             this.cmbAlarm.TabIndex = 62;
             // 
             // lblAlarm
             // 
             this.lblAlarm.AutoSize = true;
-            this.lblAlarm.Font = new System.Drawing.Font("微软雅黑", 18F);
-            this.lblAlarm.Location = new System.Drawing.Point(21, 81);
+            this.lblAlarm.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblAlarm.Location = new System.Drawing.Point(16, 105);
             this.lblAlarm.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblAlarm.Name = "lblAlarm";
-            this.lblAlarm.Size = new System.Drawing.Size(123, 31);
+            this.lblAlarm.Size = new System.Drawing.Size(72, 20);
             this.lblAlarm.TabIndex = 63;
-            this.lblAlarm.Text = "错误代码 :";
+            this.lblAlarm.Text = "故障代码 :";
             // 
             // cmbAisle
             // 
             this.cmbAisle.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbAisle.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cmbAisle.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmbAisle.FormattingEnabled = true;
-            this.cmbAisle.Location = new System.Drawing.Point(152, 145);
+            this.cmbAisle.Location = new System.Drawing.Point(103, 63);
             this.cmbAisle.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbAisle.Name = "cmbAisle";
-            this.cmbAisle.Size = new System.Drawing.Size(103, 29);
+            this.cmbAisle.Size = new System.Drawing.Size(90, 28);
             this.cmbAisle.TabIndex = 64;
             this.cmbAisle.SelectedIndexChanged += new System.EventHandler(this.cmbAisle_SelectedIndexChanged);
             // 
             // cmbDevice
             // 
             this.cmbDevice.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbDevice.Font = new System.Drawing.Font("微软雅黑", 12F);
+            this.cmbDevice.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cmbDevice.FormattingEnabled = true;
-            this.cmbDevice.Location = new System.Drawing.Point(278, 145);
+            this.cmbDevice.Location = new System.Drawing.Point(278, 63);
             this.cmbDevice.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cmbDevice.Name = "cmbDevice";
-            this.cmbDevice.Size = new System.Drawing.Size(107, 29);
+            this.cmbDevice.Size = new System.Drawing.Size(146, 28);
             this.cmbDevice.TabIndex = 65;
             // 
             // btnCk
             // 
-            this.btnCk.Location = new System.Drawing.Point(181, 193);
+            this.btnCk.Location = new System.Drawing.Point(144, 156);
             this.btnCk.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnCk.Name = "btnCk";
             this.btnCk.Size = new System.Drawing.Size(68, 31);
@@ -156,7 +157,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(278, 193);
+            this.btnCancel.Location = new System.Drawing.Point(241, 156);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(67, 31);
             this.btnCancel.TabIndex = 67;
@@ -164,11 +165,23 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.Location = new System.Drawing.Point(201, 67);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(72, 20);
+            this.label1.TabIndex = 68;
+            this.label1.Text = "设备编号 :";
+            // 
             // frmDeviceError
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(452, 253);
+            this.ClientSize = new System.Drawing.Size(443, 200);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnCk);
             this.Controls.Add(this.cmbDevice);
@@ -180,12 +193,12 @@
             this.Controls.Add(this.dtpTaskDate2);
             this.Controls.Add(this.dtpTaskDate1);
             this.Controls.Add(this.label2);
-            this.Font = new System.Drawing.Font("微软雅黑", 10.5F);
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 10.5F);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "frmDeviceError";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "frmDeviceError";
+            this.Text = "设备故障明细表";
             this.Load += new System.EventHandler(this.frmDeviceError_Load);
             ((System.ComponentModel.ISupportInitialize)(this.bsAlarm)).EndInit();
             this.ResumeLayout(false);
@@ -207,5 +220,6 @@
         private System.Windows.Forms.ComboBox cmbDevice;
         private System.Windows.Forms.Button btnCk;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label1;
     }
 }
