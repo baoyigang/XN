@@ -377,11 +377,20 @@ namespace WindowsFormsApplication1
             }
         }
         //获取24小时每小时任务数
+        //public class NewClass
+        //{
+        //    public string newOrder { get; set; }
+        //}
+        //public List<NewClass> get(DataParameter[] param)
+        //{
+        //    DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
+        //    var c = (from DataRow Order in dt.Rows where (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) >= i && (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) < (i + 1) select new NewClass{ newOrder = Order});
+        //    return c.ToList<NewClass>();
+        //}
         private void GetDetailChart(DataParameter[] param)
         {
             try
             {
-
                 txData2.Clear();
                 tyData2.Clear();
                 txHour2.Clear();
@@ -396,6 +405,7 @@ namespace WindowsFormsApplication1
                 {
            
                     var c = (from DataRow Order in dt.Rows where (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) >= i && (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) < (i + 1) select Order );
+                    var date1 = c.Select(s => s["FinishDate"]);
                     int a = c.Count();
 
                     chart1.Series[21].Points.InsertXY(i, i + 1, a);

@@ -213,7 +213,7 @@ namespace App.View.Report
                     string ymd = dateTimePicker1.Value.AddDays(i).ToString("yyyy-MM-dd");
                     string d = ymd.Substring(5);
                     txData2.Add(d);
-
+                    
                     int a = (from DataRow Order in dt.Rows where ((DateTime)Order["FinishDate"]).ToString("yyyy-MM-dd") == ymd select 1).Count();
                     tyData2.Add(a);
                 }
@@ -422,7 +422,7 @@ namespace App.View.Report
            
                     var c = (from DataRow Order in dt.Rows where (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) >= i && (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) < (i + 1) select Order );
                     int a = c.Count();
-
+                    
                     chart1.Series[21].Points.InsertXY(i , i + 1, a);
                     if (checkBox1.Checked)
                     {
