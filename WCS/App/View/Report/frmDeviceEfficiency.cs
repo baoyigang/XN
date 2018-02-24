@@ -496,11 +496,21 @@ namespace App.View.Report
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
+            
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void btnLastMonth_Click(object sender, EventArgs e)
+        {
             dateTimePicker1.Value = dateTimePicker1.Value.AddMonths(-1);
             dateTimePicker2.Value = dateTimePicker2.Value.AddMonths(-1);
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
+        private void btnNextMonth_Click(object sender, EventArgs e)
         {
             dateTimePicker1.Value = dateTimePicker1.Value.AddMonths(1);
             dateTimePicker2.Value = dateTimePicker2.Value.AddMonths(1);
