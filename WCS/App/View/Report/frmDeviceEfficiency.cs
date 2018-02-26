@@ -60,7 +60,10 @@ namespace App.View.Report
                 chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Cylinder";
                 chart1.Series[i.ToString() + "号巷道"].Color = Color.Red;  
                 chart1.Series[i.ToString() + "号巷道"].ToolTip = i.ToString() + "号巷道";
-                chart1.Series["1号巷道"].LegendText = "巷道";
+                if (i == AisleStart)
+                {
+                    chart1.Series[i.ToString() + "号巷道"].LegendText = "巷道";
+                }
             }
             chart1.Series.Add(new Series("任务数"));
             chart1.Series["任务数"].Label = "#VAL";
@@ -416,14 +419,14 @@ namespace App.View.Report
                 }
                 chart1.ChartAreas[0].Axes[0].LabelStyle.Format = "#时";
                 DataTable dt = bll.FillDataTable("WCS.SelectTaskFinish", param);
-                chart1.Series[21].Points.InsertXY(0, 0, 0);
+                chart1.Series["任务数"].Points.InsertXY(0, 0, 0);
                 for (int i = 0; i < 24; i++)
                 {
            
                     var c = (from DataRow Order in dt.Rows where (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) >= i && (int.Parse(((DateTime)Order["FinishDate"]).ToString("HH"))) < (i + 1) select Order );
                     int a = c.Count();
-                    
-                    chart1.Series[21].Points.InsertXY(i , i + 1, a);
+
+                    chart1.Series["任务数"].Points.InsertXY(i, i + 1, a);
                     if (checkBox1.Checked)
                     {
                         for (int j = AisleStart; j < AisleStart+AisleNoCount; j++)
@@ -455,7 +458,7 @@ namespace App.View.Report
                     }
                  
                 }
-                chart1.Series[21].Points.InsertXY(25, 25, 0);
+                chart1.Series["任务数"].Points.InsertXY(25, 25, 0);
                 chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.ScaleView.SmallScrollSize;
                 result = false;
             }
@@ -494,15 +497,6 @@ namespace App.View.Report
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            
-        }
 
         private void btnLastMonth_Click(object sender, EventArgs e)
         {

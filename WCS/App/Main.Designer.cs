@@ -822,6 +822,7 @@
             this.ToolStripMenuItem_BreakTotal.Name = "ToolStripMenuItem_BreakTotal";
             this.ToolStripMenuItem_BreakTotal.Size = new System.Drawing.Size(160, 22);
             this.ToolStripMenuItem_BreakTotal.Text = "设备故障统计表";
+            this.ToolStripMenuItem_BreakTotal.Click += new System.EventHandler(this.ToolStripMenuItem_BreakTotal_Click);
             // 
             // ToolStripMenuItem_Log
             // 

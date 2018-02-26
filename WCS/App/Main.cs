@@ -1010,7 +1010,8 @@ namespace App
 
         private void ToolStripMenuItem_BreakTotal_Click(object sender, EventArgs e)
         {
-
+            App.View.Report.frmErrorTotal f = new View.Report.frmErrorTotal();
+            f.ShowDialog();
         }
 
         private void ToolStripMenuItem_BreakDetail_Click(object sender, EventArgs e)
@@ -1018,6 +1019,7 @@ namespace App
             App.View.Report.frmDeviceErrorDetail f = new View.Report.frmDeviceErrorDetail();
             ShowForm(f);
         }
+
 
     }
 }

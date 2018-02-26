@@ -23,6 +23,14 @@ namespace App.View.Report
         private void frmDeviceError_Load(object sender, EventArgs e)
         {
             dtpTaskDate1.Value = dtpTaskDate2.Value.AddMonths(-1);
+            if (Program.WarehouseCode == "S")
+            {
+                DeviceType = "02";
+            }
+            else
+            {
+                DeviceType = "01";
+            }
             BindData();
             cmbAlarm.Items.Insert(0,"all");
             cmbAlarm.SelectedIndex = 0;
@@ -45,7 +53,7 @@ namespace App.View.Report
         }
         private DataTable GetMonitorData()
         {
-            DataTable dt = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", "Flag=2") });
+            DataTable dt = bll.FillDataTable("WCS.SelectDeviceAlarm", new DataParameter[] { new DataParameter("{0}", string.Format("DeviceType='{0}'", DeviceType)) });
             dt = UniteDataTableColumns(dt, "AlarmCD", "AlarmCode", "AlarmDesc");
             DataRow dr = dt.NewRow();
             dr["Flag"] = 2;
@@ -71,43 +79,34 @@ namespace App.View.Report
 
         private void cmbAisle_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int aisleNo = cmbAisle.SelectedIndex;
-            DataTable dtDevice = bll.FillDataTable("CMD.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("AisleNo='{0}' and WarehouseCode= '{1}'", "0" + aisleNo.ToString(), Program.WarehouseCode)));
+            string aisleNo = cmbAisle.Text;
+            DataTable dtDevice = bll.FillDataTable("CMD.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("AisleNo='{0}' and WarehouseCode= '{1}' and Priority = 1", aisleNo, Program.WarehouseCode)));
             cmbDevice.DataSource = dtDevice;
             cmbDevice.DisplayMember = "DeviceNo2";
         }
 
         private void btnCk_Click(object sender, EventArgs e)
         {
-            string WarehouseCode = Program.WarehouseCode;
-            if (WarehouseCode=="S")
-            {
-                DeviceType = "2";
-            }
-            else
-            {
-                DeviceType = "01";
-            }
             if (cmbAlarm.SelectedIndex==0)
             {
                 if (cmbAisle.SelectedIndex==0)
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}'", WarehouseCode, DeviceType);
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}'", Program.WarehouseCode, DeviceType);
                 }
                 else
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='0{2}' and R.DeviceNo = '{3}'", WarehouseCode, DeviceType, cmbAisle.SelectedIndex.ToString(),cmbDevice.Text); 
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='0{2}' and R.DeviceNo = '{3}'", Program.WarehouseCode, DeviceType, cmbAisle.SelectedIndex.ToString(), cmbDevice.Text); 
                 }
             }
             else
             {
                 if (cmbAisle.SelectedIndex==0)
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and R.AlarmCode='{2}'", WarehouseCode, DeviceType, cmbAlarm.SelectedIndex.ToString()); 
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and R.AlarmCode='{2}'", Program.WarehouseCode, DeviceType, cmbAlarm.SelectedIndex.ToString()); 
                 }
                 else
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='0{2}' and R.DeviceNo = '{3}' and  R.AlarmCode='{4}'", WarehouseCode, DeviceType, cmbAisle.SelectedIndex.ToString(), cmbDevice.Text, cmbAlarm.SelectedIndex.ToString());
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='0{2}' and R.DeviceNo = '{3}' and  R.AlarmCode='{4}'", Program.WarehouseCode, DeviceType, cmbAisle.SelectedIndex.ToString(), cmbDevice.Text, cmbAlarm.SelectedIndex.ToString());
                 }
             }
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

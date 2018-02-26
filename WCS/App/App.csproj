@@ -165,6 +165,14 @@
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
     <Compile Include="BLL\UserBll.cs" />
+    <Compile Include="CheckComboBox\CheckBoxComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CheckComboBox\CheckBoxComboBox.designer.cs">
+      <DependentUpon>CheckBoxComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckComboBox\Selection Wrappers\ListSelectionWrapper.cs" />
+    <Compile Include="CheckComboBox\Selection Wrappers\ObjectSelectionWrapper.cs" />
     <Compile Include="Common\frmSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,11 +197,25 @@
     <Compile Include="frmCancel.Designer.cs">
       <DependentUpon>frmCancel.cs</DependentUpon>
     </Compile>
+    <Compile Include="CheckComboBox\GripBounds.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckComboBox\NativeMethods.cs" />
+    <Compile Include="CheckComboBox\Popup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CheckComboBox\Popup.designer.cs">
+      <DependentUpon>Popup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckComboBox\PopupComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CheckComboBox\PopupComboBox.designer.cs">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -286,6 +308,12 @@
     </Compile>
     <Compile Include="View\Report\frmDeviceErrorDetail.Designer.cs">
       <DependentUpon>frmDeviceErrorDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\Report\frmErrorTotal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Report\frmErrorTotal.Designer.cs">
+      <DependentUpon>frmErrorTotal.cs</DependentUpon>
     </Compile>
     <Compile Include="View\TaskCarNo.cs">
       <SubType>Form</SubType>
@@ -459,6 +487,9 @@
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CheckComboBox\PopupComboBox.resx">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
@@ -505,6 +536,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\Report\frmDeviceErrorDetail.resx">
       <DependentUpon>frmDeviceErrorDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\Report\frmErrorTotal.resx">
+      <DependentUpon>frmErrorTotal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\TaskCarNo.resx">
       <DependentUpon>TaskCarNo.cs</DependentUpon>
