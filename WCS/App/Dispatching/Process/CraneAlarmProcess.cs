@@ -42,8 +42,14 @@ namespace App.Dispatching.Process
                         string AlarmCode = obj.ToString();
                         string AlarmDesc = "";
 
+                        //更新故障表
+                        DataTable dtDevice = bll.FillDataTable("CMD.SelectDevice", new DataParameter("{0}", string.Format("DeviceNo2='{0}'", DeviceNo)));
+                        string WarehouseCode = dtDevice.Rows[0]["WarehouseCode"].ToString();
+                        string AreaCode = dtDevice.Rows[0]["AreaCode"].ToString();
                         if (AlarmCode != "0")
                         {
+                            bll.ExecNonQuery("WCS.InsertDeviceAlarmRecord", new DataParameter[]{new DataParameter("@WareHouseCode",WarehouseCode),new 
+                                DataParameter("@AreaCode",AreaCode), new DataParameter("@DeviceNo",DeviceNo),new DataParameter("@AlarmCode",AlarmCode)});
                             DataRow[] drs = dtDeviceAlarm.Select(string.Format("AlarmCode={0}", AlarmCode));
                             if (drs.Length > 0)
                                 AlarmDesc = drs[0]["AlarmDesc"].ToString();
@@ -65,6 +71,11 @@ namespace App.Dispatching.Process
                                 }
                             }
                             Logger.Error("设备编号" + DeviceNo + "发生报警，代号：" + obj.ToString() + ";描述：" + AlarmDesc);
+                        }
+                        else
+                        {
+                            bll.ExecNonQuery("WCS.UpdateDeviceAlarmRecord", new DataParameter[]{new DataParameter("@AreaCode",AreaCode),new DataParameter("@WarehouseCode",WarehouseCode),new 
+                                DataParameter("@DeviceNo",DeviceNo)});
                         }
                         DataParameter[] paramb = new DataParameter[] { new DataParameter("@AlarmCode", obj), new DataParameter("@DeviceNo", DeviceNo) };
                         bll.ExecNonQueryTran("WCS.UpdateDeviceAlarm", paramb);

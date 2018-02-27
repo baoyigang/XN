@@ -20,11 +20,14 @@ namespace App.View.Report
         BLL.BLLBase bll = new BLL.BLLBase();
         List<string> XDate = new List<string>();
         List<int> YTime = new List<int>();
+        List<string> XDevice = new List<string>();
+        List<string> XAlarm = new List<string>();
         string stardate;
         string enddate;
         public int AisleNoCount { get; set; }
         public int AisleStart { get; set; }
         public string DeviceType { get; set; }
+        bool result = false;
 
         private void frmErrorTotal_Load(object sender, EventArgs e)
         {
@@ -68,6 +71,24 @@ namespace App.View.Report
             chart1.Series["故障频次"].Color = Color.Blue;
             chart1.Series["故障频次"].ChartType = SeriesChartType.Column;
 
+            chart2.Series.Add(new Series("故障频次(圆)"));
+            chart2.Series["故障频次(圆)"].ChartType = SeriesChartType.Pie;
+            chart2.Series["故障频次(圆)"].Label = "#PERCENT{P} 编号:#VALX";
+            chart2.Series["故障频次(圆)"].Font = new Font("微软雅黑", 12);
+            chart2.Series["故障频次(圆)"].XValueType = ChartValueType.String;
+            chart2.Series["故障频次(圆)"].LegendText = "#VALX";
+            chart2.Series["故障频次(圆)"].CustomProperties = "PieStartAngle=270";
+            chart2.MouseClick+=new MouseEventHandler(chart2_MouseClick);
+
+            chart2.Series.Add(new Series("单设备故障分布"));
+            chart2.Series["单设备故障分布"].ChartType = SeriesChartType.Pie;
+            chart2.Series["单设备故障分布"].Label = "#PERCENT{P} 故障代码:#VALX";
+            chart2.Series["单设备故障分布"].Font = new Font("微软雅黑", 12);
+            chart2.Series["单设备故障分布"].XValueType = ChartValueType.String;
+            chart2.Series["单设备故障分布"].LegendText = "#VALX";
+            chart2.Series["单设备故障分布"].CustomProperties = "PieStartAngle=270";
+
+
             this.MouseWheel += new MouseEventHandler(Rfrm_MouseWheel);
             stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
@@ -78,6 +99,7 @@ namespace App.View.Report
             bsAlarm.DataSource = GetMonitorData();
 
             cmbAlarm.DisplayMember = "AlarmCD";
+            cmbAlarm.ValueMember = "AlarmCode";
         }
         private DataTable GetMonitorData()
         {
@@ -117,13 +139,13 @@ namespace App.View.Report
                 XDate.Clear();
                 YTime.Clear();
                 DataParameter[] param;
-                if (Alarm==0)
+                if (Alarm == 0)
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{3}' and C.WarehouseCode='{2}' and CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode,DeviceType)) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{3}' and C.WarehouseCode='{2}' and CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode, DeviceType)) };
                 }
                 else
                 {
-                    param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{4}' and R.AlarmCode={3} and C.WarehouseCode='{2}'  and  CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode, Alarm,DeviceType)) };
+                    param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{4}' and R.AlarmCode={3} and C.WarehouseCode='{2}'  and  CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode, Alarm, DeviceType)) };
                 }
                 DataTable dt = bll.FillDataTable("WCS.SelectAlarmRecord", param);
                 TimeSpan t1 = dateTimePicker2.Value - dateTimePicker1.Value;
@@ -133,24 +155,65 @@ namespace App.View.Report
                     for (int i = 0; i < days + 1; i++)
                     {
                         string ymd = dateTimePicker1.Value.AddDays(i).ToString("yyyy-MM-dd");
-                        string d = ymd.Substring(5);
-                        XDate.Add(d);
-
                         int count = (from DataRow AlarmCount in dt.Rows select AlarmCount).Where(s => ((DateTime)s["EndDate"]).ToString("yyyy-MM-dd") == ymd).Count();
-                        YTime.Add(count);
+                        if (count != 0)
+                        {
+
+                            string d = ymd.Substring(5);
+                            XDate.Add(d);
+
+                            YTime.Add(count);
+                        }
                     }
                     chart1.Series["故障频次"].Points.DataBindXY(XDate, YTime);
                 }
                 else
                 {
+                    var a = chart1.Series["故障频次"].Points.Select(s => s.AxisLabel).ToList();
+                    //XDate.AddRange(a);
+                    for (int i = 0; i < a.Count; i++)
+                    {
+                        YTime.Add(0);
+                    }
                     for (int i = 0; i < days + 1; i++)
                     {
                         DataRow[] drs = dt.Select(string.Format("DeviceNo='{0}'", Device));
                         string ymd = dateTimePicker1.Value.AddDays(i).ToString("yyyy-MM-dd");
-                        string d = ymd.Substring(5);
-                        XDate.Add(d);
                         int count = (from DataRow AlarmCount in drs select AlarmCount).Where(s => ((DateTime)s["EndDate"]).ToString("yyyy-MM-dd") == ymd).Count();
-                        YTime.Add(count);
+                        if (count!=0)
+                        {
+                            string d = ymd.Substring(5);
+                           
+             
+                            for (int j = 0; j < a.Count; j++)
+                            {
+                                if (a[j] == d)
+                                {
+                                    if (YTime[j] != 0)
+                                    {
+                                        YTime[j] = YTime[j] + count;
+                                    }
+                                    else
+                                    {
+                                        YTime[j] = count;
+                                    }
+                                    //chart1.Series[Device].Points.InsertXY(j, d, count);
+                                    XDate.Add(d);
+                                }
+                                else
+                                {
+                                    //if (chart1.Series[Device].Points[j].YValues[0] == 0)
+                                    //{
+
+                                    //}
+                                    XDate.Add("");
+
+                                }
+                            }
+                            
+                            //XDate.Clear();
+                            //YTime.Clear();
+                        }
                     }
                     chart1.Series[Device].Points.DataBindXY(XDate, YTime);
                 }
@@ -163,13 +226,14 @@ namespace App.View.Report
 
         private void btnCheck_Click(object sender, EventArgs e)
         {
+            result = false;
             stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
             enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
             foreach (var series in chart1.Series)
             {
                 series.Points.Clear();
             }
-            GetChart("0",cmbAlarm.SelectedIndex, stardate, enddate);
+            GetChart("0",int.Parse(cmbAlarm.SelectedValue.ToString()), stardate, enddate);
             foreach (var item in checkedListBox1.Items)
             {
                 chart1.Series[item.ToString()].IsVisibleInLegend = false;
@@ -177,9 +241,16 @@ namespace App.View.Report
             foreach (var item in checkedListBox1.CheckedItems)
             {
                 chart1.Series[item.ToString()].IsVisibleInLegend = true;
-                GetChart(item.ToString(),cmbAlarm.SelectedIndex, stardate, enddate);
+                GetChart(item.ToString(),int.Parse(cmbAlarm.SelectedValue.ToString()), stardate, enddate);
             }
-            
+            chart1.Visible = true;
+            chart2.Visible = false;
+            lblAlarmTimes.Visible = false;
+            lblAlarmTimeNum.Visible = false;
+            lblDate.Visible = false;
+            lblDateNum.Visible = false;
+            lblDeviceNo.Visible = false;
+            lblDeviceNoNum.Visible = false;
         }
 
         private void Rfrm_MouseWheel(object sender, MouseEventArgs e)
@@ -205,6 +276,94 @@ namespace App.View.Report
                 }
                 else
                     chart1.ChartAreas[0].AxisX.ScaleView.Size = chart1.ChartAreas[0].AxisX.ScaleView.SmallScrollSize;
+            }
+        }
+
+        private void btnPie_Click(object sender, EventArgs e)
+        {
+            result = true;
+            stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
+            enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+            foreach (var series in chart1.Series)
+            {
+                series.Points.Clear();
+            }
+            GetPieChart("0",int.Parse(cmbAlarm.SelectedValue.ToString()), stardate, enddate);
+            chart1.Visible = false;
+            chart2.Visible = true;
+            lblDateNum.Text = stardate + "~" + enddate;
+            lblAlarmTimes.Visible = true;
+            lblAlarmTimeNum.Visible = true;
+            lblDate.Visible = true;
+            lblDateNum.Visible = true;
+            lblDeviceNo.Visible = false;
+            lblDeviceNoNum.Visible = false;
+        }
+        private void GetPieChart(string Device, int Alarm, string stardate, string enddate)
+        {
+            XDevice.Clear();
+            YTime.Clear();
+            DataParameter[] param;
+            if (Alarm == 0)
+            {
+                param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{3}' and C.WarehouseCode='{2}' and CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode, DeviceType)) };
+            }
+            else
+            {
+                param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{4}' and R.AlarmCode={3} and C.WarehouseCode='{2}'  and  CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode, Alarm, DeviceType)) };
+            }
+            DataTable dt = bll.FillDataTable("WCS.SelectAlarmRecord", param);
+            if (Device == "0")
+            {
+                DataTable dtDevice;
+                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}'  and Priority=1", Program.WarehouseCode)));
+                for (int i = 0; i < dtDevice.Rows.Count; i++)
+                {
+                    int ycount = dt.Select(string.Format("DeviceNo='{0}'", dtDevice.Rows[i]["DeviceNo2"].ToString())).Count();
+                    if (ycount != 0)
+                    {
+                        XDevice.Add(dtDevice.Rows[i]["DeviceNo2"].ToString());
+
+                        YTime.Add(ycount);
+                    }
+                   
+                }
+                chart2.Series["故障频次(圆)"].Points.DataBindXY(XDevice, YTime);
+            }
+            lblAlarmTimeNum.Text = dt.Rows.Count.ToString();
+        }
+
+        private void chart2_MouseClick(object sender, MouseEventArgs e)
+        { 
+            HitTestResult Result = new HitTestResult();
+            Result = chart2.HitTest(e.X, e.Y);
+            XDevice.Clear();
+            XAlarm.Clear();
+            YTime.Clear();
+            if (result)
+            {
+                if (Result.ChartElementType == ChartElementType.DataPoint)
+                {
+                    int pointIndex = Result.PointIndex;
+                    string xName = chart2.Series[0].Points[pointIndex].AxisLabel;
+                    DataParameter[] param = new DataParameter[] { new DataParameter("{0}", string.Format("R.DeviceNo='{4}' and  D.DeviceType='{3}' and C.WarehouseCode='{2}' and CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, Program.WarehouseCode, DeviceType,xName)) };
+                    DataTable dt = bll.FillDataTable("WCS.SelectAlarmRecord", param);
+                    DataView dtView = dt.DefaultView;
+                    DataTable dtnew = dtView.ToTable(true, "AlarmCode", "AlarmDesc");
+                    foreach (DataRow item in dtnew.Rows)
+                    {
+                        DataRow[] drs = dt.Select(string.Format("AlarmCode='{0}'", item[0]));
+                        XAlarm.Add(item[0].ToString() + "   " + item[1].ToString());
+                        YTime.Add(drs.Length);
+                    }
+                    lblDeviceNoNum.Text = xName;
+                    lblAlarmTimeNum.Text = dt.Rows.Count.ToString();
+                    lblDeviceNo.Visible = true;
+                    lblDeviceNoNum.Visible = true;
+                    chart2.Series[0].Points.Clear();
+                    chart2.Series[1].Points.DataBindXY(XAlarm, YTime);
+                    result = false;
+                }
             }
         }
     }

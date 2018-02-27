@@ -165,14 +165,6 @@
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
     <Compile Include="BLL\UserBll.cs" />
-    <Compile Include="CheckComboBox\CheckBoxComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CheckComboBox\CheckBoxComboBox.designer.cs">
-      <DependentUpon>CheckBoxComboBox.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CheckComboBox\Selection Wrappers\ListSelectionWrapper.cs" />
-    <Compile Include="CheckComboBox\Selection Wrappers\ObjectSelectionWrapper.cs" />
     <Compile Include="Common\frmSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,25 +189,11 @@
     <Compile Include="frmCancel.Designer.cs">
       <DependentUpon>frmCancel.cs</DependentUpon>
     </Compile>
-    <Compile Include="CheckComboBox\GripBounds.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Main.Designer.cs">
       <DependentUpon>Main.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CheckComboBox\NativeMethods.cs" />
-    <Compile Include="CheckComboBox\Popup.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CheckComboBox\Popup.designer.cs">
-      <DependentUpon>Popup.cs</DependentUpon>
-    </Compile>
-    <Compile Include="CheckComboBox\PopupComboBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="CheckComboBox\PopupComboBox.designer.cs">
-      <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -486,9 +464,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="CheckComboBox\PopupComboBox.resx">
-      <DependentUpon>PopupComboBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

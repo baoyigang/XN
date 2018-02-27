@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
@@ -43,23 +45,34 @@
             this.btnCheck = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.btnPie = new System.Windows.Forms.Button();
+            this.chart2 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.lblAlarmTimes = new System.Windows.Forms.Label();
+            this.lblDate = new System.Windows.Forms.Label();
+            this.lblAlarmTimeNum = new System.Windows.Forms.Label();
+            this.lblDateNum = new System.Windows.Forms.Label();
+            this.lblDeviceNo = new System.Windows.Forms.Label();
+            this.lblDeviceNoNum = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsAlarm)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).BeginInit();
             this.SuspendLayout();
             // 
             // chart1
             // 
-            chartArea2.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
-            chartArea2.AxisX.MajorGrid.Enabled = false;
-            chartArea2.AxisX.MajorTickMark.Enabled = false;
-            chartArea2.AxisY.MajorGrid.Enabled = false;
-            chartArea2.AxisY.MajorTickMark.Enabled = false;
-            chartArea2.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea2);
+            chartArea1.AxisX.IntervalAutoMode = System.Windows.Forms.DataVisualization.Charting.IntervalAutoMode.VariableCount;
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+            chartArea1.AxisX.MajorTickMark.Enabled = false;
+            chartArea1.AxisY.MajorGrid.Enabled = false;
+            chartArea1.AxisY.MajorTickMark.Enabled = false;
+            chartArea1.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea1);
             this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend2.Name = "Legend1";
-            this.chart1.Legends.Add(legend2);
+            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend1.Name = "Legend1";
+            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(0, 0);
             this.chart1.Name = "chart1";
             this.chart1.Size = new System.Drawing.Size(1513, 787);
@@ -185,11 +198,127 @@
             this.checkedListBox1.Size = new System.Drawing.Size(701, 16);
             this.checkedListBox1.TabIndex = 71;
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
+            // btnPie
+            // 
+            this.btnPie.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnPie.Location = new System.Drawing.Point(1326, 14);
+            this.btnPie.Name = "btnPie";
+            this.btnPie.Size = new System.Drawing.Size(75, 23);
+            this.btnPie.TabIndex = 72;
+            this.btnPie.Text = "按设备查询";
+            this.btnPie.UseVisualStyleBackColor = true;
+            this.btnPie.Click += new System.EventHandler(this.btnPie_Click);
+            // 
+            // chart2
+            // 
+            chartArea2.Area3DStyle.Enable3D = true;
+            chartArea2.Name = "ChartArea1";
+            this.chart2.ChartAreas.Add(chartArea2);
+            this.chart2.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend2.Name = "Legend1";
+            this.chart2.Legends.Add(legend2);
+            this.chart2.Location = new System.Drawing.Point(0, 0);
+            this.chart2.Name = "chart2";
+            this.chart2.Size = new System.Drawing.Size(1513, 787);
+            this.chart2.TabIndex = 73;
+            this.chart2.Text = "chart2";
+            this.chart2.Visible = false;
+            // 
+            // lblAlarmTimes
+            // 
+            this.lblAlarmTimes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAlarmTimes.AutoSize = true;
+            this.lblAlarmTimes.BackColor = System.Drawing.Color.White;
+            this.lblAlarmTimes.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblAlarmTimes.Location = new System.Drawing.Point(1172, 241);
+            this.lblAlarmTimes.Name = "lblAlarmTimes";
+            this.lblAlarmTimes.Size = new System.Drawing.Size(106, 22);
+            this.lblAlarmTimes.TabIndex = 74;
+            this.lblAlarmTimes.Text = "总故障次数：";
+            this.lblAlarmTimes.Visible = false;
+            // 
+            // lblDate
+            // 
+            this.lblDate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDate.AutoSize = true;
+            this.lblDate.BackColor = System.Drawing.Color.White;
+            this.lblDate.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblDate.Location = new System.Drawing.Point(1172, 290);
+            this.lblDate.Name = "lblDate";
+            this.lblDate.Size = new System.Drawing.Size(90, 22);
+            this.lblDate.TabIndex = 75;
+            this.lblDate.Text = "日期区间：";
+            this.lblDate.Visible = false;
+            // 
+            // lblAlarmTimeNum
+            // 
+            this.lblAlarmTimeNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblAlarmTimeNum.AutoSize = true;
+            this.lblAlarmTimeNum.BackColor = System.Drawing.Color.White;
+            this.lblAlarmTimeNum.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblAlarmTimeNum.Location = new System.Drawing.Point(1284, 241);
+            this.lblAlarmTimeNum.Name = "lblAlarmTimeNum";
+            this.lblAlarmTimeNum.Size = new System.Drawing.Size(59, 22);
+            this.lblAlarmTimeNum.TabIndex = 76;
+            this.lblAlarmTimeNum.Text = "label4";
+            this.lblAlarmTimeNum.Visible = false;
+            // 
+            // lblDateNum
+            // 
+            this.lblDateNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDateNum.AutoSize = true;
+            this.lblDateNum.BackColor = System.Drawing.Color.White;
+            this.lblDateNum.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblDateNum.Location = new System.Drawing.Point(1268, 290);
+            this.lblDateNum.Name = "lblDateNum";
+            this.lblDateNum.Size = new System.Drawing.Size(59, 22);
+            this.lblDateNum.TabIndex = 77;
+            this.lblDateNum.Text = "label5";
+            this.lblDateNum.Visible = false;
+            // 
+            // lblDeviceNo
+            // 
+            this.lblDeviceNo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDeviceNo.AutoSize = true;
+            this.lblDeviceNo.BackColor = System.Drawing.Color.White;
+            this.lblDeviceNo.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblDeviceNo.Location = new System.Drawing.Point(1174, 200);
+            this.lblDeviceNo.Name = "lblDeviceNo";
+            this.lblDeviceNo.Size = new System.Drawing.Size(90, 22);
+            this.lblDeviceNo.TabIndex = 78;
+            this.lblDeviceNo.Text = "设备编号：";
+            this.lblDeviceNo.Visible = false;
+            // 
+            // lblDeviceNoNum
+            // 
+            this.lblDeviceNoNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblDeviceNoNum.AutoSize = true;
+            this.lblDeviceNoNum.BackColor = System.Drawing.Color.White;
+            this.lblDeviceNoNum.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblDeviceNoNum.Location = new System.Drawing.Point(1270, 200);
+            this.lblDeviceNoNum.Name = "lblDeviceNoNum";
+            this.lblDeviceNoNum.Size = new System.Drawing.Size(59, 22);
+            this.lblDeviceNoNum.TabIndex = 79;
+            this.lblDeviceNoNum.Text = "label5";
+            this.lblDeviceNoNum.Visible = false;
+            // 
             // frmErrorTotal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1513, 787);
+            this.Controls.Add(this.lblDeviceNoNum);
+            this.Controls.Add(this.lblDeviceNo);
+            this.Controls.Add(this.lblDateNum);
+            this.Controls.Add(this.lblAlarmTimeNum);
+            this.Controls.Add(this.lblDate);
+            this.Controls.Add(this.lblAlarmTimes);
+            this.Controls.Add(this.btnPie);
             this.Controls.Add(this.checkedListBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCheck);
@@ -201,12 +330,15 @@
             this.Controls.Add(this.dateTimePicker2);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.chart1);
+            this.Controls.Add(this.chart2);
             this.Name = "frmErrorTotal";
             this.Text = "frmErrorTotal";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmErrorTotal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bsAlarm)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -226,5 +358,14 @@
         private System.Windows.Forms.Button btnCheck;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckedListBox checkedListBox1;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnPie;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chart2;
+        private System.Windows.Forms.Label lblDate;
+        private System.Windows.Forms.Label lblAlarmTimes;
+        private System.Windows.Forms.Label lblDateNum;
+        private System.Windows.Forms.Label lblAlarmTimeNum;
+        private System.Windows.Forms.Label lblDeviceNoNum;
+        private System.Windows.Forms.Label lblDeviceNo;
     }
 }

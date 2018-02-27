@@ -41,6 +41,7 @@ namespace App.View.Report
             bsAlarm.DataSource = GetMonitorData();
             
             cmbAlarm.DisplayMember = "AlarmCD";
+            cmbAlarm.ValueMember = "AlarmCode";
 
             DataTable dtAisle = bll.FillDataTable("CMD.SelectAisle", new DataParameter("{0}", string.Format("WareHouseCode='{0}'", Program.WarehouseCode)));
 
@@ -95,18 +96,18 @@ namespace App.View.Report
                 }
                 else
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='0{2}' and R.DeviceNo = '{3}'", Program.WarehouseCode, DeviceType, cmbAisle.SelectedIndex.ToString(), cmbDevice.Text); 
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='{2}' and R.DeviceNo = '{3}'", Program.WarehouseCode, DeviceType, cmbAisle.Text, cmbDevice.Text); 
                 }
             }
             else
             {
                 if (cmbAisle.SelectedIndex==0)
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and R.AlarmCode='{2}'", Program.WarehouseCode, DeviceType, cmbAlarm.SelectedIndex.ToString()); 
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and R.AlarmCode='{2}'", Program.WarehouseCode, DeviceType, cmbAlarm.SelectedValue.ToString()); 
                 }
                 else
                 {
-                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='0{2}' and R.DeviceNo = '{3}' and  R.AlarmCode='{4}'", Program.WarehouseCode, DeviceType, cmbAisle.SelectedIndex.ToString(), cmbDevice.Text, cmbAlarm.SelectedIndex.ToString());
+                    filter = string.Format("C.WarehouseCode='{0}' and D.DeviceType='{1}' and C.AisleNo='{2}' and R.DeviceNo = '{3}' and  R.AlarmCode='{4}'", Program.WarehouseCode, DeviceType, cmbAisle.Text, cmbDevice.Text, cmbAlarm.SelectedValue.ToString());
                 }
             }
             this.DialogResult = System.Windows.Forms.DialogResult.OK;

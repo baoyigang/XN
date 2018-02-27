@@ -25,41 +25,78 @@ namespace WindowsFormsApplication1
         List<string> txData2 = new List<string>();
         List<int> txHour2 = new List<int>();
         List<int> tyData2 = new List<int>();
+        List<string> XDevice = new List<string>();
+        List<int> YTime = new List<int>();
+        int Alarm = 0;
+        string DeviceType = "02";
+        string Device = "0";
 
         private void Rfrm_Load(object sender, EventArgs e)
         {
 
-            DataTable dt = bll.FillDataTable("CMD.SelectAisle",new DataParameter("{0}",string.Format("WareHouseCode='{0}'","S")));
-            int AisleNoCount = dt.Rows.Count;
-            DataTable dtDevice;
+            //DataTable dt = bll.FillDataTable("CMD.SelectAisle",new DataParameter("{0}",string.Format("WareHouseCode='{0}'","S")));
+            //int AisleNoCount = dt.Rows.Count;
+            //DataTable dtDevice;
 
-            for (int i = 1; i < AisleNoCount + 1; i++)
+            //for (int i = 1; i < AisleNoCount + 1; i++)
+            //{
+            //    dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}'", "S", "0" + i.ToString())));
+            //    for (int j = 1; j < dtDevice.Rows.Count + 1; j++)
+            //    {
+            //        chart1.Series.Add(new Series(dtDevice.Rows[j-1]["DeviceNo2"].ToString()));
+            //        chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Label = "#VAL";
+            //        chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].IsVisibleInLegend = false;
+            //        chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].ChartType = SeriesChartType.Column;
+            //    }
+            //    chart1.Series.Add(new Series(i.ToString() + "号巷道"));
+            //    chart1.Series[i.ToString() + "号巷道"].Label = "#VAL";
+            //    chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = false;
+            //    chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
+            //    chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
+            //}
+            //chart1.Series.Add(new Series("任务数"));
+            //chart1.Series["任务数"].Label = "#VAL";
+            //chart1.Series["任务数"].ChartType = SeriesChartType.Column;
+            //chart1.Series["任务数"].CustomProperties = "DrawingStyle=Cylinder";
+
+            //dateTimePicker1.Value=dateTimePicker2.Value.Add(new TimeSpan(-31,0,0,0));
+            //stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
+            //enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
+            //GetChart(0,stardate,enddate);
+            //this.MouseWheel +=new MouseEventHandler(Rfrm_MouseWheel);
+            //chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
+
+            chart1.Series.Add(new Series("故障频次(圆)"));
+            chart1.Series["故障频次(圆)"].ChartType = SeriesChartType.Pie;
+            chart1.Series["故障频次(圆)"].Label = "#PERCENT{P}";
+            chart1.Series["故障频次(圆)"].XValueType = ChartValueType.String;
+            this.chart1.Series["故障频次(圆)"].LegendText = "#VALX";
+            XDevice.Clear();
+            YTime.Clear();
+            DataParameter[] param;
+            if (Alarm == 0)
             {
-                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}' and AisleNo='{1}'", "S", "0" + i.ToString())));
-                for (int j = 1; j < dtDevice.Rows.Count + 1; j++)
-                {
-                    chart1.Series.Add(new Series(dtDevice.Rows[j-1]["DeviceNo2"].ToString()));
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].Label = "#VAL";
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].IsVisibleInLegend = false;
-                    chart1.Series[dtDevice.Rows[j - 1]["DeviceNo2"].ToString()].ChartType = SeriesChartType.Column;
-                }
-                chart1.Series.Add(new Series(i.ToString() + "号巷道"));
-                chart1.Series[i.ToString() + "号巷道"].Label = "#VAL";
-                chart1.Series[i.ToString() + "号巷道"].IsVisibleInLegend = false;
-                chart1.Series[i.ToString() + "号巷道"].ChartType = SeriesChartType.Column;
-                chart1.Series[i.ToString() + "号巷道"].CustomProperties = "DrawingStyle=Wedge";
+                param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{3}' and C.WarehouseCode='{2}' and CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "S", DeviceType)) };
             }
-            chart1.Series.Add(new Series("任务数"));
-            chart1.Series["任务数"].Label = "#VAL";
-            chart1.Series["任务数"].ChartType = SeriesChartType.Column;
-            chart1.Series["任务数"].CustomProperties = "DrawingStyle=Cylinder";
+            else
+            {
+                param = new DataParameter[] { new DataParameter("{0}", string.Format("D.DeviceType='{4}' and R.AlarmCode={3} and C.WarehouseCode='{2}'  and  CONVERT(varchar(12) , R.EndDate, 111 ) between '{0}' and '{1}'", stardate, enddate, "S", Alarm, DeviceType)) };
+            }
+            DataTable dt = bll.FillDataTable("WCS.SelectAlarmRecord", param);
+            if (Device == "0")
+            {
+                DataTable dtDevice;
+                dtDevice = bll.FillDataTable("Cmd.SelectAisleDeviceChart", new DataParameter("{0}", string.Format("WareHouseCode='{0}'  and Priority=1", "S")));
+                for (int i = 0; i < dtDevice.Rows.Count; i++)
+                {
 
-            dateTimePicker1.Value=dateTimePicker2.Value.Add(new TimeSpan(-31,0,0,0));
-            stardate = dateTimePicker1.Value.ToString("yyyy/MM/dd");
-            enddate = dateTimePicker2.Value.ToString("yyyy/MM/dd");
-            GetChart(0,stardate,enddate);
-            this.MouseWheel +=new MouseEventHandler(Rfrm_MouseWheel);
-            chart1.ChartAreas[0].AxisX.ScaleView.Size = 3;
+                    XDevice.Add(dtDevice.Rows[i]["DeviceNo2"].ToString());
+
+                    //YTime.Add(dt.Select(string.Format("DeviceNo='{0}'",dtDevice.Rows[i]["DeviceNo2"].ToString())).Count());"故障频次(圆)";
+                }
+                YTime.AddRange(new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5 });
+                chart1.Series["故障频次(圆)"].Points.DataBindXY(XDevice, YTime);
+            }
         }
         //获取日期每个巷道任务数
         private void GetAisleChart(int Aisle,int TaskType)
