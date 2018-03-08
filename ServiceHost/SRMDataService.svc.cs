@@ -11,6 +11,7 @@ using System.ServiceModel.Activation;
 using System.IO;
 using System.Runtime.Serialization.Json;
 using System.ServiceModel.Web;
+using System.Reflection;
 
 
 namespace ServiceHost
@@ -35,7 +36,6 @@ namespace ServiceHost
                         id = dt.Rows[0]["id"].ToString();
                     else
                         id = "";
-
                     BLL.BLLBase bll = new BLL.BLLBase();
 
                     bll.ExecNonQuery("WCS.DeleteWcsTemp");

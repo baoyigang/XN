@@ -43,7 +43,7 @@ namespace App.Dispatching.Process
                         string AlarmDesc = "";
 
                         //更新故障表
-                        DataTable dtDevice = bll.FillDataTable("CMD.SelectDevice", new DataParameter("{0}", string.Format("DeviceNo2='{0}'", DeviceNo)));
+                        DataTable dtDevice = bll.FillDataTable("CMD.SelectDevice", new DataParameter("{0}", string.Format("DeviceNo2='{0}' and WarehouseCode='{1}'", DeviceNo,Program.WarehouseCode)));
                         string WarehouseCode = dtDevice.Rows[0]["WarehouseCode"].ToString();
                         string AreaCode = dtDevice.Rows[0]["AreaCode"].ToString();
                         if (AlarmCode != "0")

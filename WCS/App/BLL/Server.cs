@@ -8,14 +8,16 @@ using System.Data;
 
 namespace BLL
 {
-    public class Server
+    public class Server//<TChannel>
     {
 
         /// <summary>
         /// 通道字典
         /// </summary>
         private static Dictionary<string, object> Channels = new Dictionary<string, object>();
-
+       //private static  ChannelFactory<TChannel> channelFactory = new ChannelFactory<TChannel>(typeof(TChannel).Name);
+       //private static TChannel channel;
+        
         /// <summary>
         /// 创建一个指定类型的通道
         /// </summary>
@@ -41,5 +43,22 @@ namespace BLL
                 throw ex;
             }
         }
+        //public static TChannel GetChannel<TChannel>()
+        //{
+        //    try
+        //    {
+        //       
+        //        //if (channel == null)
+        //        //{
+        //        //    channel = channelFactory.CreateChannel();
+        //        //}
+        //      
+        //        return channel;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
+        //}
     }
 }

@@ -58,7 +58,7 @@ namespace WindowsFormsApplication1
             }
             chart1.Series[0].Points.DataBindXY(Xdate, YMin);
             result = true;
-        }
+    }
 
         private void GetDetailEff(DataParameter[] param) 
         {

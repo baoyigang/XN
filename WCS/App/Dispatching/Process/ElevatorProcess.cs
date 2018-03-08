@@ -127,7 +127,7 @@ namespace App.Dispatching.Process
                         return;
                     }
                     tmWorkTimer.Stop();
-                    DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("S1.WarehouseCode='{0}'", Program.WarehouseCode)) });
+                    DataTable dtAisle = bll.FillDataTable("CMD.SelectAisleElevator", new DataParameter[] { new DataParameter("{0}", string.Format("A2.WarehouseCode='{0}' and D1.WarehouseCode='{1}'", Program.WarehouseCode,Program.WarehouseCode)) });
                     //dtAisle.Rows.Count
                     for (int i = 0; i < dtAisle.Rows.Count; i++)
                     {

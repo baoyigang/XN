@@ -67,6 +67,13 @@
     <Compile Include="BLL\BLLBase.cs" />
     <Compile Include="BLL\Server.cs" />
     <Compile Include="BLL\UserBll.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="ClassTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ClassTest.Designer.cs">
+      <DependentUpon>ClassTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +112,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ClassTest.resx">
+      <DependentUpon>ClassTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -81,10 +81,10 @@
   </Command>
   <Command ID="SelectAisleElevator">
     <CommandString>
-      SELECT distinct S1.AisleNo,A2.DeviceNo2,isnull(D1.ServiceName,'') ServiceName2
+      SELECT distinct S1.AisleNo,isnull(D1.ServiceName,'') ServiceName2
       FROM CMD_Shelf S1
       left join CMD_AisleDevice A2 on A2.AreaCode=S1.AreaCode and A2.WarehouseCode=S1.WarehouseCode and A2.AisleNo=S1.AisleNo
-      left join CMD_Device D1 on D1.DeviceNo=A2.DeviceNo2 and D1.State='1'
+      left join CMD_Device D1 on D1.DeviceNo2=A2.DeviceNo2 and D1.State='1'
       where {0}
       ORDER BY AisleNo
     </CommandString>

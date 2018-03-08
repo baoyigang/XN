@@ -301,7 +301,10 @@ namespace App
                         this.lbLog.EndUpdate();
                     }
                     WriteLoggerFile(msg1 + msg2  + msg3);
-                    bll.ExecNonQuery("WCS.InsertLog", new DataParameter[] { new DataParameter("@LogDate",DateTime.Now), new DataParameter("@LogType", args.LogLevel.ToString()), new DataParameter("@Info",args.Message.ToString()) });
+                    if (!msg1.Contains("[DEBUG]"))
+                    {
+                        bll.ExecNonQuery("WCS.InsertLog", new DataParameter[] { new DataParameter("@LogDate", DateTime.Now), new DataParameter("@LogType", args.LogLevel.ToString()), new DataParameter("@Info", args.Message.ToString()) });
+                    }
                 }
             }
         }

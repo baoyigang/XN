@@ -5,7 +5,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    static class Program
+    static class Program1
     {
         /// <summary>
         /// 应用程序的主入口点。
@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Rfrm());
+            Application.Run(new ClassTest());
         }
     }
     public class RtnMessage

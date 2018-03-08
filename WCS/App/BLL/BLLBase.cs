@@ -16,7 +16,7 @@ namespace BLL
 
         public BLLBase()
         {
-            bll =Server.GetChannel<IServices.IBLLBaseService>();
+            bll = Server.GetChannel<IServices.IBLLBaseService>();
             bll.SetCnKey("");
         }
         public BLLBase(string CnKey)

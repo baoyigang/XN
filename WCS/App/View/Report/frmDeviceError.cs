@@ -31,25 +31,29 @@ namespace App.View.Report
             {
                 DeviceType = "01";
             }
+           
             BindData();
-            cmbAlarm.Items.Insert(0,"all");
             cmbAlarm.SelectedIndex = 0;
         }
 
         private void BindData()
-        {
+        { 
+
+
             bsAlarm.DataSource = GetMonitorData();
-            
+                        
             cmbAlarm.DisplayMember = "AlarmCD";
             cmbAlarm.ValueMember = "AlarmCode";
-
+           
             DataTable dtAisle = bll.FillDataTable("CMD.SelectAisle", new DataParameter("{0}", string.Format("WareHouseCode='{0}'", Program.WarehouseCode)));
 
-            cmbAisle.DataSource = dtAisle;
             DataRow drAisle = dtAisle.NewRow();
             drAisle["AisleNo"] = "全选";
             dtAisle.Rows.InsertAt(drAisle, 0);
+
+            bsAisle.DataSource = dtAisle;
             cmbAisle.DisplayMember = "AisleNo";
+
             cmbAisle.SelectedIndex = 0;
         }
         private DataTable GetMonitorData()
