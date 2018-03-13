@@ -19,6 +19,14 @@ namespace WindowsFormsApplication1
         {
             return class1;
         }
+
+        public string getString(string s)
+        {
+            Thread.Sleep(3000);
+            return s;
+        }
+
+
         public static void testAdd() 
         {
             if (dc.ContainsKey("a"))

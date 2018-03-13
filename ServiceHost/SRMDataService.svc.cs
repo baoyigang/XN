@@ -17,7 +17,8 @@ using System.Reflection;
 namespace ServiceHost
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "SRMDataService" in code, svc and config file together.
-    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)] 
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class SRMDataService : ISRMDataService
     {        
         public TaskRtn transWCSTask(List<Task> list)
